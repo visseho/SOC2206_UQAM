@@ -19,9 +19,9 @@ header-includes:
 
 1. Introduction du cours: importance des méthodes quantitatives (30 minutes)
 2. Présentation du cours (30 minutes)
-3. Vue d'ensemble: organisation de la classe (30 minutes)
-4. Pause : 10 minutes
-5. Début du cours: Les statistiques et les variables (45 minutes)
+3. Pause : 10 minutes
+4. Vue d'ensemble: organisation de la classe (60 minutes)
+5. Signature entente (20 minutes)
 6. Labo (30 minutes)
 
 ## Plan de présentation (30 minutes)

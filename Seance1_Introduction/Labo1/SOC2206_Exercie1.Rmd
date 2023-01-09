@@ -1,5 +1,5 @@
 ---
-title: 'Labo 1: Statistiques et variables'
+title: 'Labo 2: Statistiques et variables'
 author: "Visseho Adjiwanou, PhD."
 date: "`r format(Sys.time(), '%d %B %Y')`"
 output:
@@ -7,7 +7,6 @@ output:
   pdf_document: default
   html_document: default
 ---
-
 
 
 ## Exercice 1: Du concept à la mesure
@@ -79,15 +78,18 @@ Texte : https://www.bitbybitbook.com/fr/1st-ed/introduction/
 
 Texte: https://id-erudit-org.proxy.bibliotheques.uqam.ca/iderudit/1008237ar
 
-- Quelle est la difficulté de mesurer l'évolution du Français au Québec ?
-- D'autres éléments seront discutés en classe
+- Quelles sont les difficultés à mesurer l'évolution du Français au Québec ?
+- Faites ressortir deux variables de cette étude et dites leurs niveaux de mesure.
 
-## Exercice 7 : A votre tour
+## Exercice 7: A votre tour
+
+Mettez-vous en groupe de 4.
 
 Dans votre groupe, chacun présente aux autres les sujets qui l'intéressent. Ensuite, vous vous mettez d'accord pour choisir un sujet et une question de recherche.
 
-1. Indiquer comment vous irez chercher l'information
+1. Indiquer comment vous irez collecter l'information
 2. A qui adresserez-vous le questionnaire?
 3. Présentez six questions importantes décrivant les différents types de variables
 4. Quelles sont les limites de votre étude?
 5. Vous allez présenter cela en classe
+

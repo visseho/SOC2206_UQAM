@@ -1,0 +1,26 @@
+---
+title: 'Labo 1: Statistiques et variables'
+author: "Visseho Adjiwanou, PhD."
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output:
+  word_document: default
+  pdf_document: default
+  html_document: default
+---
+
+
+## Question 1
+
+- Télécharger vos données personnelles de Facebook
+
+## Question 2 
+
+Mettez-vous en groupe de 4.
+
+Dans votre groupe, chacun présente aux autres les sujets qui l'intéressent. Ensuite, vous vous mettez d'accord pour choisir un sujet et une question de recherche.
+
+1. Indiquer comment vous irez collecter l'information
+2. A qui adresserez-vous le questionnaire?
+3. Présentez six questions importantes décrivant les différents types de variables
+4. Quelles sont les limites de votre étude?
+5. Vous allez présenter cela en classe

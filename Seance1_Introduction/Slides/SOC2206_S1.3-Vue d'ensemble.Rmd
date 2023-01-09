@@ -16,7 +16,7 @@ header-includes:
 
 ## Plan
 
-1. Vue d'ensemble: organisation de la classe (30 minutes)
+1. Vue d'ensemble: organisation de la classe (60 minutes)
 
 
 ## Organisation
@@ -30,10 +30,27 @@ https://join.slack.com/t/soc2206h2310/shared_invite/zt-1mujn6i76-vmtUoM_x1ogzHTj
 https://join.slack.com/t/soc2206h2330/shared_invite/zt-1mvoj8y5g-geSFiMl2GvVkprlmZjRTOQ
 
 
+## Organisation
+
+- Installation des logiciels
+
+    - R : http://cran.cnr.berkeley.edu/
+    - RStudio : https://posit.co/downloads/
+    - BlueSky Statistics : https://www.blueskystatistics.com/Articles.asp?ID=317
+
+## Organisation
+
 - DataCamp
 - Moodle
 - Livre de cours
 
+## Organisation
+
+- Inscription au Labo
+
+    - Groupe 10: https://docs.google.com/spreadsheets/d/18X7OML-8T_DZw3arWt6BEhKnolratP_B-Q12DLgTvKM/edit?usp=sharing
+    
+    - Groupe 30: https://docs.google.com/spreadsheets/d/1VPatwd21Lvsci4_Zjot00frFaQ06_85VWeNfmViNabM/edit?usp=sharing
 
 Vue d'ensemble
 ----------------------------
@@ -51,3 +68,15 @@ Vue d'ensemble
 
 - La réponse à ces questions dépend entièrement de la nature des variables.
 - D'où l'importance de ce premier chapitre, que vous devez maîtriser à la perfection.
+
+## Pour la semaine prochaine
+
+- Lectures obligatoires
+
+    - Cours : Fox. Les statistiques et les variables (chapitre 1, pp.3-31)
+    - Article : Prévost, J.-G. (2011). Statistiques linguistiques, rhétorique quantitative et effets de perspective. Sociologie et sociétés, 43(2), 19–40. https://doi org.proxy.bibliotheques.uqam.ca/10.7202/1008237ar
+    -	https://www.bitbybitbook.com/fr/1st-ed/introduction/
+    
+- Exercices 
+
+    - Faire l'exercice 1 chez vous
