@@ -1,0 +1,20 @@
+---
+title: "Introduction à la statistique sociale? "
+subtitle: "Description des données"
+author:
+- Visseho Adjiwanou^[corresponding author - adjiwanou.vissého@uqam.ca]
+- Sociology department, Université du Québec à Montréal (UQAM)
+- Aoudou Njingouo Mounchingam (Contribution)
+- Yao Jean Kouadio (Contribution)
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output:
+  pdf_document: default
+  html_document: 
+    toc: true
+    toc_depth: 3
+  word_document: default
+  citation_package: natbib
+  template: svm-latex-ms2.tex 
+#bibliography: Remarriage_autonomy.bib
+
+---

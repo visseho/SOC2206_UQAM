@@ -1,0 +1,47 @@
+---
+title: "Seance 5: Plan du jour"
+author: "Visseho Adjiwanou, PhD."
+institute: "Département de Sociologie - UQAM"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output:
+  beamer_presentation:
+    colortheme: beaver
+    fonttheme: structurebold
+    theme: AnnArbor
+  slidy_presentation: default
+  ioslides_presentation: default
+header-includes:
+  - \usepackage{color}
+---
+
+
+## Plan
+
+
+1. Présentation Labo 5 (10 minutes)
+2. Labo 5 (1 heure en petits groupes)
+  - Question 1 : **10 minutes**
+  - Question 2 : **10 minutes**
+  - Question 3 : **10 minutes**
+  - Question 4 : **5 minutes**
+  - Partie B : **25 minutes**
+  
+3. Quiz 4 (15 minutes)
+**4. Pause (10 minutes)**
+5. Correction Labo 5 (1h)
+6. Conclusion (10 minutes)
+7. Pour le prochain cours
+
+
+## Pour la semaine prochaine
+
+- Chez vous
+
+    - Introduction à tidyverse (Datacamp)
+    - Introduction à ggplot (Datacamp)
+    - Labo 6
+
+- En classe
+
+    - Quiz 6
+    - Travail en groupe Labo 6

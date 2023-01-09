@@ -1,0 +1,393 @@
+---
+title: "Labo7: Statistiques bivariées"
+author: "Visseho Adjiwanou, PhD."
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+
+# Introduction
+
+Nous allons travailler avec 
+- les données de l'enquête sociale du Canada de 1995 "cora-crsc1996-E-1996_F1.csv" et
+
+
+## Question 1
+
+Charger ces données dans R.
+
+
+
+
+```{r}
+
+rm(list = ls())
+
+library(tidyverse)
+library(summarytools)
+#library(pander)
+
+crsc96 <- read_csv("cora-crsc1996-E-1996_F1.csv")
+
+```
+
+
+## Question 2
+
+A partir de ces données, sélectionner les variables suivantes: sexq, region, age, ageq, q1, q2, q3, q4, q44, q95. Vous créerez un nouveau fichier qui s'appelle crsc96_small.
+
+
+```{r}
+
+crsc96_small <-
+  crsc96 %>% 
+  select(sexq, region, age, ageq, q1, q2, q3, q4, q44, q95)
+
+
+```
+
+## Question 3
+
+Quelle est le niveau de mesure de chacune de ces variables?
+N'oubliez pas de consulter le **codebook** de l'enquête.
+
+Variables    Selon R      La réalité(Codebook)
+---------    -----------  -------------------------
+sexq         numerique
+region
+age
+ageq
+q1
+q2           numérique    qualitative nominale
+q3
+q4
+q44
+q95
+
+```{r}
+
+class(crsc96_small$sexq)
+class(crsc96_small$q2)
+
+```
+
+
+## Question 4
+
+Présenter les statistiques univariées appropriées sur chacune des variables suivantes: sexq, region, age, et q2. Commenter.
+
+```{r}
+
+# Sexe
+freq(crsc96_small$sexq)
+
+# Region
+freq(crsc96_small$region)
+
+# age (ratio)
+
+car_age <-
+  crsc96_small %>% 
+  summarise(moyenne = mean(age, na.rm = TRUE),
+            quartile1 = quantile(age, probs = 0.25, na.rm = TRUE),
+            mediane = median(age, na.rm = TRUE),
+            minimum = min(age, na.rm = TRUE),
+            variance = var(age, na.rm = TRUE))
+
+car_age
+
+```
+
+
+## Question 5
+
+Présenter à l'aide du graphique approprié chacune de ces variables.
+
+
+```{r}
+# variable qualitative
+ggplot(crsc96_small) +
+  geom_bar(aes(x = sexq)) +
+  facet_wrap(~region)
+
+
+ggplot(crsc96_small) +
+  geom_bar(aes(x = sexq, y = ..prop.., group = 1))
+
+
+```
+
+-  variable quantitative
+
+```{r}
+
+# Histogramme
+ggplot(crsc96_small) +
+  geom_histogram(aes(x = age)) 
+
+# Boite à moustache
+
+ggplot(crsc96_small) +
+  geom_boxplot(aes(x = age)) +
+  coord_flip()  # renverser les axes
+
+## Enlevons certaines valeurs
+
+ggplot(crsc96_small %>% filter(age <= 90)) +
+  geom_boxplot(aes(x = age)) +
+  coord_flip()
+```
+
+
+## Question 6
+
+Présenter un tableau décrivant l'association entre le sexe et la variable q2. Commenter.
+
+- q2: "An unmarried girl of 18 should not have sexual relations"
+Une jeune fille non mariée de 18 ans ne devrait pas avoir de relations sexuelles
+
+```{r}
+
+table1 <- table(crsc96_small$sexq, crsc96_small$q2)
+table1
+
+```
+
+
+
+
+
+
+Comme vous le voyez, ce tableau n'est pas assez explicite. Il manque plusieurs éléments. On ne va pas utiliser **base R** pour l'analyse bivariée. On va utiliser le package summarytools.
+
+## Statistiques bivariées : Association entre variables
+
+https://cran.r-project.org/web/packages/summarytools/vignettes/Introduction.html
+
+```{r}
+
+ctable(crsc96_small$sexq, crsc96_small$q2, "no")
+ctable(crsc96_small$sexq, crsc96_small$q2, "r")
+ctable(crsc96_small$sexq, crsc96_small$q2, "c")
+
+ctable(crsc96_small$q2, crsc96_small$sexq, "c")
+
+table1_mieux <- ctable(crsc96_small$sexq, crsc96_small$q2, "r")
+table1_mieux
+
+
+ctable(crsc96_small$q2, crsc96_small$sexq, "c")
+
+```
+
+## Question 7
+
+Présenter le résultat précédent sous forme de graphique. Comment appelle-t-on ce graphique?
+
+
+## Graphique
+
+```{r}
+
+ggplot(crsc96_small) +
+  geom_bar(aes(x = sexq, fill = q2))
+
+
+ggplot(crsc96_small) +
+  geom_bar(aes(x = sexq, fill = as_factor(q2)))
+
+
+ggplot(crsc96_small) +
+  geom_bar(aes(x = sexq, fill = as_factor(q2)), position = "fill")
+
+class(crsc96_small$q2)
+```
+
+
+## Question 8
+
+Présenter un tableau décrivant l'association entre le sexe et la variable q2 pour chaque catégorie de la variable region Qulle conclusion tirez-vous? Présenter ce résultat sous forme de graphique.
+
+```{r}
+
+ggplot(crsc96_small) +
+  #group_by(region) +
+  geom_bar(aes(x = sexq, fill = as_factor(q2)), position = "fill") +
+  facet_wrap(~region)
+
+```
+
+
+```{r}
+
+region0 <- 
+  crsc96_small %>% 
+  filter(region == 0)
+
+ctable(region0$q2, region0$sexq, "c")
+
+
+
+
+
+
+
+with(crsc96_small, 
+     stby(data    = list(x = sexq, y = q2), 
+          INDICES = region, 
+          FUN     = ctable))
+
+```
+
+
+
+
+
+
+
+
+
+
+## Statistiques bivariées : Association entre variables
+
+- Recréons la variable sexe pour qu'elle soit plus explicite.
+- Recréons la question q2 pour qu'elle soit aussi plus explicite.
+
+```{r}
+
+crsc96_small <-
+  crsc96_small %>% 
+  mutate(sexe = factor(sexq, labels = c("Homme", "Femme")),
+         q2_new = factor(q2, labels = c("totalement d'accord", "d'accord", "Ne sait pas", "En désaccord", "Totalement en désaccord")))
+
+```
+
+
+## Statistiques bivariées : Association entre variables
+
+
+```{r}
+
+ctable(crsc96_small$sexe, crsc96_small$q2_new)
+
+```
+
+- Par défaut, **ctable** calcule le pourcentage ligne (row)
+
+
+## Statistiques bivariées : Association entre variables
+
+Chaque commande a toujours des options.
+- **useNA** permet de spécifier les colonnes pour les valeurs manquantes aussi (no, ifany, always)
+- **round.digits** spécifie le nombre de virgule
+- **prop** spécifie si on calcule des proportions ligne (**r**) ou colonne (**c**)
+- **style** spécifie la forme du tableau (**grid, simple, rmarkdown**)
+
+
+```{r}
+
+ctable(crsc96_small$sexe, crsc96_small$q2_new, prop = "r", style = 'rmarkdown', useNA = "no", round.digits = 1)
+
+```
+
+## Association
+
+Les colonnes et les lignes d'un tableau croisés, ne sont pas identiques.
+
+```{r}
+
+ctable(crsc96_small$q2_new, crsc96_small$sexe)
+
+```
+
+
+Lequel des deux tableaux donne une indication sur l'association entre les deux variables?
+
+## Association
+
+Aussi, est-il important de préciser si vous calculez des proportions lignes ou des proportions colonnes.
+
+```{r}
+
+ctable(crsc96_small$q2_new, crsc96_small$sexe, "c")
+
+```
+
+
+## Exercices
+
+- Créer la variable q2_3 qui regroupe les modalités de q2 en trois catégories en 
+    - regroupant tout ce qui est **agree** ensemble et
+    - tout ce qui est **disagree** ensemble
+- Regarder à nouveau l'association entre le sexe et le nouveau q2_3
+- Analyser l'association entre l’age et le nouveau q2_3? Que concluez-vous?
+
+
+
+# Visualisation de l'association de deux variables qualitatives
+
+
+## Croisement de deux variables qualitatives
+
+
+```{r, out.width = '70%', message = FALSE, fig.align='center'}
+
+ggplot(crsc96_small) +
+  geom_bar(aes(x = sexe, fill = q2_new))
+
+```
+
+* Ce graphique nous donne pour chaque sexe, le nombre de personne qui sont dans chaque catégorie de la variable dépendante.
+* Il a cependant un problème, c'est difficile de comparer le nombres bruts. Il faut des pourcentages.
+
+
+## Croisement de deux variables qualitatives
+
+```{r, out.width = '60%', message = FALSE, fig.align='center'}
+
+ggplot(crsc96_small) +
+  geom_bar(aes(x = sexe, fill = q2_new), position = "fill")  
+
+```
+
+- On voit clairement la différence d'opinion entres les hommes et les femmes.
+
+
+## Croisement de deux variables qualitatives
+- On peut changer les couleurs, on verra cela plus loin.
+- http://www.sthda.com/french/wiki/couleurs-dans-r
+
+```{r, out.width = '60%', message = FALSE, fig.align='center'}
+
+ggplot(crsc96_small) +
+  geom_bar(aes(x = sexe, fill = q2_new), position = "fill") +
+  scale_fill_brewer(palette="PRGn") 
+# Changer PRGn avec un chiffre
+
+```
+
+
+
+## Chi-carré
+
+```{r}
+
+ctable(crsc96_small$sexe, crsc96_small$q2_new, chisq = TRUE, headings = TRUE)
+
+```
+
+Pour ne pas répéter la base de donnée chaque fois, on peut écrire simplement ceci:
+
+```{r}
+
+crsc96_small %>% 
+  ctable(sexe, q2_new, chisq = TRUE, headings = TRUE)
+
+```
+
+
+## Question 8
+
+Présenter un tableau décrivant l'association entre le groupe d'âges et la variable q2 pour chaque catégorie de la variable sexe. Qulle conclusion tirez-vous? Présenter ce résultat sous forme de graphique.

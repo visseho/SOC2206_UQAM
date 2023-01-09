@@ -1,0 +1,49 @@
+---
+title: "Séance 1: Tour d'horizon"
+author: "Visseho Adjiwanou"
+institute: "Sociologie, UQAM"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output:
+  beamer_presentation:
+    colortheme: beaver
+    fonttheme: structurebold
+    theme: AnnArbor
+  slidy_presentation: default
+  ioslides_presentation: default
+header-includes:
+  - \usepackage{color}
+---
+
+## Plan
+
+1. Introduction du cours (30 minutes)
+2. Présentation du cours (30 minutes)
+3. Les statistiques et les variables (Labo - 1h en groupe, 1h ensemble)
+  - Achète un.e ami.e
+  - Résultats de votre participation à l'enquête
+  
+
+## Organisation
+
+- Slack
+- DataCamp
+- Moodle
+- Livre de cours
+
+
+Vue d'ensemble
+----------------------------
+
+## Questions qui structurent ce cours
+
+> 1. Y a-t-il une **relation** entre deux variables ?
+> 2. Quelle est l'**intensité** de cette relation ?
+> 3. Quelles sont la **direction** et la **forme** de cette relation?
+> 4. Pouvons-nous **généraliser** la relation à la **population** de laquelle est tiré l'**échantillon**?
+> 5. La relation est-elle vraiment **causale**?
+> 6. Quelles sont les **variables intermédiaires** qui relient les variables **indépendante** et **dépendante**?
+
+## Questions qui structurent ce cours
+
+- La réponse à ces questions dépend entièrement de la nature des variables.
+- D'où l'importance de ce premier chapitre, que vous devez maîtriser à la perfection.

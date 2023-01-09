@@ -1,0 +1,97 @@
+---
+title: 'Test de chi-deux et test de student'
+author: "Visseho Adjiwanou, PhD."
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output:
+  pdf_document: default
+  word_document: default
+  html_document: default
+---
+
+
+## Test de chi-deux
+
+Dans cet exercice, nous examinons les différences transnationales dans les attitudes envers la violence domestique et l'accès à l'information. Nous explorons l’hypothèse selon laquelle il existe une association à un niveau global, entre la mesure dans laquelle les individus dans un pays ont accès à la connaissance et aux nouvelles informations, à la fois, à travers la scolarisation formelle et par les médias, et leur probabilité de condamner les actes de violence conjugale. Cet exercice est en partie basé sur:
+
+Pierotti, Rachel. (2013). "[Increasing Rejection of Intimate Partner Violence: Evidence of Global Cultural Diffusion](http://dx.doi.org/10.1177/0003122413480363)." *American Sociological Review*, 78: 240-265. **Un beau texte à lire si vous souhaitez**.
+
+Nous utilisons les données des enquêtes démographiques et de santé (EDS), qui représentent un ensemble de plus de 300 enquêtes représentatives à l'échelle nationale, régionale et résidentielle menées dans des pays en développement du monde entier depuis 1992. Les enquêtes utilisent un plan d'échantillonnage en grappes, stratifié à deux degrés. Dans la première étape, les zones de dénombrement (ZD) sont tirés des fichiers de recensement. Dans la deuxième étape, dans chaque ZD, un échantillon de ménages est tiré d’une liste actualisée de ménages. En outre, les enquêtes ont des questionnaires identiques et des formations identiques pour les enquêteurs, permettant de comparer directement les données d'un pays avec celles collectées dans d'autres pays. Il est important de noter que différents groupes de pays sont interrogés chaque année.
+
+Dans l'étude, l'auteur a utilisé ces données pour montrer que «les femmes ayant un meilleur accès aux scripts culturels mondiaux grâce à la vie urbaine, à l'enseignement secondaire ou à l'accès aux médias étaient plus susceptibles de rejeter la violence entre partenaires intimes». Les données se trouvent dans le fichier csv `dhs_ipv.csv`. Les noms et descriptions des variables sont les suivants:
+
+
+Name             Description
+---------------  ---------------------------------------------------------
+`beat_goesout`     Pourcentage de femmes dans chaque pays qui pensent qu'un mari est justifié de battre sa femme
+                 si elle sort sans le lui dire. 
+`beat_burnfood`    Pourcentage de femmes dans chaque pays qui pensent qu'un mari a                                le droit de battre sa femme
+                 si elle brûle sa nourriture.  
+`no_media`         Pourcentage de femmes dans chaque pays qui ont rarement accès un 
+                 journal, une radio ou une télévision.
+`sec_school`       Pourcentage de femmes dans chaque pays ayant un niveau d'éducation                             secondaire ou supérieur.
+`year`             Année de l'enqueête
+`region`           Région du monde
+`country`          pays
+
+
+Notez qu'il existe deux indicateurs d'*attitudes envers la violence domestique*: `beat_goesout` et `beat_burnfood`. Ce sont ces variables que nous voulons expliquer/comprendre. On les appelle des variables dépendantes ou variables à expliquer ou des `outcomes`. Il existe également deux indicateurs d'*accès à l'information*: `sec_school` et `no_media`. Celles-ci sont appelées des variables explicatives.
+
+Comme toujours, il faut prévoir un premier *chunck* où vous installez vos packages, les chargez et chargez la bse de données. C'est une procédure qu'il faut toujour suivre. Sachez aussi que vous devez ouvrir ce fichier RMarkDown et travailler directement dedans.
+
+
+```{r, results='hide'}
+rm(list = ls())     # Permet d'éffacer l'environnement
+
+# Chargement 
+
+library(tidyverse)
+library(summarytools)
+
+dhs <- read_csv("dhs_ipv.csv")
+
+```
+
+
+# T test
+Est-ce que la violence diffère selon les régions
+
+
+
+```{r}
+
+bbf_region <-
+  dhs %>% 
+  group_by(region) %>% 
+  summarise(mean_beat_burnfood = mean(beat_burnfood, na.rm = TRUE))
+
+bbf_region
+
+```
+On voit donc que la moyenne diffèrent les région. Mais, est-ce que cela est dû au hasard?
+
+# t test
+
+```{r}
+
+t.test(beat_burnfood ~ region, data = dhs)
+
+```
+
+Le t test se fait sur deux groupes. Comparons donc l'Afrique et l'Asie
+
+```{r}
+
+afrique_asie <-
+  dhs %>% 
+  filter(region == "Asia" | region == "Sub-Saharan Africa")
+
+t.test(beat_burnfood ~ region, data = afrique_asie)
+  
+```
+
+On voit que le t calculé vaut -4,10. Au seuil de 5%, le t critique est de 1,96.
+Ainsi le t calculé en valeur absolu est plus grand que le t lu, on rejette l'hypothèse nulle. La différence d'opinion sur la violence est différente entre les pays d'Afrique et les pays d'Asie.
+
+La décision peut-être prise aussi en regardant les niveaux de l'intervalle de confiance. Si cet intervalle contient 0, alors, on **ne** peut **pas** rejeter l'hypothèse nulle.
+
+Qu'en est-il entre les pays d'Asie et les pays d'Amérique Latine? Essayer cela.

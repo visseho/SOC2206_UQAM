@@ -1,0 +1,369 @@
+---
+title: 'Labo 12: Comparaison de moyenne / Analyse de la variance'
+author: "Visseho Adjiwanou, PhD."
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output:
+  pdf_document: default
+  word_document: default
+  html_document: default
+---
+
+
+# Question 1
+
+Supposons que vous souhaitiez en savoir plus sur la façon dont le fait de vivre sur le campus pendant la première année influence la satisfaction globale à l'égard de l'expérience universitaire. Vous échantillonnez 30 personnes: 10 qui vivaient sur le campus, 10 qui vivaient près du campus et 10 qui ont fait la navette vers le campus. Vous demandez ensuite aux répondants d'indiquer leur satisfaction globale à l'égard de leur expérience universitaire sur une échelle de 1 à 10. Vos données donnent les résultats suivants:
+
+$SC_{Inter} = 93.3$
+
+$SC_{Intra} = 29.7$
+
+Utiliser ces informations pour répondre aux questions suivantes:
+
+1. Quelles sont les variables à l'étude et quels sont leur type?
+
+- Variable dépendante: satisfaction globale, variable qualitative ordinale que nous pouvons traiter ici comme une variable quantitative discrète. Cependant, nous violons le postulat de la normalité et du fait que la variable dépendante est ratio/intervalle
+- Variable indépendante: lieu de résidence, variable qualitative nominale
+
+2. Quelle est la valeur du carré moyen intergroupe (encore appelé variance intergroupe)?
+
+Pour connaître le carré moyen, il faut connaître les degrés de liberté
+dl_inter = nombre de groupe - 1
+
+```{r}
+
+k <- 3
+dl_inter <- k - 1
+SC_inter <- 93.3
+
+Carre_moyen_inter <- SC_inter / dl_inter
+Carre_moyen_inter
+
+```
+
+3. Quelle est la valeur du carré moyen intragroupe (encore appelé variance intragroupe)?
+
+dl_intra = Taille de l'échantillon - nombre de groupe
+
+```{r}
+
+N <- 30
+dl_intra <- N - k
+SC_intra <- 29.7
+
+Carre_moyen_intra <- SC_intra / dl_intra
+Carre_moyen_intra
+
+
+```
+
+4. Quelle est la valeur de F?
+
+```{r}
+
+F_calcule <- Carre_moyen_inter / Carre_moyen_intra
+F_calcule
+
+```
+
+5. Quelle est la valeur de Éta carré ($E^2$)?
+
+
+```{r}
+
+Eta <- SC_inter / (SC_inter + SC_intra)
+Eta
+
+```
+
+
+
+
+
+
+6. Est-ce que les résultats sont significatifs au seuil de 5%? 1%? (Que comprenez-vous pas résultat significatif?)
+  - Présenter votre hypothèse nulle
+  
+Hypothèse nulle: Il n'y a pas de différence entre le lieu de résidence et la satisfaction par rapport à l'expérience universitaire
+
+Au seuil de 5%, le F lu aux degrés de liberté (2) au numérateur et 27 au dénominateur donne 3,35.
+
+Comme le F calculé est plus grand que le F lu, nous rejetons l'hypothèse nulle.
+
+Au seuil de 1%, le F lu vaut 5.49. Encore une fois, nous rejetons l'hypothèse nulle.
+
+```{r}
+
+qf(.95, df1 = 2, df2 = 27)
+qf(.99, df1 = 2, df2 = 27)
+
+```
+
+
+Voici à quoi ressemble la distribution de Fisher avec les degrés de liberté.
+
+
+```{r}
+ggplot(data = data.frame(x = c(0, 10)), aes(x)) +
+  stat_function(fun = df, args = list(df1 = 2, df2 = 27))
+  
+
+```
+
+
+
+```{r}
+
+ggplot(data = data.frame(x = c(0, 10)), aes(x)) +
+  stat_function(fun = df, args = list(df1 = 2, df2 = 27)) +
+  stat_function(fun = df, args = list(df1 = 4, df2 = 100), colour = "red") 
+
+```
+
+```{r}
+
+library(tidyverse)
+
+
+
+
+ggplot(data = data.frame(x = c(0, 10)), aes(x)) +
+  stat_function(fun = df, args = list(df1 = 2, df2 = 27)) +
+  stat_function(fun = df, args = list(df1 = 2, df2 = 27),
+                geom = "area", fill = "red", alpha = 0.2,
+                xlim = c(0, qf(.95, df1 = 2, df2 = 27)))
+
+```
+
+
+# Question 2: Analyse de variance
+
+
+Baumann et Jones (Moore, D. S. and McCabe, G. P. (1993) Introduction to the Practice of Statistics,
+Second Edition. New York: Freeman) ont conduit une étude expérimentale dans laquelle 66 enfants ont été assignés de manière aléatoire dans trois groupes différents. Les groupes représentent différentes méthodes d'enseignement: une méthode standard appelée **Basal** et deux nouvelles méthodes appelées **DTRA** et **Strat**. Les données sont présentées dans la base de donnée **Baumann** qui se trouve dans le package **carData**. Cette base de données contient les informations suivantes:
+
+Variables                   Description
+-------------------------   ---------------------------------------------
+group                       Le groupe de l'enfant (Basal, DTRA, Strat)
+pretest.1                   Pré-test 1 de compréhension de lecture
+pretest.2                   Pré-test 2 de compréhension de lecture
+post.test.1                 Post-test 1 de compréhension de lecture
+post.test.2                 Post-test 2 de compréhension de lecture
+post.test.3                 Post-test 3 de compréhension de lecture
+
+
+Remarque: Chaque package contient un certain nombres de bases de données pour permettre de tester facilement les fonctions du package. Le code présenté si dessous vous permet de charger ces données.
+
+```{r}
+rm(list = ls())
+#install.packages("carData")
+
+library(tidyverse)
+library(carData)
+library(summarytools)
+#data(package = "carData")       # Permet de savoir l'ensemble des bases de données inclus dans le package
+data("Baumann", package = "carData")  # Charger la base de données Baumann
+
+summary(Baumann)
+
+```
+
+1. Créer une nouvelle variable nommée **group1** où vous combinez ensemble les groupes **DRTA** et **Strat**. Ces deux groupes deviennent **DTST**.
+2. On va s'intéresser par la suite aux variables pretest.1 et post.test.3. Calculer la moyenne, la variance et l'écart-type des scores de compréhension avant le nouveau programme (pretest.1) et après le programme (post.test.3) pour les deux nouveaux groupes.
+
+
+```{r}
+
+freq(Baumann$group)
+
+# 1
+Baumann <-
+  Baumann %>% 
+  mutate(group1 = if_else(group == "Basal", "Basal", "DTST"))
+
+
+
+
+Baumann <-
+  Baumann %>% 
+  mutate(group2 = case_when(
+    group == "Basal" ~ "Basal",
+    group == "DRTA" ~ "DTST",
+    group == "Strat" ~ "DTST"
+  ))
+
+# 2 
+
+mean(Baumann$pretest.1, na.rm = TRUE)
+var(Baumann$post.test.3, na.rm = TRUE)
+
+
+stat_baumann <-
+  Baumann %>% 
+  group_by(group1) %>% 
+  summarise(moyenne_pretest1 = mean(pretest.1, na.rm = TRUE),
+            var_pretest1 = var(pretest.1),
+            ecart_pretest1 = sqrt(var_pretest1),
+            moyenne_postest3 = mean(post.test.3),
+            var_postest3 = var(post.test.3),
+            ecart_postest3 = sqrt(var_postest3))
+            
+stat_baumann
+
+
+```
+
+# Présenter le diagramme à moustache (boxplot) de ces deux scores selon les catégories du **group1**.
+
+```{r}
+
+ggplot(Baumann) +
+ # geom_boxplot(aes(x = group1, y = pretest.1, color = group1)) +
+  geom_boxplot(aes(x = group1, y = post.test.3, color = group1)) 
+
+## On peut faire deux graphiques séparés, c'est ok. 
+
+ggplot(Baumann) +
+  geom_boxplot(aes(x = group1, y = pretest.1, color = group1))
+
+ggplot(Baumann) +
+  geom_boxplot(aes(x = group1, y = post.test.3, color = group1)) 
+
+```
+
+# t test de comparaison de moyenne
+
+Est-ce que le nouveau programme améliore l'apprentissage des élèves? Tester cela au seuil de 5%.
+
+La comparaison des moyennes au 2 a montré que les resultats du postest sont meilleurs dans le groupe DTST que dans le groupe BASAL, alors qu'au prétest. c'est le contraire. Il s'agit alors de tester au sein de la population si ce constat est révélé.
+Nous formulons l'hypothese nulle:
+H0 : Les moyennes de score au posttest sont les mêmes pour le groupe BASAL que pour le groupe DTST.
+
+Sous cette hypothèse nulle, 
+
+$$t = \frac{(\bar{X_1} - \bar{X_2)}}{s_{\bar{X_1} - \bar{X_2}}}$$ 
+
+suit une loi de Student avec n1 + n2 - 2 dégrés de liberté, avec 
+
+$$S_{\bar{X_1} - \bar{X_2}} = \sqrt\frac{N_1*s_1^2 + N_2*s_2^2}{N_1 + N_2 -2}*\sqrt\frac{N_1 + N_2}{N_1*N_2}$$
+
+```{r}
+stat_baumann
+
+stat_baumann[1, "moyenne_postest3"]
+stat_baumann[2, "moyenne_postest3"]
+
+Numt <- stat_baumann[1, "moyenne_postest3"] - stat_baumann[2, "moyenne_postest3"]
+Numt
+
+N1 <- 22
+N2 <- 44
+
+Demt1 <- N1*stat_baumann[1, "var_postest3"] + N2*stat_baumann[2, "var_postest3"]
+Demt1
+
+Demt2 <- N1 + N2 - 2
+Demt2
+
+Demt3 <- N1 + N2
+
+Demt4 <- N1*N2
+
+Demt <- sqrt((Demt1/Demt2)*(Demt3/Demt4))
+Demt
+
+t <- Numt/Demt
+t 
+
+# t lu au seuil alpha de 0.05 à 64 degré de liberté = 1.99
+# Conclusion: tcalculé > t lu, rejet de l'hypothèse nulle
+
+# Avec la fonction ttest
+
+t.test(post.test.3 ~ group1, data = Baumann)
+
+```
+
+
+## Analyse de la variance
+
+Reprendre les questions 2 à 4 maintenant en travaillant avec les trois groupes distincts de la variable **group**. La différence entre cette question et les questions précédentes est que cette fois-ci vous avez 3 groupes (**Basal**, **DTRA**, et **Strat**) alors que précédemment vous avez deux groupes (**Basal** et **DTST**)
+
+```{r}
+
+stat_baumann2 <-
+  Baumann %>% 
+  group_by(group) %>% 
+  summarise(moyenne_pretest1 = mean(pretest.1),
+            var_pretest1 = var(pretest.1),
+            ecart_pretest1 = sqrt(var_pretest1),
+            moyenne_postest3 = mean(post.test.3),
+            var_postest3 = var(post.test.3),
+            ecart_postest3 = sqrt(var_postest3))
+
+stat_baumann2
+
+# Diagramme à moustache
+
+
+ggplot(Baumann) +
+  geom_boxplot(aes(x = group, y = pretest.1, color = group)) 
+  geom_boxplot(aes(x = group, y = post.test.3, color = group)) 
+
+
+ggplot(Baumann) +
+  geom_boxplot(aes(x = group, y = pretest.1, color = group)) 
+
+ggplot(Baumann) +
+  geom_boxplot(aes(x = group, y = post.test.3, color = group)) 
+
+# Signification
+
+analyse_variance <- aov(post.test.3 ~ group, data = Baumann)
+analyse_variance
+summary(analyse_variance)
+
+# Quels groupes sont différents
+
+TukeyHSD(analyse_variance)
+
+
+# Intensité de la relation
+ratio_correlation <- 357/(357+2511)
+ratio_correlation
+
+
+```
+
+
+
+# Question 3 (A faire par vous-mêmes)
+
+Supposons que vous souhaitiez en savoir plus sur l'isolement social. Vous émettez l'hypothèse que le fait de vivre dans des zones densément peuplées est associé à une socialisation plus fréquente avec des amis. Vous collectez des données auprès de 17 personnes des zones rurales (6), suburbaines (5) et urbaines (5). Le tableau ci-dessous contient vos données. 
+
+                           Rural        Suburbain    Urbain          Total
+-------------------------- ------------ ------------ --------------- -----------
+Nombre de rencontres       3            1            3       
+par mois avec des amis     4            3            2
+                           2            1            4  
+                           1            3            1
+                           1            4            5
+                           2            2 
+
+Utilisez ces informations pour répondre aux questions suivantes:
+
+1. Quelles sont les variables à l'étude et quels sont leur type?
+2. Calculer la somme des carrés intergroupe
+3. Calculer la somme des carrés intragroupe
+4. Calculer la statistique F
+5. Est-ce que les résultats sont significatifs au seuil de 5%? et de 1%? (Que comprenez-vous pas résultat significatif?)
+6. Quelle est la valeur de Éta carré ($E^2$)?
+7. Maintenant, considérer uniquement deux groupes:
+  - ceux qui vivent en milieu urbain et
+  - ceux qui ne vivent pas en milieu urbain (Rural + Suburbain)
+  
+7.1. Dresser un nouveau tableau qui présente ces résultats.
+
+7.2. Existe-il une relation significative au niveau de signification de 5% entre le faire de vivre en milieu urbain et le nombre de rencontres avec les amis par mois?
+
+
+

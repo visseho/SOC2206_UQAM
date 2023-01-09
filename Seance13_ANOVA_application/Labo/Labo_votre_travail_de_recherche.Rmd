@@ -1,0 +1,127 @@
+---
+title: "Inégalités de revenus au Canada"
+author:
+- Vissého Adjiwanou ^[corresponding author - adjiwanou.vissého@uqam.ca]
+- Département de Sociologie, Université du Québec à Montréal (UQAM)
+- Auteur 2
+- Auteur 3
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output:
+  pdf_document: default
+  html_document:
+    toc: yes
+    toc_depth: 3
+  citation_package: natbib
+  template: svm-latex-ms2.tex
+  word_document:
+    keep_md: yes
+subtitle: Article
+bibliography:
+- Methodes_quantitatives.bib
+---
+
+## Question de recherche
+
+Vous êtes interessés par la question générale de l'inégalité de revenu selon le sexe au Canada.
+Par ailleurs, vous vous demandez comment cette inégalité varie :
+
+  - selon les provinces 
+  - et le groupe d'âges (moins de 30 ans versus plus de 30 ans)
+
+On peut aussi chercher à avoir comment cette inégalité varie selon :
+
+  - le statut matrimonial et le type de famille,
+  - le niveau de scolarité,
+  - le statut d’immigration (statut légal au Canada),
+  - la principale source de revenu
+  - la région de résidence
+
+
+## Organisation de votre fichier de travail
+
+
+## 1. Introduction
+
+- Pourquoi le sujet est intéressant?
+- Que sait-on sur le sujet?
+- Quelles sont les limites des études précédentes?
+- Quels sont mes objectifs?
+
+
+## 2. Revue de littérature
+
+
+
+## Questions de recherche et hypothèses 
+
+
+
+## 3. Méthodologie
+
+### 3.1 Données
+
+- Décrire d'où proviennent vos données
+- Décrire la taille des échantillons
+- Il est toujours important d'aller consulter les informations sur l'enquête:
+
+https://www23.statcan.gc.ca/imdb/p2SV_f.pl?Function=getSurvey&SDDS=5200
+
+### 3.2 Variables
+
+#### 3.2.1 Variable(s) dépendante(s)
+
+- Qu'est-ce que je cherche à expliquer?
+- Comment est-elle mésurée par l'enquête?
+- Décrire le niveau de mesure de la variable.
+
+
+#### 3.2.2 Variables indépendantes
+
+- Quelles variables permettent d'expliquer la variable dépendante?
+- Comment sont-elles mésurées par l'enquête?
+- Décrire le niveau de mesure de chacune de ces variables.
+
+
+### 3.3 Méthodes d'analyse
+
+- Tableau croisé et Chi-carré
+- Comparaison des moyennes et test de Student
+- Analyse de la variance et test de Fisher
+- Modèles de régression linéaire
+
+## 4. Résultats
+
+- Il s'agit d'une présentation des résultats. Il n'y a pas d'interprétation à faire ici.
+
+### 4.1 Description de l'échantillon
+
+### 4.2 Visualisation de votre variable dépendante et indépendante principale
+
+![](inegalite.png)
+
+### 4.3 Relation entre les deux variables
+
+### 4.4 Autres éléments à considérer
+
+
+## 5. Discussion
+
+- Tenter d'expliquer et d'interpréter les résultats obtenus.
+
+## 6. Conclusion
+
+## Références
+
+
+
+# Analyse des données
+
+Ce qui va entrer dans les résultats proviendra de votre analyse des données. Vous pouvez le faire directement dans la partie résultats. Cependant, je vous conseille de le faire ailleurs et ramener les résultats ici. Il faut créer un autre fichier .RMD d'analye des données. 
+
+## Remarques
+
+Vous pouvez utiliser Zotero à l'intérieur de RMarkdown.
+- https://warin.ca/dpr/managing-references.html
+
+Intégrer Zotero à Chrome
+- https://chrome.google.com/webstore/detail/zotero-connector/ekhagklcjbdpajgpjgmbionohlpdbjgc?hl=en

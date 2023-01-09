@@ -1,0 +1,60 @@
+---
+title: "Labo7: Statistiques bivariées"
+author: "Visseho Adjiwanou, PhD."
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+# Introduction
+
+Nous allons travailler avec 
+- les données de l'enquête sociale du Canada de 1995 "cora-crsc1996-E-1996_F1.csv" et
+
+# Croisement de deux variables qualitatives
+
+Dans cet labo, nous visons deux objectifs:
+1. De quelle manière les réponses des gens sur les questions sociales dépendent-elles de leur âge et sexe?
+
+Pour cela, nous allons utiliser les données de l'enquête sociale du Canada de 1995 "cora-crsc1996-E-1996_F1.csv"
+
+## Question 1
+
+Charger ces données dans R.
+
+
+## Question 2
+
+A partir de ces données, sélectionner les variables suivantes: sexq, region, age, ageq, q1, q2, q3, q4, q44, q95. Vous créerez un nouveau fichier qui s'appelle crsc96_small.
+
+## Question 3
+
+Quelle est le niveau de mesure de chacune de ces variables?
+N'oubliez pas de consulter le **codebook** de l'enquête.
+
+## Question 4
+
+Présenter les variables univariées appropriées sur chacune des variables suivantes: sexq, region, age, et q2. Commenter.
+
+## Question 5
+
+Présenter à l'aide du graphique approprié chacune de ces variables.
+
+## Question 6
+
+Présenter un tableau décrivant l'association entre le sexe et la variable q2. Commenter.
+
+## Question 7
+
+Présenter le résultat précédent sous forme de graphique. Comment appelle-t-on ce graphique?
+
+## Question 8
+
+Présenter un tableau décrivant l'association entre le groupe d'âges et la variable q2 pour chaque catégorie de la variable sexe. Qulle conclusion tirez-vous? Présenter ce résultat sous forme de graphique.
+
+
+
+
+
+

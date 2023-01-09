@@ -1,0 +1,76 @@
+---
+title: "Distribution d'échantillonnage"
+author: "Visseho Adjiwanou, PhD."
+date: "11/19/2020"
+output: html_document
+---
+
+# PARTIE B: DISTRIBUTION D'ECHANTILLONNAGE
+
+## QUESTION 3
+
+La manière de sélectionner un échantillon constitue un élément central des tests statistiques. C'est parce que notre échantillon est sélectionnée de manière probabiliste (chaque personne de la population a une chance non nulle de faire partie de l'échantillon) que les tests statistiques ont un sens. Si nous avons choisis l'échantillon de manière , alors on ne peut pas faire de test statistique. L'idée centrale d'un test statistique est aussi l'idée de distribution d'échantillonnage. 
+
+Cet exercice va vous montrer comment cela fonction. Nous allons utiliser les données du marathon de Boston de 2012 qui se trouvent dans le fichier "bm_results2012.txt" que j'ai chargé aussi pour vous.
+
+Le tableau ci-dessous présente les informations contenues dans cette base de données.
+
+Variables           Description
+------------------  -----------------------------
+V1                   Nom 
+V2                   Sexe
+V3                   Age
+V4                   Division
+V5                   Pays
+V6                   Temps mis 
+
+
+```{r, out.width= '70%', out.height='70%', message=FALSE, warning=FALSE, error=FALSE}
+
+rm(list = ls())  
+library(tidyverse)
+
+marathon <- read_csv("bm_results2012.txt", col_names = FALSE, quote = "")
+
+```
+
+Nous nous interessons à savoir s'il existe une relation entre le sexe et la durée du marathon en prenant de manière aléatoire un échantillon de courreurs parmi l'ensemble des maranthoniens. Ici, nous connaissons les vrais résultats, car nous avons l'information sur l'ensemble des courreurs (C'est à dire la population à l'étude). Dans les faits, nous ne connaissons pas ces informations, c'est pourquoi nous prenons un échantillon.
+
+1. Prendre un échantillon de 40 courreurs de cette population et calculé le temps moyen mis pour courir le marathon. La fonction sample_n vous permet de sélection un échantillon. Le code ci-dessous vous fait cela.
+
+```{r}
+
+marathon_S1 <- sample_n(marathon, 40, replace = FALSE)
+
+``` 
+
+- Quel est le temps moyen courru du marathon? Par les hommes? Par les femmes?
+
+2. Tirer 9 autres échantillons échantillons marathon_S2 à marathon_S10 et répondez au même question que précédemment.
+- Obtenez-vous les mêmes résultats? Pourquoi?
+
+```{r}
+
+```
+
+3. La distribution d'échantillonnage n'est rien d'autre que les moyennes de ces différents échantillons que vous prenez.
+- Maintenant calculer la moyenne de ces moyennes.
+
+```{r}
+
+```
+
+
+4. Calculé le temps moyen mis pour courir le marathon chez la population des marathoniens.
+- Parmi les 11 moyennes (les 10 de chaque échantillon et la moyenne des moyennes) calculées précédemment, laquelle est le plus proche de la vrai moyenne?
+
+```{r}
+
+```
+
+5. Bonus. A vous de vous amuser maintenant. Si au lieu d'un échantillon de taille 40, on en prenait 100? Quels résultats obtenez-vous? Faites les calculs de 1 à 4 à nouveau.
+
+```{r}
+
+```
+

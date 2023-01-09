@@ -1,0 +1,395 @@
+---
+title: 'Test de chi-deux et test de student'
+author: "Visseho Adjiwanou, PhD."
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output:
+  pdf_document: default
+  word_document: default
+  html_document: default
+---
+
+
+# Question 1
+
+Supposons que vous ayez deux groupes d'étudiants, un groupe de majors en mathématiques et un groupe de majors en philosophie. Vous voulez en savoir plus sur leurs capacités de pensée critique. Vous demandez à chaque groupe de passer un test. Les résultats montrent que les 28 majors en mathématiques ont en moyenne un score de 88 avec un écart type de 6 et que les 19 majors en philosophie ont en moyenne un score de 90 avec un écart type de 3. Utilisez ces informations pour déterminer ce qui suit:
+
+
+Combien de variable avons-nous?
+
+variable 1: domaine d'études (math ou philo), qualitative, nominale, dichotomique
+variable 2: score obtenue, quantitative, ratio, continue
+on ne peut pas utiliser le chi-carré
+
+Mais, si on tient à utiliser le chi-carré, que doit-on faire?
+
+1. Énoncer votre hypothèse nulle
+
+
+
+H0: Il n'y a pas de différence entre les capacités de pensée critique entre ceux qui font une majeure en mathématique et une majeure en philosophie (en termes statistiques, le score moyen chez les mathématiciens = score moyen chez les philosophes)
+
+
+2. L'erreur type de la différence entre les moyennes
+
+
+la formule de l'erreur-type de la différence de moyenne vaut:
+
+$$s_{\bar{X}_1 - \bar{X}_2} = \sqrt{(\frac{N_1*s_1^2 + N_2*s_2^2}{N_1 + N_2 - 2})(\frac{N_1 + N_2}{N_1*N_2})}$$
+
+Calculons cela:
+
+```{r}
+
+# Groupe des maths
+
+N1 <- 28
+s1_carre <- 6^2
+
+# Groupe des philosophes
+
+N2 <- 19
+s2_carre <- 3^2
+
+# Calcul de l'erreur par étape
+
+## Numérateur fraction 1
+
+nf1 <- N1*s1_carre + N2*s2_carre
+
+## denominateur fraction 1
+
+df1 <- N1 + N2 - 2
+
+f1 <- nf1/df1
+
+## Numérateur et denominateur fraction 2
+
+nf2 <- N1 + N2
+df2 <- N1*N2
+
+f2 <- nf2/df2
+
+## Erreur-type
+
+s12 <- sqrt(f1*f2)
+s12
+
+```
+
+
+3. La statistique t
+
+
+Sous l'hypothèse nulle $\mu_1 - \mu_2 = 0$, donc 
+
+
+$$t = \frac{\bar{X}_1 - \bar{X}_2}{s_{\bar{X}_1 - \bar{X}_2}}$$
+
+```{r}
+
+X1_bar <- 88
+X2_bar <- 90
+t_calcule <- (X1_bar - X2_bar)/s12
+t_calcule
+
+```
+
+
+
+
+
+4. La différence entre les majors en mathématiques et les majors en philosophie est-elle statistiquement significative au niveau de signification de 1%? Expliquer.
+
+degré de liberté = 28 + 19 - 2  = 45
+
+t lu = 2.75
+
+t calculé en valeur absolu = 1.31 < t lu = 2.75, on **ne peut pas rejeter** l'hypothèse nulle. Autrement dit, il n'existe pas d'association significative entre le domaine de formation et la capacité de raisonnement critique.
+
+On peut aboutir aux mêmes résultats en utilisant l'intervalle de confiance.
+
+La formule de l'intervalle de confiance est:
+
+$$IC = (\bar{X_1} - \bar{X_2}) ± t_{\text{seuil choisi}}*s_{\bar{X_1} - \bar{X_2}}$$
+On connait déjà :
+1. $\bar{X_1} - \bar{X_2}$
+2. $s_{\bar{X_1} - \bar{X_2}}$ et 
+3 le t lu.
+
+Si cette intervalle de confiance contient 0, on ne peut pas rejeter l'hypothèse nulle.
+
+
+Voici la distribution de la différence des deux moyennes avec le degré de liberté de 45
+
+```{r}
+library(tidyverse)
+
+dist_t <- ggplot(data = data.frame(t = c(-4, 4)), aes(t)) +
+  stat_function(fun = dt, args = list(df = 5), color = "red") +
+ # stat_function(fun = dt, args = list(df = 5), color = "green") +
+#  stat_function(fun = dt, args = list(df = 150), color = "green")
+
+dist_t
+
+```
+
+Je cherche les valeurs de t pour lesquelles 99% de la distribution se trouve à l'intérieur de cette valeur.
+
+
+```{r}
+
+ggplot(data = data.frame(x = c(-4, 4)), aes(x)) +
+  stat_function(fun = dt, args = list(df = 45), color = "red") +
+  stat_function(fun = dt, args = list(df = 45), color = "red",
+                geom = "area", fill = "lightblue",
+                xlim = c(-4, 1.7))   
+
+```
+
+On n'a ainsi 99,5% de la distribution qui se trouve dans la zone bleue.
+
+De même, ici, on 0,5% de la distribution qui se trouve dans la zone verte.
+
+```{r}
+
+ggplot(data = data.frame(x = c(-4, 4)), aes(x)) +
+  stat_function(fun = dt, args = list(df = 45), color = "red") +
+  stat_function(fun = dt, args = list(df = 45), color = "red",
+                geom = "area", fill = "green",
+                xlim = c(-4, -1.7))  
+
+```
+
+Nous pouvons alors déduire que 99% de la distribution se trouve ici:
+
+```{r}
+
+ggplot(data = data.frame(x = c(-4, 4)), aes(x)) +
+  stat_function(fun = dt, args = list(df = 45), color = "red") +
+  stat_function(fun = dt, args = list(df = 45), color = "red",
+                geom = "area", fill = "purple", alpha = 0.2,
+                xlim = c(-1.7, 1.7)) 
+
+```
+
+Maintenant, trouvons les vraies valeurs des quantiles
+
+Au seuil de 1%
+
+```{r}
+
+qt(0.5, df = 45)
+
+bi <- qt(0.005, df=45)
+bi
+
+bs <- qt(0.995, df=45)
+bi
+bs
+
+```
+
+Voici le graphique qui vous donne les quantiles :
+
+bi: 0.5% de la distribution ont une valeur inférieur à la valeur trouvée
+bs: 99.5% de la distribution ont une valeur supérieure à la valeur trouvée
+
+Ainsi, on peut dire que 99% de la distribution ont une valeur comprise entre bi et bs.
+Avec notre niveau de signification de 1%, notre t devrait être à l'extérieur de cette zone.
+
+
+Exécuter ce code une ligne à la fois, et vous verrez comment c'est crée.
+
+Quelles sont les différents graphiques qui sont créés et avec quelle fonction?
+
+```{r}
+
+df <- N1 + N2 -2
+df
+
+acceptation_rejet <-
+  ggplot(data = data.frame(t = c(-4, 4)), aes(t)) +
+  stat_function(fun = dt, args = list(df = 45), color = "red") +
+  geom_vline(aes(xintercept = bi), color = "blue") +
+  geom_vline(aes(xintercept = bs), color = "green") +
+  geom_segment(aes(x = bi, xend = bs, y = 0, yend = 0), 
+               arrow = arrow(length = unit(0.1,"cm"), ends = "both"), 
+               color = "black") +
+  stat_function(fun = dt, args = list(df = 45),
+                xlim = c(bs, 4),
+                geom = "area", fill = "lightblue") +
+  stat_function(fun = dt, args = list(df = 45),
+                xlim = c(-4, bi),
+                geom = "area", fill = "lightblue") +
+  stat_function(fun = dt, args = list(df = 45),
+                xlim = c(bi, bs),
+                geom = "area", fill = "purple", alpha = 0.2) #+
+  geom_abline(aes(slope = 0, intercept = -1.314578), color = "black")+
+  theme(legend.position = "none")
+
+acceptation_rejet
+
+?geom_abline
+```
+
+
+
+La fonction pour tracer la ligne était juste devant moi. J'avais déjà tracé deux lignes avec la fonction vline. La fonction geom_abline vous permet de tracer aussi des droites mais de manière générale. vline pour dire **vertical line**.
+
+
+```{r}
+
+t_calcule <- 1.314578
+
+acceptation_rejet <-
+  ggplot(data = data.frame(t = c(-4, 4)), aes(t)) +
+  stat_function(fun = dt, args = list(df = 45), color = "red") +
+  geom_vline(aes(xintercept = bi), color = "blue") +
+  geom_vline(aes(xintercept = bs), color = "green") +
+  geom_segment(aes(x = bi, xend = bs, y = 0, yend = 0), 
+               arrow = arrow(length = unit(0.1,"cm"), ends = "both"), 
+               color = "black") +
+  stat_function(fun = dt, args = list(df = 45),
+                xlim = c(bs, 4),
+                geom = "area", fill = "lightblue") +
+  stat_function(fun = dt, args = list(df = 45),
+                xlim = c(-4, bi),
+                geom = "area", fill = "lightblue") +
+  stat_function(fun = dt, args = list(df = 45),
+                xlim = c(bi, bs),
+                geom = "area", fill = "purple", alpha = 0.2) +
+  geom_vline(aes(xintercept = t_calcule), color = "black")+
+  theme(legend.position = "none")
+
+acceptation_rejet
+
+```
+
+On voit dont que cela se trouve bien dans la zone mauve.
+
+
+- Refaites la même chose, cette fois-ci avec un niveau de signification de 5%. Quelle conclusion vous-tirez?
+
+
+# Question 2
+
+Dans cet exercice, nous examinons les différences transnationales dans les attitudes envers la violence domestique et l'accès à l'information. Nous explorons l’hypothèse selon laquelle il existe une association à un niveau global, entre la mesure dans laquelle les individus dans un pays ont accès à la connaissance et aux nouvelles informations, à la fois, à travers la scolarisation formelle et par les médias, et leur probabilité de condamner les actes de violence conjugale. Cet exercice est en partie basé sur:
+
+Pierotti, Rachel. (2013). "[Increasing Rejection of Intimate Partner Violence: Evidence of Global Cultural Diffusion](http://dx.doi.org/10.1177/0003122413480363)." *American Sociological Review*, 78: 240-265. **Un beau texte à lire si vous souhaitez**.
+
+Nous utilisons les données des enquêtes démographiques et de santé (EDS), qui représentent un ensemble de plus de 300 enquêtes représentatives à l'échelle nationale, régionale et résidentielle menées dans des pays en développement du monde entier depuis 1992. Les enquêtes utilisent un plan d'échantillonnage en grappes, stratifié à deux degrés. Dans la première étape, les zones de dénombrement (ZD) sont tirés des fichiers de recensement. Dans la deuxième étape, dans chaque ZD, un échantillon de ménages est tiré d’une liste actualisée de ménages. En outre, les enquêtes ont des questionnaires identiques et des formations identiques pour les enquêteurs, permettant de comparer directement les données d'un pays avec celles collectées dans d'autres pays. Il est important de noter que différents groupes de pays sont interrogés chaque année.
+
+Dans l'étude, l'auteur a utilisé ces données pour montrer que «les femmes ayant un meilleur accès aux scripts culturels mondiaux grâce à la vie urbaine, à l'enseignement secondaire ou à l'accès aux médias étaient plus susceptibles de rejeter la violence entre partenaires intimes». Les données se trouvent dans le fichier csv `dhs_ipv.csv`. Les noms et descriptions des variables sont les suivants:
+
+
+Name             Description
+---------------  ---------------------------------------------------------
+`beat_goesout`     Pourcentage de femmes dans chaque pays qui pensent qu'un mari est justifié de battre sa femme
+                 si elle sort sans le lui dire. 
+`beat_burnfood`    Pourcentage de femmes dans chaque pays qui pensent qu'un mari a                                le droit de battre sa femme
+                 si elle brûle sa nourriture.  
+`no_media`         Pourcentage de femmes dans chaque pays qui ont rarement accès un 
+                 journal, une radio ou une télévision.
+`sec_school`       Pourcentage de femmes dans chaque pays ayant un niveau d'éducation                             secondaire ou supérieur.
+`year`             Année de l'enqueête
+`region`           Région du monde
+`country`          pays
+
+
+Notez qu'il existe deux indicateurs d'*attitudes envers la violence domestique*: `beat_goesout` et `beat_burnfood`. Ce sont ces variables que nous voulons expliquer/comprendre. On les appelle des variables dépendantes ou variables à expliquer ou des `outcomes`. Il existe également deux indicateurs d'*accès à l'information*: `sec_school` et `no_media`. Celles-ci sont appelées des variables explicatives.
+
+Comme toujours, il faut prévoir un premier *chunck* où vous installez vos packages, les chargez et chargez la bse de données. C'est une procédure qu'il faut toujours suivre. Sachez aussi que vous devez ouvrir ce fichier RMarkDown et travailler directement dedans.
+
+
+```{r, results='hide'}
+
+rm(list = ls())     # Permet d'éffacer l'environnement
+
+# Chargement 
+
+library(tidyverse)
+library(summarytools)
+
+dhs <- read_csv("dhs_ipv.csv")
+
+```
+
+
+## T test
+
+Est-ce que la violence diffère selon les régions ?
+
+
+```{r}
+
+bbf_region <-
+  dhs %>% 
+  group_by(region) %>% 
+  summarise(mean_beat_burnfood = mean(beat_burnfood, na.rm = TRUE))
+
+bbf_region
+
+```
+
+## T test
+
+
+Comparer l'Afrique et l'Asie. Est-ce que la différence observée est due au hasard? Testé cela au niveau de signification de 5% ? Prenez soin de bien présenter votre hypothèse nulle et votre hypothèse alternative.
+
+
+- Faites cela à la main et ensuite avec R.
+
+```{r}
+
+t.test(beat_burnfood ~ region, data = dhs)
+
+```
+
+Le t test se fait sur deux groupes. Comparons donc l'Afrique et l'Asie
+
+```{r}
+
+afrique_asie <-
+  dhs %>% 
+  filter(region == "Asia" | region == "Sub-Saharan Africa")
+
+t.test(beat_burnfood ~ region, data = afrique_asie)
+
+
+ggplot(dhs) +
+  geom_boxplot(aes(x = beat_burnfood, y = region)) +
+  coord_flip()
+
+```
+
+
+On voit que le t calculé vaut -4,10. Au seuil de 5%, le t critique est de 1,96.
+Ainsi le t calculé en valeur absolu est plus grand que le t lu, on rejette l'hypothèse nulle. La différence d'opinion sur la violence est différente entre les pays d'Afrique et les pays d'Asie.
+
+La décision peut-être prise aussi en regardant les niveaux de l'intervalle de confiance. Si cet intervalle contient le t calculé, alors, on **ne** peut **pas** rejeter l'hypothèse nulle.
+
+Qu'en est-il entre les pays d'Asie et les pays d'Amérique Latine? Essayer cela.
+
+
+# Question 3: dégré de fondamentalisme par niveau d'éducation
+
+Le tableau suivant donne la relation entre l'éducation et le degré du fondamentalisme
+
+                      libéral    Modéré    Fondamentaliste  
+-------------------- ----------- --------- ----------------                    
+Moins de 12 années    171        311       282              
+12 années             317        452       387              
+Plus de 12 années     839        947       628              
+
+
+1. Quelle est la valeur du chi-carré?
+2. Est-ce que la relation observée est-elle valable au sein de la population?
+3. Calculer les mesures d'association suivantes et justifier pourquoi on peut les calculer ou pas. Énumérer leurs limites éventuelles.
+3.1. Le coefficient de contingence de Pearson 
+3.2. Le phi $\phi$
+3.3. Le Lambda
+3.4. Le Dxy de Somer
+
+
+
+

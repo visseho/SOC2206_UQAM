@@ -1,0 +1,151 @@
+---
+title: 'Labo 3: Fréquences et pourcentages'
+author: "Visseho Adjiwanou, PhD."
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output:
+  word_document: default
+  pdf_document: default
+  html_document: default
+---
+
+## Exercice 1: Préférence réligieuse
+
+Le tableau suivant présente les résultats sur la préférence réligieuse:
+
+                        Fréquence Pourc.         Pourc. valide        Pourc. cumulé
+--------- ------------  --------- ------------- --------------------- -------------
+Valide    Protestante    953      953/1500*100  953/1492*100 = 63.8   63.8
+          Catholique     333                    333/1492*100 = 22.3   63.8+22.3 = 86.1
+          Juive           31
+          Aucune         140
+          Autre           35
+          Total         1492                                          100
+Manquant  
+          NSP              1
+          NA               7
+          Total            8
+Total                   1500
+
+
+Pourc. = Pourcentage
+NSP = Ne sait pas
+NA = Non réponse
+
+Compléter le tableau avec les informations manquantes et répondez aux questions suivantes.
+
+1. Quelle est la taille de l'échantillon?
+2. Combien y-a-t'il de données manquantes?
+3. Quels problèmes posent les données manquantes?
+4. Combien de répondant.es sont des Protestant.es
+5. Quel pourcentage des répondant.es sont des Protestant.es? 953/1492*100
+6. Est-ce que la variable est nominale? ordinale? intervalle/ratio?
+7. Quelle proportion des répondant.es sont des Catholiques? *333/1492*
+8. Quelle proportions des répondant.es sont des Juifs?
+9. Quelle pourcentage des répondant.es ne sont ni protestant.es ni Catholiques?
+10. Présenter un graphique approprié à partir de ces données.
+11. Commenter ces résultats.
+
+
+## Exercice 2: Dents apparentes
+
+À la naissance, les dents de lait sont déjà presque toutes formées, mais sont cachées sous les gencives. Il arrive que le bébé naisse avec quelques **dents apparentes**, mais c'est très rare. C'est généralement vers 6 mois que se fait l'apparition des premières dents. On a dénombré le nombre de dents de lait apparentes dans un échantillon de
+20 filles et 20 garçons, âgés de 0 à 2 ans. Les Réponses sont reportées dans les deux tableaux suivants:
+
+**Tableau garçon**
+---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+0    1    10   4    14   10   2    8    4    14
+6    11   13   15   16   4    0    12   16   3
+---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+
+**Tableau fille**
+---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+0    9    7    0    12   1    7    4    1    2
+7    9    3    4    5    4    6    16   4    11
+---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+
+1. Quelles sont les deux variables de ce tableau et quel est leur type respectif? 
+
+`- sexe : nominale`
+`- dents de lait : ratio `
+
+2. Présenter le tableau de distribution (fréquence, pourcentage, pourcentage valide, pourcentage cumulé) de cette variable.
+
+Garçon
+
+Atrribut  Freq  Pourc.
+0         2     2/20
+1         1     1/20
+2         1
+3         1
+4         3
+6         1
+8         1
+10        2
+11        1
+12        1
+13        1
+14        2
+15        1
+16        2
+
+N         20
+
+3. Vous allez créer une nouvelle variable qui regroupe le nombre de dents de laits en classe selon:
+- Nombre de dents de laits < 5
+- Nombre de dents de laits >=5 et < 12
+- Nombre de dents de laits >= 13
+
+- Classe de dents de lait
+
+                      Freq Pourcent 
+Moins que 5           8
+entre 5 et 13         6
+Plus ou égale à 13    6
+N                     20
+
+
+3.1. Quelle est la nature de cette nouvelle variable?
+
+
+3.2. Présenter le tableau de distribution (fréquence, pourcentage, pourcentage valide, pourcentage cumulé) de cette nouvelle variable?
+
+4. Quelle représentation graphique est appropriée pour présenter les données des filles et des garçons?
+
+
+
+## Entrée les données dans R
+
+```{r}
+#install.packages("tidyverse")
+library(tidyverse)
+library(summarytools)
+
+garcon <- c(1, 1, 10, 4, 14, 10, 2, 8, 4, 14, 6, 11, 13, 15, 16, 4, 0, 12, 16, 3)
+fille <- c(0, 9, 7, 0, 12, 1, 7, 4, 1, 2, 7, 9, 3, 4, 5, 4, 6, 16, 4, 11)
+sexe <- c(rep("garcon", 20), rep("fille", 20))
+
+donnee <- data.frame(sexe = sexe, nombre_dents = c(garcon, fille))
+
+
+freq(garcon)
+
+
+getmode <- function(v) {
+   uniqv <- unique(v)
+   uniqv[which.max(tabulate(match(v, uniqv)))]
+}
+
+Statistique <- donnee %>% 
+  group_by(sexe) %>% 
+  summarise(mode = getmode(nombre_dents),
+            moyenne = mean(nombre_dents),
+            mediane = median(nombre_dents),
+            variance = var(nombre_dents),
+            ecart_type = sd(nombre_dents),
+            min = min(nombre_dents),
+            max = max(nombre_dents),
+            sca = sum((nombre_dents - moyenne)^2))
+Statistique
+
+```
+

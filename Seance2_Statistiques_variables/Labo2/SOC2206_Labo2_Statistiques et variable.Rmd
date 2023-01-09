@@ -1,0 +1,93 @@
+---
+title: 'Labo 2: Statistiques et variables'
+author: "Visseho Adjiwanou, PhD."
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output:
+  word_document: default
+  pdf_document: default
+  html_document: default
+---
+
+
+
+## Exercice 1: Du concept à la mesure
+
+Marx a soutenu que le capitalisme est un mode de production économique basé sur le conflit entre deux classes de personnes: le capital (alias la bourgeoisie) et le travail (alias le prolétariat). L'appartenance à une classe est déterminée par sa relation avec les moyens de production. Le capital possède les moyens de production et le travail non. Au travail, les membres de la classe ouvrière vendent leur capacité de faire du travail (leur force de travail) au capital en échange d'un taux de salaire. Marx a affirmé que cela a pour effet d'aliéner les gens de leur travail parce que les individus ne contrôlent plus leur travail, ni le produit de leur travail.
+
+Logiquement, cela a du sens; cependant, pouvons-nous mesurer l'aliénation d'une manière ou d'une autre pour offrir des preuves empiriques de son existence? L'aliénation de Marx existe au niveau conceptuel. Pouvez-vous penser à des moyens d'opérationnaliser l'aliénation?
+
+**Aliénation**: condition dans laquelle les gens souffrent d'une «déconnexion» entre eux-mêmes et de leur travail et d'une déconnexion les uns des autres.
+
+## Exercice 2: Variable dépendante, variable indépendante
+
+Parmi les exemples suivants, identifier les variables et dire si elles constituent dans le contexte une variable dépendante ou indépendante.  Définissez aussi le type de variable en question.
+
+1. Une démographe analyse l'évolution du taux de fécondité des femmes depuis 1960 selon l'origine ethnique et le degré de scolarité.
+
+2. Dans une expérience sur le temps de réaction visuelle, on mesure le temps nécessaire pour percevoir des mots à connotation sexuelle par rapport à des mots non sexuels. Pour cette expérience, les chercheurs prennent bien soin de s'assurer que la vision des sujets leur permet de voir adéquatement les diapositives.
+
+3. Un criminologue recherche des données sur la nature des infractions au Code criminel selon le sexe des accusés.
+
+4. Lors d'une série d'expérience en psychologie sportive, on s'est rendu compte que chez les athlètes masculins, en situation de compétition relativement à celle de non compétition, il y a une augmentation du nombre de comportements complexes émis, mais qu'il y a une augmentation du nombre de comportements complexes émis, mais qu'il y a une baisse de la qualité de ceux-ci.
+
+5. Des élèves du cours de psychologie expérimentale veulent étudier les sentiments de culpabilité des individus selon le type de délit qu'ils ont commis.
+
+6. Un journaliste fait l'examen du pourcentage des intentions de vote des différents partis politiques québécois selon la langue parlée à la maison, le groupe d'âge et le degré de scolarité des électeurs.
+
+## Exercice 3: Type de variables
+
+Voici une série de questions issues d'un questionnaire:
+
+1. Quel est ton sexe? Homme, Femme
+2. Quel est ton âge? ___________ (en années)
+3. Tu es en quelle année? 1e année, 2e année, junior, senior, autres
+4. Vis-tu sur le campus ou fais-tu la navette hors campus? Sur le campus, hors campus
+5. Quelle est ton ethnie/race?  ___________________
+6. Te considères-tu comme un fumeur? Oui, Non
+  a. Si oui, combien de cigarettes fumes-tu en moyenne par semaine? _______
+  b. Si oui, depuis combien d'années fumes-tu? ___________
+  c. Si oui, aimerais-tu cesser de fumer? Oui, Non
+7. As-tu déjà essayé de cesser de fumer? Oui, Non
+  a. Si oui, combien de fois as-tu essayé? ______________
+
+Pour chacune de ces question, dites le type de mesure de la variable ?
+
+## Question 4
+
+Jean-Marc Leger, fondateur de la firme de sondage **Leger** a dressé la liste de résultats statistiques qu'il juge "drôles" pour égayer la fin de l'été 2013 des lecteurs du Journal de Montréal (https://www.journaldemontreal.com/2013/09/09/droles-de-statistiques)
+
+Voici deux résultats de sa liste:
+
+1. Les gens qui sont beaux peuvent gagner un salaire jusqu’à 15% plus élevé. Alors que si vous êtes plus grand, vous ne pouvez qu’espérer 3% de plus.
+
+2. Une serveuse qui porte du rouge gagnera 15% de plus en pourboires. Un homme qui porte un vêtement avec un peu de rouge est perçu comme ayant un meilleur statut, plus riche, plus ambitieux et donc plus attirant.
+
+A votre tour de refaire ces études. Pour chaque résultat dites (le cas échéant):
+
+- A. La variable dépendante, son type et ces catégories;
+- B. La variable indépendante, son type et ces catégories;
+
+## Exercice 5: Texte de Matthews Salganik
+
+Texte : https://www.bitbybitbook.com/fr/1st-ed/introduction/
+
+- En quoi l'ère numérique change-t-elle le métier du sociologue?
+- L'auteur parle dans son texte de "Readymade"et de "Custommade", Que signifie ces deux notions?
+- Donnez-moi des exemples de chaque type que vous avez déjà rencontré
+
+## Exercice 6: Texte de Jean-Guy Prévost
+
+Texte: https://id-erudit-org.proxy.bibliotheques.uqam.ca/iderudit/1008237ar
+
+- Quelle est la difficulté de mesurer l'évolution du Français au Québec ?
+- D'autres éléments seront discutés en classe
+
+## Exercice 7 : A votre tour
+
+Dans votre groupe, chacun présente aux autres les sujets qui l'intéressent. Ensuite, vous vous mettez d'accord pour choisir un sujet et une question de recherche.
+
+1. Indiquer comment vous irez chercher l'information
+2. A qui adresserez-vous le questionnaire?
+3. Présentez six questions importantes décrivant les différents types de variables
+4. Quelles sont les limites de votre étude?
+5. Vous allez présenter cela en classe

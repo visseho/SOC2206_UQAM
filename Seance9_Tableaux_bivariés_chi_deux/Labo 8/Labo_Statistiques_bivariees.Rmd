@@ -1,0 +1,311 @@
+---
+title: "Lab6: Statistiques bivariées"
+author: "Visseho Adjiwanou, PhD."
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+
+# Croisement de deux variables qualitatives
+
+
+```{r}
+library(tidyverse)
+library(summarytools)
+#library(pander)
+
+crsc96 <- read_csv("cora-crsc1996-E-1996_F1.csv")
+
+crsc96_small <-
+  crsc96 %>% 
+  select(sexq, region, age, ageq, q1, q2, q3, q4, q44, q95)
+
+```
+
+## Statistiques bivariées : Association entre variables
+
+Existe-il une association entre le sexe et l'opinion des gens, notamment q2?
+- q2: "An unmarried girl of 18 should not have sexual relations"
+Une jeune fille non mariée de 18 ans ne devrait pas avoir de relations sexuelles
+
+```{r}
+
+table1 <- table(crsc96_small$sexq, crsc96_small$q2)
+table1
+
+```
+
+Comme vous le voyez, ce tableau n'est pas assez explicite. Il manque plusieurs éléments. On ne va pas utiliser **base R** pour l'analyse bivariée. On va utiliser le package summarytools.
+
+## Statistiques bivariées : Association entre variables
+
+```{r}
+
+table1_mieux <- ctable(crsc96_small$sexq, crsc96_small$q2)
+table1_mieux
+
+```
+
+
+## Statistiques bivariées : Association entre variables
+
+- Recréons la variable sexe pour qu'elle soit plus explicite.
+- Recréons la question q2 pour qu'elle soit aussi plus explicite.
+
+```{r}
+
+crsc96_small <-
+  crsc96_small %>% 
+  mutate(sexe = factor(sexq, labels = c("Homme", "Femme")),
+         q2_new = factor(q2, labels = c("totalement d'accord", "d'accord", "Ne sait pas", "En désaccord", "Totalement en désaccord")))
+
+```
+
+
+## Statistiques bivariées : Association entre variables
+
+
+```{r}
+
+ctable(crsc96_small$sexe, crsc96_small$q2_new)
+
+```
+
+- Par défaut, **ctable** calcule le pourcentage ligne (row)
+
+
+## Statistiques bivariées : Association entre variables
+
+Chaque commande a toujours des options.
+- **useNA** permet de spécifier les colonnes pour les valeurs manquantes aussi (no, ifany, always)
+- **round.digits** spécifie le nombre de virgule
+- **prop** spécifie si on calcule des proportions ligne (**r**) ou colonne (**c**)
+- **style** spécifie la forme du tableau (**grid, simple, rmarkdown**)
+
+
+```{r}
+
+ctable(crsc96_small$sexe, crsc96_small$q2_new, prop = "r", style = 'rmarkdown', useNA = "no", round.digits = 1)
+
+```
+
+## Association
+
+Les colonnes et les lignes d'un tableau croisés, ne sont pas identiques.
+
+```{r}
+
+ctable(crsc96_small$q2_new, crsc96_small$sexe)
+
+```
+
+
+Lequel des deux tableaux donne une indication sur l'association entre les deux variables?
+
+## Association
+
+Aussi, est-il important de préciser si vous calculer des proportions lignes ou des proportions colonnes.
+
+```{r}
+
+ctable(crsc96_small$q2_new, crsc96_small$sexe, "c")
+
+```
+
+
+## Exercices
+
+- Créer la variable q2_3 qui regroupe les modalités de q2 en trois catégories en 
+    - regroupant tout ce qui est **agree** ensemble et
+    - tout ce qui est **disagree** ensemble
+- Regarder à nouveau l'association entre le sexe et le nouveau q2_3
+- Analyser l'association entre l’age et le nouveau q2_3? Que concluez-vous?
+
+
+
+# Visualisation de l'association de deux variables qualitatives
+
+
+## Croisement de deux variables qualitatives
+
+
+```{r, out.width = '70%', message = FALSE, fig.align='center'}
+
+ggplot(crsc96_small) +
+  geom_bar(aes(x = sexe, fill = q2_new))
+
+```
+
+* Ce graphique nous donne pour chaque sexe, le nombre de personne qui sont dans chaque catégorie de la variable dépendante.
+* Il a cependant un problème, c'est difficile de comparer le nombres bruts. Il faut des pourcentages.
+
+
+## Croisement de deux variables qualitatives
+
+```{r, out.width = '60%', message = FALSE, fig.align='center'}
+
+ggplot(crsc96_small) +
+  geom_bar(aes(x = sexe, fill = q2_new), position = "fill")  
+
+```
+- On voit clairement la différence d'opinion entres les hommes et les femmes.
+
+
+## Croisement de deux variables qualitatives
+- On peut changer les couleurs, on verra cela plus loin.
+- http://www.sthda.com/french/wiki/couleurs-dans-r
+
+```{r, out.width = '60%', message = FALSE, fig.align='center'}
+
+ggplot(crsc96_small) +
+  geom_bar(aes(x = sexe, fill = q2_new), position = "fill") +
+  scale_fill_brewer(palette="PRGn") 
+# Changer PRGn avec un chiffre
+
+```
+
+Chi-carré
+========================================================
+
+## Chi-carré
+
+```{r}
+
+ctable(crsc96_small$sexe, crsc96_small$q2_new, chisq = TRUE, headings = TRUE)
+
+```
+
+```{r}
+
+crsc96_small %>% 
+  ctable(sexe, q2_new, chisq = TRUE, headings = TRUE)
+
+```
+
+
+Association entre une variable quantitative et une variable qualitative
+========================================================
+
+## Croisement d'une variable quantitative et d'une variable qualitative
+
+- Croiser une variable quantitative et une variable qualitative, c’est essayé de voir si les valeurs de la variable quantitative se répartissent différemment selon les catégories d’appartenance de la variable qualitative.
+
+
+
+## Différence de moyenne
+
+```{r}
+
+diff_moyenne <-
+  dhs_ipv %>% 
+  filter(region == "Asia" | region == "Sub-Saharan Africa") %>% 
+  group_by(region) %>% 
+  summarise(moyenne_beat_burnfood = mean(beat_burnfood, na.rm = TRUE))
+
+diff_moyenne
+
+diff = diff_moyenne[2, "moyenne_beat_burnfood"] - diff_moyenne[1, "moyenne_beat_burnfood"]
+
+diff
+
+```
+
+## Croisement d'une variable quantitative et d'une variable qualitative
+
+- Avant de présenter ce diagramme, regardons un peu la distribution de la variable beat_burnfood par région.
+
+```{r, out.width = '65%', message = FALSE, warning=FALSE, fig.align='center'}
+
+dhs_ipv <- read_csv("dhs_ipv.csv")
+
+a <-
+ggplot(dhs_ipv) + 
+  geom_text(aes(x = region, y = beat_burnfood, 
+                label = country, color = region), size = 2)
+
+```
+
+## Croisement d'une variable quantitative et d'une variable qualitative
+
+```{r, out.width = '70%', message = FALSE, warning=FALSE, fig.align='center'}
+a 
+  
+```
+
+- Commenter ce graphique.
+
+## Croisement d'une variable quantitative et d'une variable qualitative
+
+```{r, out.width = '60%', message = FALSE, warning=FALSE, fig.align='center'}
+a + 
+  theme(axis.text.x = element_text(angle = 20, hjust = 1),
+        legend.position = "none")
+  
+```
+
+## Exemple: Diagramme de quartile 
+
+- Le diagramme de quartile permet de synthétiser l'information contenue dans ce nuage de point pour une comparaison plus efficiente.
+
+```{r, out.width = '60%', message = FALSE, warning=FALSE, fig.align='center'}
+
+b <- ggplot(dhs_ipv) + 
+  geom_boxplot(aes(x = region, y = beat_burnfood))
+b
+```
+* Note : x doit être une variable qualitative, et y une variable quantitative.
+
+
+## Exemple: Diagramme de quartile 
+
+```{r, out.width = '60%', message = FALSE, warning=FALSE, fig.align='center'}
+c <- ggplot(dhs_ipv) + 
+  geom_boxplot(aes(x = region, y = sec_school))
+c
+
+```
+
+## Exemple: Diagramme de quartile 
+
+- Commencez-vous par tirer une petite conclusion ici?
+- Pour bien visualiser le tout, il faut les mettre dans un même graphique. La commande **ggarrange** du package **ggpubr** vous permet de faire cela.
+
+## Exemple: Diagramme de quartile 
+
+```{r, out.width = '70%', message = FALSE, warning=FALSE, fig.align='center'}
+#install.packages("ggpubr")
+library(ggpubr)
+ggarrange(b, c, ncol = 2)
+
+```
+
+
+Association entre deux variables quantitatives
+========================================================
+
+##  Corrélation linéaire : Croisement de deux variables quantitatives 
+
+
+```{r, out.width = '65%', message = FALSE, warning=FALSE, fig.align='center'}
+
+ggplot(dhs_ipv) +
+  geom_point(aes(x = sec_school, y = beat_burnfood)) 
+
+```
+
+##  Corrélation linéaire : Croisement de deux variables quantitatives 
+
+
+```{r, out.width = '70%', message = FALSE, warning=FALSE, fig.align='center'}
+
+ggplot(dhs_ipv) +
+  geom_point(aes(x = no_media, y = beat_burnfood)) 
+
+```
+
+
+
+
+

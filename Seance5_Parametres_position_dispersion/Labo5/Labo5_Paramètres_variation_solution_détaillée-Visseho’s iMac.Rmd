@@ -1,0 +1,571 @@
+---
+title: "Labo 4: Paramètres de tendance centrale"
+author: "Visseho Adjiwanou, PhD."
+institute: "Département de Sociologie - UQAM"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+
+# PARTIE A
+
+
+## Question 1: (tiré de Krieg)
+
+A partir des données du tableau suivant, calculer :
+
+- le mode
+- la médiane
+- la moyenne
+- l'étendue
+- l'écart inter-quartile
+- la variance et l'écart-type
+
+
+NE     Fréquence  Pourcentage    Pourcentage valide  Pourcentage cumulé
+------ ---------- -------------  ------------------  -------------------
+0      414        28.1           28.1                 28.1
+1      242        16.4           16.4                 44.5
+2      398        27.0           27.0                 71.4
+3      226        15.3           15.3                 86.8
+4      115        7.8             7.8                 94.6
+5       58        3.9             3.9                 98.6
+6       14         .9              .9                 99.5
+7        7         .5              .5                100.0
+
+NE : Nombre d'enfants
+
+
+
+### Réponse
+
+- Mode : 0
+
+
+
+- Médiane : 44,5% des répondants ont au plus 1 enfant (c'est à dire qu'ils en ont 0 ou 1). 71,4% ont au plus 2 enfants (c'est à dire qu'ils en ont 0, ou 1 ou 2). Donc, on peut dire que la moitié de l'échantillon (50%) a au entre 1 et 2 enfants. La médiane est alors l'intervalle [1,2]. On peut être plus précis en utilisant la formule de la fois passée:
+
+
+1                  médiane                      2
+44.5%                50%                        71.4
+414+ 242              737                      1056   
+
+
+(Médiane - 2)/(50 - 71.4) = (1 - 2)/(44.5 - 71.4)
+
+
+Médiane = 2 + (1-2)/(44.5 - 71.4)*(50 - 71.4)
+
+
+Médiane = 1.2 enfants
+
+Autre manière de le visualiser:
+On a au total 1474 répondants. La moitié est entre 737 et 737.5
+
+0      1        md                     2
+414    242      737                    398
+       658                             1056        
+
+737 est plus proche de 658 (donc de 1) que de 1056 (2)
+
+(mediane - 2)/(737 - 1056) = (1-2)/(658-1056)
+mediane = 2 + (1-2)/(658-1056)*(737 - 1056)
+mediane = 1.20
+
+
+- Moyenne
+
+NE     Fréquence  Pourcentage    Pourcentage valide  Pourcentage cumulé
+------ ---------- -------------  ------------------  -------------------
+0      414        28.1           28.1                 28.1
+1      242        16.4           16.4                 44.5
+2      398        27.0           27.0                 71.4
+3      226        15.3           15.3                 86.8
+4      115        7.8             7.8                 94.6
+5       58        3.9             3.9                 98.6
+6       14         .9              .9                 99.5
+7        7         .5              .5                100.0
+
+```{r}
+414*0 + 242*1 + 298*2 + 226*3 + 115*4 + 58*5 + 14*6 + 7*7
+414 + 242 + 398 + 226 + 115 + 58 + 14 +7
+moyenne <- 2399 / 1474
+moyenne 
+```
+
+mode < médiane < moyenne ==> asymétrique avec un étalement vers la droite.
+
+
+
+- étendue : 7 - 0 = 7 enfants
+
+- EIQ: 
+  - 1e Quartile : 25% des gens ont 0 enfant donc 1eQ = 0
+  
+2                3eq                   3   
+71.4              75%                 86.8%
+
+
+3eq = 3 + (2-3)/(71.4 - 86.8)*(75 - 86.8) = 2.2
+  
+  - 3e quartile: 75% des gens ont entre 2 et 3 enfants = 2.2
+
+donc EIQ = 2.2 - 0 = 2.2
+
+
+Exemple simple pour calculer le Q1, Q2 et l'écart:
+
+https://www150.statcan.gc.ca/n1/edu/power-pouvoir/ch12/5214890-fra.htm#:~:text=L'%C3%A9cart%20interquartile%20est%20une,comme%20mesure%20de%20la%20dispersion.&text=L'%C3%A9cart%20interquartile%20couvre%2050,le%20quartile%20le%20plus%20faible.
+
+
+
+
+- Variance
+NE     Fréquence  Pourcentage    Pourcentage valide  Pourcentage cumulé
+------ ---------- -------------  ------------------  -------------------
+0      414        28.1           28.1                 28.1
+1      242        16.4           16.4                 44.5
+2      398        27.0           27.0                 71.4
+3      226        15.3           15.3                 86.8
+4      115        7.8             7.8                 94.6
+5       58        3.9             3.9                 98.6
+6       14         .9              .9                 99.5
+7        7         .5              .5                100.0
+
+
+414 personnes avec 0 enfant
+
+```{r}
+
+(xi - moyenne)^2
+
+
+(0 - 1.6)^2 + ... (0 - 1.6)^2
+
+A <- 414*(0-1.6)^2
+242*(1 - 1.6)^2
+398*(2 - 1.6)^2
+226*(3 -1.6)^2
+115*(4 - 1.6)^2
+58*(5 - 1.6)^2
+14*(6 - 1.6)^2
+7*(7 - 1.6)^2
+
+variance <- somme / (1474 -1)
+
+```
+
+- écart-type 
+
+```{r}
+ écart_type <- sqrt(variance)
+```
+
+
+## Question 2: (tiré de Krieg)
+
+Le graphique suivant présente l'histogramme de l'âge au premier mariage. 
+
+![Figure 1: Histogramme de l'âge au premier mariage](Histogramme_age_mariage.jpg)
+
+
+A partir de ce graphique, répondez aux questions suivantes:
+
+1. Quel est l'âge moyen des répondant.es à leur premier mariage?
+
+22.19
+
+2. Combien de répondant.es ont été enquêté.es?
+1202
+
+3. Quelle est la valeur de la variance?
+
+```{r}
+variance <- 5.099^2
+
+```
+
+4. En se basant sur les propriétés de la courbe normale, nous pouvons dire que 68% des répondant.es se sont marié.es entre les âges 22.19 - 5.099 et 22.19 + 5.099, soit entre 17.10 et 27.29 ans.  
+5. En se basant sur les propriétés de la courbe normale, nous pouvons dire que 95% des répondant.es se sont marié.es entre les âges 22.19 - 2*5.099 et 22.19 + 2*5.099 soit entre 12.00 ans et 32.38 ans
+
+
+## Question 3: Vrai ou faux, justifier (ou donner un exemple selon les cas)
+
+1. les scores-Z sont particulièrement utiles lorsque l'on compare des scores provenant de distributions dont les moyennes et les écart-types sont différents (Vrai ou Faux)
+
+2. La moyenne d'une variable standardisée vaut 1 (Vrai ou Faux)
+
+3. On peut calculer les scores-Z pour les variables ordinales (Vrai ou Faux)
+
+4. Si vous prenez deux distributions normales A et B avec A plus aplatie (signifie quoi) que l'autre, alors la proportion des scores qui se trouve à 1,5 écart-type de la moyenne de A est plus grande que la proportion des scores qui se trouve à 1,5 écart-type de la moyenne de B (Vrai ou Faux)
+
+5. La distribution d'échantillonnage n'est rien d'autre que la distribution d'un échantillon (Vrai ou Faux)
+
+- Voir Solution détaillée à la fin.
+
+
+6. Énoncez et expliquer le théorème de la **limite centrale**
+
+- Voir solution détaillé à la fin
+
+7. Il n'y a pas de différence entre l'**écart-type** et l'**erreur-type**
+
+- Voir Solution détaillée à la fin
+
+8. Si la moyenne d'heure d'écoute de la télé est de 2,90 et l'écart-type est de 2,14, alors l'intervalle de confiance à 95% est de 2,77 à 3,03 (Vrai ou Faux)
+
+## Question 4 - représentation graphique
+
+Quelles sont les types de représentation graphique que l'on peut faire avec une variable quantitative (ratio ou intervalle) ?
+
+ - histogramme
+ - diagramme de quartile
+
+# PARTIE B
+
+# La solution technologique au changement climatique, suite et fin (exemple tiré de Krieg)
+
+
+À partir de la base d données que vous avez crées et utilisées à partir des données sur les voitures, répondez aux questions suivantes en utilisant R:
+
+
+- Pour 1994
+
+```{r}
+
+# Créons d'abord des vecteurs
+
+marque_1994 <- c("Mazda 626", "Honda Accord", "Chevrolet Corsica", "Buick Century", "Oldsmobile Cutlass Ciera", "Oldsmobile Achieva", "Pontiac Grand Am", "Infiniti G20", "Mitsubishi Galant", "Dodge Spirit", "Plymouth Acclaim", "Subaru Legacy", "Toyota Camry", "Hyundai Sonata", "Chrysler LeBaron", "Ford Taurus", "Mercury Sable", "Eagle Vision")
+marque_1994
+
+annee_pas_cool_1994 <- c(1994, 1994, 1994,1994, 1994, 1994, 1994, 1994, 1994, 1994, 1994, 1994, 1994, 1994, 1994, 1994, 1994, 1994)
+annee_pas_cool_1994
+
+length(marque_1994)
+
+annee_un_peu_bon_1994 <- c(rep(1994, 18))
+annee_un_peu_bon_1994
+
+annee_1994 <- c(rep(1994, length(marque_1994)))
+
+annee_1994
+
+mpg_ville_1994 <- c(23, rep(22, 4), rep(21, 6), rep(20, 2), rep(19, 2), rep(18, 3))
+mpg_ville_1994
+
+
+mpg_autoroute_1994 <- c(31, 29, rep(28, 3), rep(32, 2), 29, 28, rep(27, 2), 28, 27, 26, 25, rep(27, 2), 26)
+mpg_autoroute_1994
+
+```
+
+Une fois qu'on a créé les vecteurs, on peut facilement créer les deux bases de données
+
+```{r}
+
+donnee_1994 <- data.frame(marque = marque_1994, annee = annee_1994, vitesse_ville = mpg_ville_1994, vitesse_autoroute = mpg_autoroute_1994)
+
+donnee_1994
+
+
+```
+
+Maintenant, on peut le sauvegarder si on veut pour ne pas être amené à refaire tout cela la prochaine fois.
+
+```{r}
+
+saveRDS(donnee_1994, "donnee1994.RDS")
+
+```
+
+Je peux alors l'ouvrir et l'utiliser
+
+```{r}
+
+d1994 <- readRDS("donnee1994.RDS")
+
+```
+
+
+1. Recalculer les paramètres de position sur les variables suivantes:
+  - la vitesse en ville en 1994
+  - la vitesse sur autoroute en 1994
+  - la vitesse en ville en 2009
+  - la vitesse sur autoroute en 2009
+
+Je calcule la moyenne et la médiane pour les variables vitesse sur autorute et en ville en 1994.
+
+```{r}
+
+# Moyenne
+moyenne_vitesse_ville_1994 <- mean(d1994$vitesse_ville)
+moyenne_vitesse_ville_1994
+
+moyenne_vitesse_autoroute_1994 <- mean(d1994$vitesse_autoroute)
+moyenne_vitesse_autoroute_1994
+
+#Mediane
+
+mediane_vitesse_ville_1994 <- median(d1994$vitesse_ville)
+mediane_vitesse_ville_1994
+
+mediane_vitesse_autoroute_1994 <- median(d1994$vitesse_autoroute)
+mediane_vitesse_autoroute_1994
+
+
+```
+
+2. Calculer la variance et l'écart-type des quatre variables précédentes.
+
+3. Comment ces résultats permettent-ils d'infirmer ou de renforcer la conclusion que vous avez tiré sur la solution technologique au changement climatique tiré au 1.
+
+
+## Solution de la question 4
+
+laissez-moi vous entraîner dans la passion des statistiques. 
+
+
+5. La distribution d'échantillonnage n'est rien d'autre que la distribution d'un échantillon (Vrai ou Faux)
+
+Réponse: Faux.
+
+Une distribution d’échantillonnage correspond à une distribution de statistiques quelconques (moyennes, médianes, etc.) provenant de tous les échantillons possibles d’une taille donnée que l’on peut tirer d’une population déterminée. Une distribution d'un échantillon est la distribution des scores à l'intérieur d'un échantillon d'une taille donnée.
+
+
+Voici une manière de comprendre la distribution d'échantillon. On va utiliser les données du marathon de Boston de 2012. le tableau présente la description de cette base de données:
+
+Variables    Description
+-----------  -----------------------
+V1           Nom 
+V2           Sexe
+V3           Age
+V4           Division
+V5           Pays
+V6           Temps mis
+
+Pour estimer le temps moyen que ce marathon a été couru, nous n'avons pas besoin d'avoir forcément l'ensemble des résultats de la course. Un échantillon représentatif devrait suffire à nous fournir ce résultat. Donc, nous allons prendre un échantillon de 40 coureurs et calculer le temps moyen mis. Pour le moment, nous vivons comme ci nous ne connaissons par le temps vrai (issu de la course).
+
+Nous chargeons la base de données dans R.
+
+```{r}
+
+rm(list = ls())
+marathon <- read.csv("bm_results2012.txt", header = FALSE, quote = "")
+
+```
+
+On voit ainsi que 21541 personnes ont couru ce marathon.
+
+Pour tirer un échantillon, nous allons utiliser la fonction **sample_n** du package **dplyr**. Comme toujours, vous devez installer ce package (une seule fois), le charger (avant toute utilisation).
+
+```{r}
+#install.packages("dplyr")
+library(dplyr)
+set.seed(430)
+marathon_S1 <- sample_n(marathon, 40, replace = FALSE)
+
+```
+
+Nous voyons ainsi que marathon_S1 a juste 40 observations.
+
+**Remarques:**
+
+1. dplyr fait partie d'une famille de package qui s'appelle **tidyverse** que nous allons voir lors du prochain cours. 
+2. L'option replace = FALSE signifie que quand nous tirons un élément de la population, nous ne le retournons pas dans la population avant de tirer le second.
+3. Même si on choisit les individus de manières aléatoires, on veut quand même que d'autres personnes tirent exactement les mêmes individus que nous s'ils veulent vérifier nos résultats. set.seed(n'importe quel chiffre) permet de tirer chaque fois le même échantillon. N'utiliser pas cela quand vous faites vos calculs, cela va nous permettre de voir les différents résultats que nous obtenons tous.
+4. Un rappel sur l'échantillonage : https://www150.statcan.gc.ca/n1/edu/power-pouvoir/ch13/prob/5214899-fra.htm
+
+
+Ainsi, à partir de notre échantillon tiré, on peut calculer le temps moyen mis pour courir le marathon de 
+
+1, 2, 3, NA
+1, 2, 3
+
+```{r}
+temps_moyen_S1 <- mean(marathon_S1$V6, na.rm = TRUE)
+temps_moyen_S1
+
+sd(marathon_S1$V6)
+```
+
+268 +- 1.96*ecart-type/racine carré(N)
+
+
+On voit ainsi qu'à partir de notre échantillon que le temps mis pour parcourir le marathon de New York est de 268.5 minutes.
+
+Maintenant, jetons un coup d'œil sur les vrais résultats de ce marathon.
+
+```{r}
+
+temps_moyen_vrai <- mean(marathon$V6, na.rm = TRUE)
+temps_moyen_vrai
+
+```
+
+Le temps moyen mis en vrai est de 263.0 minutes. Voyez comment est proche notre estimation à partir juste d'un échantillon aléatoire de 40 coureur.es. 
+
+Voua avez tous obtenus une réponse différente de la mienne. Une distribution d'échantillonnage n'est rien d'autre que l'ensemble des moyennes qu'on peut calculer à partir des millions d'échantillon de taille 40 de cette population de 21541 coureurs. En fait, on connaît exactement le nombre d'échantillons possible qu'on peut tirer. C'est cela qui s'appelle une combinaison avec la formule  $C_{21541}^{40} =\frac{21541!}{40!(21541 - 40)!}$. Tenez-vous bien, ce nombre équivaut à :
+
+253 077729093757612460294630785205954107797288308598032063927991250054643573537874160223994161945109975602007594 059 581 835 406 976
+
+
+{A, B, C, D}
+
+:{A, B}, {A, C}
+
+J'ai utilisé ce générateur en ligne pour le calculer : https://www.dcode.fr/combinaisons
+
+Bref, revenons à notre exercice. Aujourd'hui avec la puissance des machine, on peut déterminer en une fraction de secondes le nombre total d'échantillon. Mais, au fait, si on peut tirer tous ces échantillons, n'est-il juste pas plus simple de collecter l'information sur l'ensemble de la population ? Bien sûr. Dans les faits, on ne tirera jamais plus d'un échantillon. 
+
+Si je prenais par contre 10 échantillons de taille 40, la distribution que j'obtiens de la moyenne est ce qu'on appelle **une distribution d'échantillonnage**. Voyons ce que cela donne :
+
+```{r}
+
+set.seed(123432)
+marat_T40_R100 <- bind_rows(replicate(100, sample_n(marathon, 40, replace = FALSE), simplify = F), .id = "Obs")
+
+```
+
+En lisant cette syntaxe de la droite vers la gauche, cela veut dire que :
+- **sample_n(marathon, 40, replace = FALSE), simplify = F)**: je tire un échantillon de taille 40 dans la base de données **marathon**
+- **(replicate(100, sample_n(marathon, 40, replace = FALSE)** : je replique cela 100 fois;
+- **bind_rows(replicate(100, sample_n(marathon, 40, replace = FALSE), simplify = F), .id = "Obs")**: Je les colle ensemble (avec la fonction bind_rows de dplyr) en les distinguant par leur numéro dans la nouvelle variable "Obs"
+
+C'est tout. Vous voyez que cela me donne un échantillon de 4000 observations. La variable Obs distingue ainsi chaque unique échantillon.
+
+Si nous calculons alors la moyenne de chaque échantillon on obtient la base de données avec les moyenne. On va utiliser la fonction stby de summarytools pour faire cela facilement. remarquez une fois de plus que je charge ce package avant de l'utiliser.
+
+```{r}
+library(summarytools)
+
+with(marat_T40_R100, stby(data = V6, INDICES = Obs,
+     FUN = descr, stats = c("mean")))
+
+```
+
+Sammarytools ne semble pas fonctionner, je vais utiliser une autre option:
+
+```{r}
+
+Moyenne_T40_R100 <-
+  marat_T40_R100 %>% 
+  group_by(Obs) %>% 
+  summarise(moyenne = mean(V6, na.rm = TRUE)) 
+
+Moyenne_T40_R100
+```
+
+Ainsi, on a une nouvelle base de donnés avec les 100 moyennes issus de chaque marathon échantillonné.
+
+Dressons la distribution de ces 100 moyennes, à l'aide de l'histogramme
+
+```{r}
+
+hist(Moyenne_T40_R100$moyenne)
+
+```
+
+On voit ainsi que cela à l'allure d'une coure normale.
+
+Que pensez-vous que la moyenne de ces moyenne va nous donner?
+
+```{r}
+moyenne_moyenne <- mean(Moyenne_T40_R100$moyenne)
+moyenne_moyenne
+```
+
+cela nous donne exactement 263 minutes, ce qui est exactement la vraie moyenne à quelque centième de seconde près. Bingo, la moyenne des moyennes nous donne une estimation de la vrai moyenne.
+
+Pour faire cet exercice, voici un peu toutes les recherches que j'ai faites sur le net:
+
+![](recherche_net.png)
+
+- 
+
+6. Énoncez et expliquer le théorème de la **limite centrale**
+
+Ce théorème dit simplement que si N devient de plus en plus grand, la forme de la courbe tend de plus en plus vers une courbe normale. Voyons cela:
+A la place de 40 observations
+- Tirons plutôt 90;
+- Tirons à nouveau 100 échantillons;
+- Calculons la vitesse moyenne de chaque échantillon
+- Présentons l'histogramme de cette distribution
+
+Vous pouvez le faire non?
+Essayer.
+
+
+
+
+
+
+
+
+
+
+```{r}
+
+# Echantillon
+set.seed(12343)
+marat_T90_R100 <- bind_rows(replicate(100, sample_n(marathon, 90, replace = FALSE), simplify = F), .id = "Obs")
+
+# Moyenne
+
+Moyenne_T90_R100 <-
+  marat_T90_R100 %>% 
+  group_by(Obs) %>% 
+  summarise(moyenne = mean(V6, na.rm = TRUE))
+
+# Histogramme
+
+hist(Moyenne_T40_R100$moyenne)
+
+```
+
+et la moyenne des moyenne vaut
+
+```{r}
+
+mean(Moyenne_T90_R100$moyenne)
+
+```
+
+Vous verrez surtout que l'écart-type est plus faible.
+
+```{r}
+
+sd(Moyenne_T90_R100$moyenne)
+
+```
+
+
+
+
+
+Alors que avec l'échantillon de 40, cela donnait:
+
+```{r}
+
+sd(Moyenne_T40_R100$moyenne)
+
+```
+
+
+
+
+Quand la taille augmente, notre confiance dans les résultats augmente.
+
+
+Alors, faites la même chose en choississant un échantillon de 150 coureur.es.
+
+
+7. Il n'y a pas de différence entre l'**écart-type** et l'**erreur-type**
+
+l'écart-type est ce que vous calculez à partir d'un seul échantillon, alors que l'erreur-type est ce que vous calculer à partir d'une distribution d'échantillonnage. Donc, en haut, j'ai plutôt calculé les erreurs-types.
+
+Pouvez-vous e dire alors, comment sont calculés les erreurs-type?
+
+**N'est-ce pas formidable les statistiques?**
+

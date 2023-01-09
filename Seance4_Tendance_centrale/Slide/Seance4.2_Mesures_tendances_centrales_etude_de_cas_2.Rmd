@@ -1,0 +1,158 @@
+---
+title: 'Séance 4.2: Mesures de tendances centrales'
+author: "Visseho Adjiwanou, PhD."
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output:
+  word_document: default
+  html_document: default
+  pdf_document: default
+subtitle: Calcul de la médiane sur des variables ordinales
+---
+
+## Comment distinguer une variable ordinale d'une variable ratio
+
+- $\color{red}{\text{Variable ordinale}}$ : variables dont les valeurs peuvent être ordonnées.
+
+- Exemple classes d'âges : moins de 15 ans, 15 à 19 ans, 20 ans et plus
+
+- $\color{red}{\text{Variable d'intervalle}}$ a non seulement des valeurs qui peuvent être ordonnées, mais elle se mesure également à l'aune d'une *unité de mesure* fixe ou standard.
+ 
+## Comment distinguer une variable ordinale d'une variable ratio
+
+1. Les variables ordinales ne se mesurent pas à l'aune d'une unité de mesure
+>2. Vous ne pouvez pas faire des calculs avec les valeurs d'une variable ordinale
+  >- Si vous prenez quelqu'un qui a moins de 15 ans et vous ajoutez quelqu'un qui a entre 15 et 20 ans, ensemble, ils ont quel âge?
+
+>3. Deux éléments d'une même classe ne peuvent pas être ordonnées
+  - Par exemple, si vous prenez deux personnes qui ont moins de 15 ans, qui est la plus âgée?
+
+## Médiane des variables ordinales
+
+- Une mesure de tendance centrale est une valeur **typique** ou **représentative** d'un ensemble de scores
+
+- **La Médiane** = valeur telle que la moitié des observations lui sont inférieures et donc la moitié lui sont supérieures.
+
+- C'est donc assez facile à calculer, il suffit juste d'ordonner les cas.
+
+- Une difficulté arrive avec les variables ordinales
+
+## Médiane des variables ordinales
+
+Exemple: Attitude envers les immigrants et les emplois
+
+- Q1: Sur une échelle de 1 (totalement en désaccord) à 5 (totalement d'accord), que pensez-vous de l'affirmation suivante: "Les immigrants volent nos emplois"
+
+
+## Médiane des variables ordinales
+
+Valeur Fréquence  Fréq. cumulée  Pourcentage    Pourc. cumulé
+------ ---------- -------------- ------------ -----------------
+1      170         170
+2      446         616
+3      299         915
+4      301        1216
+5       65        1281
+N      1281     
+
+- Médiane va diviser la distribution en deux partie égale
+- (1281 + 1)/2 = 641
+- la médiane est la valeur du 641e score, c'est-à-dire quelque part parmi les 299 scores 3
+- La médiane est donc 3. Cependant il faut affiner cela.
+
+
+## Médiane des variables ordinales
+
+- Convention: on va supposer que derrière les réponses à cette question, il y a une échelle (ratio) allant de 0.5 à 5.5. 
+- Autrement dit, ceux qui ont répondu 1, aurait répondu en réalité entre 0.5 et 1.5. On les ramène donc à la moyenne de l'intervalle qui vaut (0.5 + 1.5)/2 = 1 
+- Ainsi, les 299 personnes qui ont répondu 3 ont en fait répondu entre 2.5 et 3.5
+- Nous allons donc interpoler pour trouver à endroit se situe la médiane
+
+617 ---------641-------------------------------------617+298 = 915
+
+2.5 ----------M--------------------------------------3.5
+
+## Médiane des variables ordinales
+
+- Interpolation
+- Application de la règle de trois
+- Si 3 pains coûtent 55$, combien coûte 2 pains?
+
+
+(M - 3.5)/(2.5 - 3.5) = (641 - 915)/(617 - 915)
+
+M = [(641 - 915)/(617 - 915)]/(2.5 - 3.5) + 3.5
+
+M = 2.6
+
+## Vous pouvez préféré utiliser la formule
+
+$$Md = L + (\frac{N/2 - F}{f})(i)$$
+- L = la limite inférieure de l'intervalle contenant la médiane (2.5)
+- N = le nombre de cas (1281)
+- F = la fréquence cumulative des scores inférieurs à l'intervalle contenant la médiane (616)
+- f = le nombre de scores que comprend l'intervalle contenant la médiane (299)
+- i = la largeur de l'intervalle contenant la médiane (1)
+
+Md = 2.5 +(1281/2 - 616)/299*1 = 2.6
+
+
+## En résumé : Quel type de résumé pour quel type de variable?
+
+
+Type de variable     Moyenne   Mode      Médiane     Variance    Écart-type   
+-------------------- --------- --------- ----------- ----------- ------------ 
+Nominale             Non       Oui       Non         Non         Non
+Ordinale             Possible  Oui       Oui         Possible    Possible
+Ratio/Intervalle     Oui       Oui       Oui         Oui         Oui
+Ratio/Intervalle     Oui       Oui       Oui         Oui         Oui
+(données groupées)
+
+
+## En résumé : Mesure de tendance centrale (paramètres de position)
+
+Symbole            Définition                           Formules
+------------------ ------------------------------------ ------------------------
+Moyenne            Somme des valeurs divisée par        $\bar{X} = \frac{1}{n} \sum_{i=1}^n X_i$
+                   l'effectif de la série
+Médiane            Valeur qui divise la distribution
+                   en deux parties égales
+Mode               Valeur observée de fréquence maximum                    
+Percentile         Valeurs qui divisent la distribution
+                   en 100 parties égales
+
+
+## En résumé : Mesure de dispersion
+
+Symbole       Définition                       Formules
+------------- -------------------------------- -----------------------------------------
+Étendue       Différence entre la plus grande  G - P
+              et la plus petite valeur de la 
+              variable
+EIQ           3ème quartile - 1er quartile     Q3 - Q1
+Déviation     La distance d'une valeur à       $X - \bar{X}$
+              la moyenne
+Sommes        Somme des carrés des déviations  SC = $\sum_{i=1}^n (X_i - \bar{X})^2$
+des carrés
+Variance      Moyenne des carrés des déviances $s^2 = \frac{1}{n-1} \sum_{i=1}^n (X_i - \bar{X})^2$
+Écart-type    Racine carrée de la variance     $s = \sqrt{\frac{1}{n-1} \sum_{i=1}^n (X_i - \bar{X})^2}$     
+
+## Application: Labo 4 et 5
+
+  
+## Pour la semaine prochaine
+
+1. Lecture 
+- Paramètres de variation (ou de dispersion) - Fox : chapitre 4, pp.91-103
+- Distribution d’échantillonnage - Fox : Chapitre 4, pp.103-120
+
+2. Application
+- https://juba.github.io/tidyverse/01-presentation.html
+- https://juba.github.io/tidyverse/02-prise_en_main.html
+- https://juba.github.io/tidyverse/03-premier_travail.html
+
+
+
+
+
+
+

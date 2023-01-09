@@ -1,0 +1,404 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Labo 4: Paramètres de tendance centrale},
+  pdfauthor={Visseho Adjiwanou, PhD.},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{longtable,booktabs}
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+
+\title{Labo 4: Paramètres de tendance centrale}
+\author{Visseho Adjiwanou, PhD.}
+\date{01 February 2022}
+
+\begin{document}
+\maketitle
+
+\hypertarget{partie-a}{%
+\section{PARTIE A}\label{partie-a}}
+
+Voici les résultats obtenus au cours d'une enquête sur l'âge et le
+statut matrimoniale des répondants.
+
+\textbf{Tableau 1: Distribution du statut matrimonial}
+
+\begin{longtable}[]{@{}lllll@{}}
+\toprule
+Statut & Fréquence & Pourcentage & Pourcentage valide & Pourcentage
+cumulé\tabularnewline
+\midrule
+\endhead
+Marié & 247 & 29.1 & 29.1 & 29.1\tabularnewline
+Veuf & 3 & .4 & .4 & 29.4\tabularnewline
+Divorcé & 36 & 4.2 & 4.2 & 33.6\tabularnewline
+Séparé & 14 & 1.6 & 1.6 & 35.3\tabularnewline
+Jamais marié & 550 & 64.7 & 64.7 & 100.0\tabularnewline
+\textbf{Total} & \textbf{850} & \textbf{100.0} & \textbf{100.0}
+&\tabularnewline
+\bottomrule
+\end{longtable}
+
+Répondez aux questions suivantes:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Quel est le type de la variable étudiée?
+\item
+  Quel est la valeur du mode
+\item
+  Si vous pouvez utiliser la médiane, indiquez sa valeur. Sinon, dites
+  que ce n'est pas possible et expliquer votre réponse.
+\item
+  Si vous pouvez utiliser la moyenne, indiquez sa valeur. Sinon, dites
+  que ce n'est pas possible et expliquer votre réponse.
+\item
+  Quel est le problème avec ce tableau? Quelle solution préconisez-vous?
+\end{enumerate}
+
+Au cours de la même enquête, on a collecté les données sur le groupe
+d'âges des enquêtés. les résultats sont présentés dans le tableau 2.
+
+\textbf{Tableau 2: Distribution du groupe d'âges}
+
+\begin{longtable}[]{@{}lllll@{}}
+\toprule
+Groupe d'âge & Fréquence & Pourcentage & Pourcentage valide &
+Pourcentage cumulé\tabularnewline
+\midrule
+\endhead
+15 - 24 & 276 & & &\tabularnewline
+25 - 34 & 199 & & &\tabularnewline
+35 - 49 & 263 & & &\tabularnewline
+50 et plus & 77 & & &\tabularnewline
+Non réponse & 35 & & &\tabularnewline
+\textbf{Total} & \textbf{850} & & &\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Quel est le type de la variable étudiée?
+\item
+  Complétez le tableau
+\item
+  Quel est la valeur du mode?
+\item
+  Si vous pouvez utiliser la médiane, indiquez sa valeur. Sinon, dites
+  que ce n'est pas possible et expliquer votre réponse.
+\item
+  Si vous pouvez utiliser la moyenne, indiquez sa valeur. Sinon, dites
+  que ce n'est pas possible et expliquer votre réponse.
+\end{enumerate}
+
+\hypertarget{question-2}{%
+\subsection{Question 2}\label{question-2}}
+
+Voici les données issues d'une enquête dans une classe
+
+\begin{longtable}[]{@{}ll@{}}
+\toprule
+Age & Nombre d'élèves\tabularnewline
+\midrule
+\endhead
+10 & 5\tabularnewline
+11 & 7\tabularnewline
+12 & 4\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Quelle est la variable étudiée?
+\item
+  Quelle est la valeur de l'âge moyen de la classe?
+\item
+  Quelle est la valeur de l'âge modal de la classe?
+\item
+  Quelle est la valeur de l'âge médian de la classe?
+\end{enumerate}
+
+\hypertarget{partie-b}{%
+\section{PARTIE B}\label{partie-b}}
+
+\hypertarget{la-solution-technologique-au-changement-climatique-exemple-tiruxe9-de-krieg}{%
+\section{La solution technologique au changement climatique (exemple
+tiré de
+Krieg)}\label{la-solution-technologique-au-changement-climatique-exemple-tiruxe9-de-krieg}}
+
+Beaucoup de gens pensent qu'en adoptant de nouvelles technologies, nous
+pouvons économiser à la fois de l'argent et protéger l'environnement en
+brûlant moins de combustibles fossiles. Cet exercice est tiré du livre
+de krieg, ``Statistics and data analysis for Social Science''.
+
+\hypertarget{que-pensez-vous-de-cette-assertion}{%
+\subsection{1. Que pensez-vous de cette
+assertion?}\label{que-pensez-vous-de-cette-assertion}}
+
+\hypertarget{en-quoi-nest-elle-pas-valide}{%
+\subsection{2. En quoi n'est-elle pas
+valide?}\label{en-quoi-nest-elle-pas-valide}}
+
+Pour tester cette assertion, nous utilisons les données de 1994 et de
+2009 sur les voitures les plus efficients entre les deux périodes. Le
+tableau suivant présente les vitesses (mile per gallon, mpg) pour les
+différentes marques de voitures pour leur circulation en ville et sur
+l'autoroute:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Pour 1994}
+\end{itemize}
+
+\begin{longtable}[]{@{}lll@{}}
+\toprule
+Marque et modèle & Ville (mpg) & Autoroute(mpg)\tabularnewline
+\midrule
+\endhead
+Mazda 626 & 23 & 31\tabularnewline
+Honda Accord & 22 & 29\tabularnewline
+Chevrolet Corsica & 22 & 28\tabularnewline
+Buick Century & 22 & 28\tabularnewline
+Oldsmobile Cutlass Ciera & 22 & 28\tabularnewline
+Oldsmobile Achieva & 21 & 32\tabularnewline
+Pontiac Grand Am & 21 & 32\tabularnewline
+Infiniti G20 & 21 & 29\tabularnewline
+Mitsubishi Galant & 21 & 28\tabularnewline
+Dodge Spirit & 21 & 27\tabularnewline
+Plymouth Acclaim & 21 & 27\tabularnewline
+Subaru Legacy & 20 & 28\tabularnewline
+Toyota Camry & 20 & 27\tabularnewline
+Hyundai Sonata & 19 & 26\tabularnewline
+Chrysler LeBaron & 19 & 25\tabularnewline
+Ford Taurus & 18 & 27\tabularnewline
+Mercury Sable & 18 & 27\tabularnewline
+Eagle Vision & 18 & 26\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Pour 2009}
+\end{itemize}
+
+\begin{longtable}[]{@{}lll@{}}
+\toprule
+Marque et modèle & Ville (mpg) & Autoroute(mpg)\tabularnewline
+\midrule
+\endhead
+Toyota Prius Hybrid) & 48 & 45\tabularnewline
+Nissan Altima (hybrid) & 35 & 33\tabularnewline
+Toyota Camry (hybrid) & 33 & 34\tabularnewline
+Chevrolet Malibu (hybrid) & 26 & 34\tabularnewline
+Saturn Aura (hybrid) & 26 & 34\tabularnewline
+Hyundai Elantra & 25 & 33\tabularnewline
+Kia Spectra & 24 & 32\tabularnewline
+Nissan Altima & 23 & 32\tabularnewline
+Saturn Aura & 22 & 33\tabularnewline
+Kia Optima & 22 & -\tabularnewline
+Hyundai Sonata & 22 & 32\tabularnewline
+Honda Accord & 22 & 31\tabularnewline
+Chevrolet Malibu & 22 & 30\tabularnewline
+Toyota Camry & 21 & 31\tabularnewline
+Volkswagen Passat & 21 & 31\tabularnewline
+Mazda 6 & 21 & 30\tabularnewline
+Chrysler Sebring & 21 & 30\tabularnewline
+Dodge Avenger & 21 & 30\tabularnewline
+Ford Fusion & 20 & 29\tabularnewline
+Mercury Milan & 20 & 29\tabularnewline
+Mitsubishi Galant & 20 & 27\tabularnewline
+Subaru Legacy & 20 & 27\tabularnewline
+Nissan Maxima & 19 & 260\tabularnewline
+Nissan Altima & 19 & 26\tabularnewline
+Mercury Sable & 18 & 28\tabularnewline
+Hyundai Azera & 18 & 26\tabularnewline
+Buick LaCrosse/Allure & 17 & 28\tabularnewline
+\bottomrule
+\end{longtable}
+
+\hypertarget{quelle-est-la-taille-de-chaque-uxe9chantillon}{%
+\subsection{3. Quelle est la taille de chaque
+échantillon}\label{quelle-est-la-taille-de-chaque-uxe9chantillon}}
+
+\hypertarget{uxe9fficacituxe9-gagnuxe9e-en-ville}{%
+\subsection{4. Éfficacité gagnée en
+ville}\label{uxe9fficacituxe9-gagnuxe9e-en-ville}}
+
+Vous allez calculé le mode, la médiane et la moyenne pour la vitesse en
+\textbf{ville} en 1994 et 2009. Quelle conclusion tirez-vous? A cette
+étape de l'exercice, je vous demande de faire les calculs à la main.
+
+\hypertarget{uxe9fficacituxe9-sur-autoroute}{%
+\subsection{5. Éfficacité sur
+autoroute}\label{uxe9fficacituxe9-sur-autoroute}}
+
+Le calcul que vous venez de faire est trop long. On peut présenter les
+données précédentes sous forme de données agrégées. C'est quoi encore
+les données agrégées?
+
+4.1 Regrouper les données de la \textbf{vitesse sur l'autoroute} sous
+forme agrégée. Cela veut dire qu'il faut dénombrer le nombre de voitures
+pour chaque niveau de vitesse. Faite cela pour les données de 1994 et de
+2009.
+
+\hypertarget{pruxe9senter-dans-ce-muxeame-tableau-les-fruxe9quences-et-les-fruxe9quences-cumuluxe9es}{%
+\subsubsection{5.1 Présenter dans ce même tableau les fréquences, et les
+fréquences
+cumulées}\label{pruxe9senter-dans-ce-muxeame-tableau-les-fruxe9quences-et-les-fruxe9quences-cumuluxe9es}}
+
+\hypertarget{quelle-repruxe9sentation-graphique-vous-semble-la-plus-appropriuxe9e-pour-ces-donnuxe9es}{%
+\subsubsection{5.2 Quelle représentation graphique vous semble la plus
+appropriée pour ces
+données?}\label{quelle-repruxe9sentation-graphique-vous-semble-la-plus-appropriuxe9e-pour-ces-donnuxe9es}}
+
+\hypertarget{calculer-uxe0-nouveau-le-mode-la-muxe9diane-et-la-moyenne-uxe0-partir-de-ses-donnuxe9es-groupuxe9es.-quelle-conclusion-tirez-vous}{%
+\subsubsection{5.3 Calculer à nouveau le mode, la médiane et la moyenne
+à partir de ses données groupées. Quelle conclusion
+tirez-vous?}\label{calculer-uxe0-nouveau-le-mode-la-muxe9diane-et-la-moyenne-uxe0-partir-de-ses-donnuxe9es-groupuxe9es.-quelle-conclusion-tirez-vous}}
+
+--------------- PAS NÉCESSAIRE LA QUESTION 6-------------------
+
+\hypertarget{utilisation-de-r}{%
+\subsection{6. Utilisation de R}\label{utilisation-de-r}}
+
+Maintenant, nous allons utiliser R pour faire le même travail. Voici
+comment vous allez procéder.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Créer la base de données \textbf{donnee\_1994} avec les variable
+  suivantes:
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  modele
+\item
+  vitesse\_ville et
+\item
+  vitesse\_autoroute
+\end{itemize}
+
+Vous comprenez que cette base de données contient donc 18 observations
+pour 3 variables. Quelle est la nature de chaque variable?
+
+\hypertarget{ruxe9ponse-1}{%
+\subsubsection{Réponse 1}\label{ruxe9ponse-1}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Calculer la moyenne, la médiane et le mode des deux variables
+  \textbf{vitesse\_ville} et \textbf{vitesse\_autoroute} à partir des
+  données \textbf{donnee\_1994}.
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  Commenter vos résultats. Si vous vous rappelez, pour calculer la
+  moyenne et la médiane, il faut utiliser les fonctions \textbf{mean} et
+  \textbf{mediane}.
+\item
+  Cependant, il \textbf{N'existe PAS} de fonction \textbf{mode} pour
+  calculer le mode. Je vous demande de faire quelques recherches et me
+  venir avec une solution. Il est dès fois important de ne pas se
+  focaliser pour comprendre ce que vous faites du moment où ça marche.
+  Donnez-vous le temps de le comprendre plus tard.
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\item
+  Il y a plusieurs autres paramètres de tendance centrale que les trois
+  que nous avons vus en classe. Vous avez le minimum, le maximum, le
+  premier quartile, le 3e quartile et plus généralement les
+  \textbf{ntiles}. Calculer ces différents paramètres sur les variables
+  vitesse\_ville et vitesse\_autoroute. Commenter vos résultats.
+\item
+  La fonction \textbf{descr} de summarytools vous permet aussi de
+  calculer ces paramètres de tendance centrale. Utiliser cette fonction
+  pour calculer les paramètres calculer au 2 et 3.
+\item
+  Maintenant, refaite la même chose avec les données de 2009.
+\item
+  Quelle conclusion tirez-vous sur la solution technologique au
+  changement climatique?
+\end{enumerate}
+
+\end{document}

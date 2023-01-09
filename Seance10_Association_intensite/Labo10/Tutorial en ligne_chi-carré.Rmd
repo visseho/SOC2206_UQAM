@@ -1,0 +1,127 @@
+---
+title: "Untitled"
+author: "Visseho Adjiwanou, PhD."
+date: "3/23/2022"
+output: html_document
+---
+
+
+## Calcul du chi-carré
+
+                  Marche et caquette comme un canard 
+Est un canard   Oui Non
+Oui             60  40
+Non             40  60
+Total           100 100
+N               25  25
+
+chi-carré = 2.0
+
+                  Marche et caquette comme un canard 
+Est un canard   Oui Non
+Oui             15  10
+Non             10  15
+N               25  25
+
+calcul du chi-carré
+
+chi-carré c'est une mesure de la distance entre le tableau que j'ai obtenu (issu de l'échantillon) et le tableau que j'aurai eu sans relation entre les deux variables (théorique)
+
+
+                  Marche et caquette comme un canard 
+Est un canard   Oui Non  Total
+Oui              A  C      25
+Non              B  D      25
+N               25  25     50
+
+
+A = 25*25/50 = 12.5
+B = 25*25/50 = 12.5
+C = 25*25/50 = 12.5
+D = 25/25*50 = 12.5
+
+# Distance entre tableau observé et tableau théorique
+
+distance cellule A = (15 - 12.5)^2/12.5 = 0.5
+distance cellule B = (10 - 12.5)^2/12.5 = 0.5
+distance cellule C = (10 - 12.5)^2/12.5 = 0.5
+distance cellule D = (15 - 12.5)^2/12.5 = 0.5
+
+chi-carré = 0.5 + 0.5 + 0.5 + 0.5 = 2
+
+# Signification statistique
+
+- Si je dis que mon chi-carré est très grand, alors je peux conclure qu'il y a une relation au sein de la population
+
+supposons que j'ai la possibilit´de tirer 100 échantillons de cette population dans laquelle je suppose qu'il n'y a pas d'association entre les deux variables.
+
+je peux calculer 100 distances 
+100 chi-carrés
+
+v1  v2             v96    v100
+
+commment obtenir les valeurs du chi-carré si je n'ai pas tiré 100 échantillons
+
+- niveau de signification
+- degré de liberté:
+
+Tableau 2 X 2 (2 colonnes, 2 rangées)
+
+                  Marche et caquette comme un canard 
+Est un canard   Oui Non  Total
+Oui              22  3      25
+Non              3  22      25
+N               25  25     50
+
+degré de liberté  = 1
+(r - 1)x (c-1) = (2-1)*(2-1) = 1
+
+3 rangées et 5 colonnes = 
+(3-1)x(5-1) = 8
+
+
+**Niveau de signification**
+
+Risque de        5%,      1% ou      0.1%
+chi-carré        3.841 
+
+si j'avais tiré 100 échantillons aléatoires de ma population, je vais avoir 5 échantillons dont les valeurs du chi-carré vont être plus grand que 3.841
+
+Si je me donne 1% de risque de me tromper, quelle est la valeur du chi-carrévaleur = 6.635
+
+
+# Prendre une décision
+
+Niveau de signification = 5%
+degré de liberté 1
+==> j'obtiens un chi-carré de 3.841
+
+Quelle est la valeur du chi-carré que j'ai calculé à partir de mon échantillon?
+chi-carré calculé = 2 plus faible que le chi-carré lu (3.841) 
+
+Alors ma distance est trop petite, je conclus que mon tableau n'est pas très différent du tableau théorique. Conlcuison, la relation n'est pas statistiquement significative.
+
+# Résumé
+
+1. H0: pas d'association, HA: Il y a une association
+2. Niveau de significativité = 5%
+3. combien de rangée et de colonne contient mon tableau (2r et 2col) == degré de liberté de 1*1 = 1
+4. Lire la valeur du chi-carré = 3.841
+
+5. Calculons notre chi-carré (chi-carré calculé)
+ chi-carré calculé = 2.
+ 
+6 Prendre une décision
+2 < 3.841, je conclus qu'il n'y a pas d'association entre les deux variables dans la population. je Ne peux PAS rejeter l'hypothèse nulle.
+
+
+## Z score
+
+age 12, 13, 14, 15, 12
+
+z-score pour l'age 
+moyenne des z-score = 0
+écart-type = 1
+
+
+

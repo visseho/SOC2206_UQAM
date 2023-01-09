@@ -1,0 +1,710 @@
+---
+title: "Labo5: Statistiques descriptives univariées"
+author: "Visseho Adjiwanou, PhD."
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+## Enquête sociale générale, 1996
+
+- Il s'agit du CROP Socio-Cultural Survey de 1996
+- Dans cette partie, nous allons apprendre à :
+    - Selectionner les variables 
+    - Sélectionnez les observations
+    - Réorganiser les données
+    - Créer de nouvelles variables avec des fonctions de variables existantes (mutate ())
+    - Recoder des variables existantes
+    - Calculer des statistiques univariées
+
+
+## Dressons la table
+
+```{r}
+# Effacer votre environnement
+
+rm(list = ls())
+
+# Installer les package dont vous avez besoin
+#install.packages("tidyverse")
+#install.packages("summarytools")
+#install.packages("xlsx")
+# install.packages("tidyverse")
+# install.packages("summarytools")
+
+# Charger les packages - Étape fondamentales
+
+library(tidyverse)
+library(summarytools)
+
+```
+
+
+
+## Téléchargement de la base de données
+
+```{r}
+
+crsc96 <- read_csv("cora-crsc1996-E-1996_F1.csv")
+
+```
+
+## Regardons ce que contient cette base de données
+
+```{r}
+# trois manière de faire
+#View(crsc96)
+
+head(crsc96)
+#glimpse(crsc96)
+
+```
+
+
+## Sélectionnons les données les variables qui nous intéressent
+
+Ce choix est basé sur notre sujet d'étude, sur la théorie et sur les travaux empiriques dans le domaine. Il est toujours important de ne pas faire cette selection sur la même base de données.
+
+```{r }
+
+crsc96_small <-
+  crsc96 %>% 
+  select(sexq, region, age, ageq, q1, q2, q3, q4, q44, q95, q96)
+
+crsc96_small 
+
+```
+
+
+## Sélectionner les observations
+
+```{r}
+
+crsc96_small_homme <-
+  crsc96_small %>% 
+  filter(sexq == 1 & age >= 35)
+
+# Vérification
+freq(crsc96$age)
+freq(crsc96_small_homme$age)
+
+```
+
+
+## Toutes ces étapes peuvent se réduire à:
+
+```{r}
+
+crsc96_small_homme_general <-
+  crsc96 %>% 
+  select(sexq, region, age, ageq, q1, q4, q44, q95) %>% 
+  filter(sexq == 1 & age >= 35)
+
+```
+
+- Autre fonction qui fait la même chose **subset**
+
+
+## Classe des variables
+
+```{r}
+
+class(crsc96_small$q2)
+#freq(crsc96_small$q1)
+```
+- Allons regarder voir si cette variable est vraiment numérique.
+
+R donne un nom particulier aux types de variables différent des noms que les statistiques leur donne:
+
+Statistiques                  R
+----------------------------  ----------------------------------------------
+Quantitative                  numeric
+      Entier (âge)            integer
+      décimal (taille)        dbl (pour double)
+Qualitative
+      nominal ou ordinal      factor
+Caractères (texte)            character (on ne va beaucoup travailler avec ceci)      
+logique (Vrai / faux)         logical      
+
+
+## Fréquences sur une variable
+
+```{r}
+
+freq(crsc96$q2)
+
+```
+
+- Que faites vous si vous ne voulez pas avoir les pourcentages?
+
+## Recodage et création de variables facorielles
+
+- Comme on l'a vu, la variable q1 n'est pas numérique mais qualitative (ordinal ? ou nominal ?)
+- La création de nouvelles variables se fait avec la commande `mutate`
+
+```{r}
+
+crsc96_small <-
+  crsc96_small %>% 
+  mutate(q2_new = case_when(
+    q2 == 1 ~ "totally agree", 
+    q2 == 2 ~ "agree somewhat", 
+    q2 == 3 ~ "DK/NA",
+    q2 == 4 ~ "disagree somewhat",
+    q2 == 5 ~ "totally disagree"))
+
+```
+
+Quelle est la classe de cette nouvelle variable?
+Quelle est la fréquence de distribution?
+
+```{r}
+class(crsc96_small$q2_new)
+freq(crsc96_small$q2_new)
+```
+
+Il faut le changer alors en variable factorielle. On vera comment faire bientôt.
+
+## If_else pour créer des variables binaires ou dichotomiques
+
+Supposons que nous voulons scinder la variable age en deux catégorie, alors on peut utiliser la commande `if_else`
+
+if_else(condition, valeur si la condition est vraie, valeur si la condition est fausse)
+
+```{r}
+crsc96_small <-
+  crsc96_small %>% 
+  mutate(age2 = if_else(age >= 35, "adulte", "jeune"))
+
+class(crsc96_small$age2)
+freq(crsc96_small$age2)
+
+```
+
+## Commande case_when pour des cas plus généraux
+
+```{r}
+
+crsc96_small <-
+  crsc96_small %>% 
+  mutate(age4 = case_when(
+    age < 20 ~ "adolescent",
+    age >= 20 & age < 34 ~ "jeune",
+    age >= 35 & age <59 ~ "adulte",
+    age >=60 ~ "ainé"
+  ))
+
+class(crsc96_small$age4)
+freq(crsc96_small$age4)
+
+```
+
+## Pour le rendre comme une variable catégorielle
+
+```{r}
+
+crsc96_small <-
+  crsc96_small %>% 
+  mutate(age4 = as.factor(age4))
+
+class(crsc96_small$age4)
+freq(crsc96_small$age4)
+
+```
+
+
+## Distribution de fréquences et de pourcentage (Chap 2)
+
+```{r}
+
+nombre_sexe <-
+  crsc96_small %>% 
+  count(sexe = sexq)
+nombre_sexe
+
+nombre_age4 <-
+  crsc96_small %>% 
+  count(age = age4)
+nombre_age4
+```
+
+
+## Calculer des proportions
+
+```{r}
+
+
+proportion_sexe <-
+  crsc96_small %>% 
+  count(sexe = sexq) %>% 
+  mutate(proportion = n / (sum(n)))
+proportion_sexe
+
+# proportion
+
+proportion_age4 <-
+  crsc96_small %>% 
+  count(age4) %>% 
+  mutate(proportion = n / (sum(n)))
+proportion_age4
+
+```
+
+## Avec le package Summarytools
+
+Les mêmes résultats sont obtenus directement avec freq de summarytools tel qu'on l'a vu précédemment.
+
+```{r}
+freq(crsc96$sexq)
+freq(crsc96$q1)
+freq(crsc96$region)
+freq(crsc96$q44)
+freq(crsc96$q95)
+```
+
+
+## Application
+
+- Créer la variable age au carré nommé `age_square`
+- Recoder la variable q2 en trois catégories (`agree`, `dk`, et `disagree`) (variable factorielle)
+- Créer une nouvelle variable qui permet de savoir combien de personne sont dans le groupe d'âge [25, 35]
+- Créer une variable qui divise l'age en 5 catégories
+- Créer la variable age_ecart qui est l'écart de la valeur de l'âge par rapport à la moyenne
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```{r}
+
+crsc96_small <-
+  crsc96_small %>% 
+  mutate(age_square = age^2,
+         q2_3 = factor(case_when(
+           q2 == 1 | q2 == 2 ~ "agree",
+           q2 == 3 ~ "dk",
+           q2 == 4 | q2 == 5 ~ "disagree")),
+         age_groupe = between(age, 25, 34),
+         age5 = ntile(age, 5),
+         age_ecart = age - mean(age))
+
+class(crsc96_small$q2_3)
+freq(crsc96_small$age_groupe)
+freq(crsc96_small$q2_3) 
+
+freq(crsc96_small$age5)
+mean(crsc96_small$age)
+```
+
+
+## PAUSE
+
+Autrement, on peut les faire de manière séparée.
+
+```{r}
+
+crsc96_small <-
+  crsc96_small %>% 
+  mutate(age_square = age^2)
+
+
+crsc96_small <-
+  crsc96_small %>%
+  mutate(q2_3 = factor(case_when(
+    q2 == 1 | q2 == 2 ~ "agree",
+    q2 == 3 ~ "dk",
+    q2 == 4 | q2 == 5 ~ "disagree")))
+
+freq(crsc96_small$q2_3)
+
+crsc96_small <-
+  crsc96_small %>%
+  mutate(age_groupe = between(age, 25, 34))
+
+crsc96_small <-
+  crsc96_small %>%
+  mutate(age5 = ntile(age, 5))
+
+crsc96_small <-
+  crsc96_small %>%
+  mutate(age_ecart = age - mean(age))
+
+```
+
+
+## Statistiques univariées 
+
+- Ces statistiques s'appliquent au variables quantitatives.
+
+La commande summary nous donne une première indication sur l'ensemble des variables de notre base de données.
+Il faut prêter attention aux variables manquantes.
+D’où proviennent les données manquantes dans `age4` 
+
+
+```{r}
+
+summary(crsc96_small$age)
+
+```
+
+L’inconvénient, c'est que c'est mal présenté, et ce ne sont pas l'ensemble des variables de notre base de données qui nous concernent. Les informations sur les variables caractères ne sont pas fournies. C'est pourquoi, il faut toujours les transformer en variables factorielles.
+
+## Paramètres de position
+
+```{r}
+
+age_moyen <- mean(crsc96_small$age)
+age_moyen
+
+age_median <- median(crsc96_small$age)
+age_median
+
+```
+
+Cette approche n'est pas la bonne car elle nous demande beaucoup de coding (avec la création de plusieurs objets)
+
+## Statistiques univariées
+
+La fonction `summarise` permet de calculer l'ensemble des indicateurs dont nous avons besoin.
+Dans toute étude, il est important de résumé l'information contenue dans les variables pour se faire une première idée.
+
+```{r}
+
+age_position <- 
+  crsc96_small %>% 
+  summarise(age_moyen = mean(age),
+            age_median = median(age),
+            age_Q1 = quantile(age, prob = 0.25),
+            age_Q3 = quantile(age, prob = 0.75),
+            age_min = min(age),
+            age_max = max(age))
+
+age_position
+
+```
+
+## Statistiques univariées: Mode
+
+Il n'y a aucune fonction qui permet de calculer directement le mode. Alors, il faut créer cette fonction soit même ou utiliser celle créer par un autre utilisateur.
+
+```{r}
+
+getmode <- function(v) {
+   uniqv <- unique(v)
+   uniqv[which.max(tabulate(match(v, uniqv)))]
+}
+
+age_position <- 
+  crsc96_small %>% 
+  summarise(age_moyen = mean(age),
+            age_median = median(age),
+            age_Q1 = quantile(age, prob = 0.25),
+            age_Q3 = quantile(age, prob = 0.75),
+            age_mode = getmode(age))
+
+age_position
+
+# Vérification du mode
+freq(crsc96_small$age)
+
+```
+
+## Statistique par groupe
+
+Nous pouvons aussi regarder ces données selon le sexe des individus. C'est dire voir les statistiques pour les femmes et pour les hommes.
+
+```{r}
+
+age_position_sexe <- 
+  crsc96_small %>% 
+  group_by(sexq) %>% 
+  summarise(age_moyen = mean(age),
+            age_median = median(age),
+            age_Q1 = quantile(age, prob = 0.25),
+            age_Q3 = quantile(age, prob = 0.75),
+            age_mode = getmode(age))
+
+age_position_sexe
+
+```
+
+
+## EXERCICE
+
+Calculer les paramètres de dispersion de la variable age et commenter.
+
+```{r}
+
+```
+
+
+## Données manquantes
+
+- Qu'arrive-t-il si l'âge avait des données manquantes?
+
+- Si vos données contiennent des données manquantes, les statistiques univariées ne vont pas fonctionner. Vous devez lui dire explicitement de les enlever avant de calculer les statistiques 
+
+
+Créons la variable **age_avec_manquant** qui a des valeurs manquantes pour tout ceux qui ont 70 ans ou plus
+
+```{r}
+
+crsc96_small <-
+  crsc96_small %>% 
+  mutate(age_avec_manquant = if_else(age < 70, age, NA_real_))
+         
+freq(crsc96_small$age_avec_manquant)
+```
+
+```{r}
+
+age_avec_manquant_position <- 
+  crsc96_small %>% 
+  summarise(age_moyen = mean(age_avec_manquant),
+            age_median = median(age_avec_manquant),
+            age_Q1 = quantile(age_avec_manquant, prob = 0.25),
+            age_Q3 = quantile(age_avec_manquant, prob = 0.75),
+            age_mode = getmode(age))
+
+age_avec_manquant_position
+
+```
+
+
+Qu'est-ce qui s'est passé. En fait, **age_avec_manquant** comporte des valeurs manquantes. Il faut indiquer dans le calcul des statistiques univariées qu'il y a des valeurs manquantes, et qu'il faut les enlever avant de calculer la moyenne, ou toute autre statistique.
+
+```{r}
+
+age_avec_manquant_position <- 
+  crsc96_small %>% 
+  summarise(age_moyen = mean(age_avec_manquant, na.rm = TRUE),
+            age_median = median(age_avec_manquant, na.rm = TRUE),
+            age_Q1 = quantile(age_avec_manquant, prob = 0.25, na.rm = TRUE),
+            age_Q3 = quantile(age_avec_manquant, prob = 0.75, na.rm = TRUE),
+            age_mode = getmode(age))
+
+age_avec_manquant_position
+
+```
+
+
+
+Quel est le problème qui se pose quand des informations sont manquantes. Peut-on faire confiance aux résultats?
+
+## Pouvons-nous calculer les statistiques univariées sur des variables qualitatives?
+
+```{r}
+
+q2_position <- 
+  crsc96_small %>% 
+  summarise(q2_moyen = mean(q2, na.rm = TRUE),
+            q2_median = median(q2, na.rm = TRUE),
+            q2_Q1 = quantile(q2, prob = 0.25, na.rm = TRUE),
+            q2_Q3 = quantile(q2, prob = 0.75, na.rm = TRUE),
+            q2_mode = getmode(q2))
+
+q2_position
+
+
+```
+
+Pourquoi ça fonctionne? Comment interprétez-vous ces résultats?
+
+Qu'en est-il de la variable sexe (sexq)
+
+```{r}
+
+sexq_position <- 
+  crsc96_small %>% 
+  summarise(sexq_moyen = mean(sexq, na.rm = TRUE),
+            sexq_median = median(sexq, na.rm = TRUE),
+            sexq_Q1 = quantile(sexq, prob = 0.25, na.rm = TRUE),
+            sexq_Q3 = quantile(sexq, prob = 0.75, na.rm = TRUE),
+            sexq_mode = getmode(sexq))
+
+sexq_position
+
+```
+Pour une variable dichotomique, seule la moyenne a un sens. 
+
+## Remarques
+
+1. Tous les objets que vous créez, vous pouvez les manipuler à votre guise
+
+2. Les variables que vous créez, vous pouvez les réutiliser juste après
+
+3. Interprétations des résultats
+
+
+## PAUSE
+ 
+ 
+
+## Représentation graphique pour les distributions univariées
+
+## Introduction
+
+- Les graphiques nous permettent de répondre à plusieurs types de questions :
+    - Quelle est la distribution d'une variable?
+    - Est-ce que les filles ont plus tendances à vivre dans un type particulier de structure familiale? 
+    - Comment est-ce que la structure de la famille affecte la santé des enfants?
+    - Est-ce qu'il existe une association entre les attitudes envers la violence conjugale et le niveau de scolarisation  (données dhs_ipv)
+      - Cette relation est-elle positive? négative? ou nulle?
+
+
+## Type de graphiques pour les distributions univariées
+- Dépend en général du type de variable (qualitative ou quantitative) et du nombre de variable
+
+- Graphiques pour representer une seule variable:
+
+
+```{r graphique1, echo=FALSE, out.width = '80%', fig.align='center'}
+knitr::include_graphics("/Users/visseho/OneDrive - UQAM/Cours/Images_cours/graphique1.jpg")
+```
+
+- On peut aussi utiliser les graphiques pour representer l'association entre deux variables. On verra cela plus tard  
+
+
+##ggplot
+
+## Forme générale
+
+* La forme générale d'un code de graphique est le suivant:
+
+```{r ggplot, echo=FALSE,  out.width = '100%'}
+knitr::include_graphics("/Users/visseho/OneDrive - UQAM/Cours/Images_cours/ggplot_forme_generale.jpg")
+```
+
+1. **ggplot** spécifie que vous utiliser la commande ggplot. C'est à ce niveau que vous spécifier les données que vous voulez utiliser.
+
+- Ce n'est pas toujours obligatoire si vous utilisez plus d'une base de données.
+
+2. **geom_function**, contient plusieurs fonctions pour spécifier le type de graphique que vous voulez faire. Le type de graphique indique le nombre de paramètres à inclure.
+  - Exemples: geom_histogram() pour les **histogrammes** 
+  - geom_point() pour les **diagrammes de dispertions**,
+  - geom_barplot() pour les **diagrammes de barre**.
+  - La liste complète est ici: https://ggplot2.tidyverse.org/reference/
+
+3. **aes** pour aestetics indique le nombre de paramètres à passer à la fonction **geom_function**. Il permet également de spécifier des informations sur le graphique.
+
+
+
+## Exemples: Visualiser la distribution univariée
+
+### Pour les variables qualitatives (nominales et ordinales)
+
+1. Diagramme de barres
+
+```{r}
+
+ggplot(crsc96_small) +
+  geom_bar(aes(x = q2))
+
+```
+
+Mieux avec q2_new
+
+```{r}
+
+ggplot(crsc96_small) +
+  geom_bar(aes(x = q2_new))
+
+?geom_bar
+```
+
+- Il faut toujours privilégier les distributions en pourcentages
+
+```{r}
+
+ggplot(crsc96_small) +
+  geom_bar(aes(x = q2_new, ..prop.., group = 1))
+
+```
+
+- Diagramme circulaire 
+
+
+
+### Pour les variables quantitatives (intervalle/ratio)
+
+1. Histogramme
+
+```{r}
+
+ggplot(crsc96_small) +
+  geom_histogram(aes(x = age)) 
+  
+```
+
+On peut ajouter dans ce graphique les informations sur la moyenne, la médiane et le mode
+
+```{r}
+
+ggplot(crsc96_small) +
+  geom_histogram(aes(x = age)) +
+  geom_vline(aes(xintercept = mean(age)), color = "red") +
+  geom_vline(aes(xintercept = median(age)), color = "blue") +
+  geom_vline(aes(xintercept = getmode(age)), color = "white") 
+
+```
+
+2. Diagramme de quartile
+
+```{r}
+
+ggplot(crsc96_small) +
+  geom_boxplot(aes(y = age))
+
+```
+
+Il est plus intéressant si on le calcule pour différent groupes
+
+
+```{r}
+
+ggplot(crsc96_small) +
+  geom_boxplot(aes(x = sexq, y = age))
+
+```
+
+
+Voici une bonne extension de ce qu'on a vu. Limitez-vous uniquement à ce qu'on a vu: les statistiques univariées. Ce site est magique. Une ressource incontournable pour vous dès maintenant.
+
+http://larmarange.github.io/analyse-R/graphiques-bivaries-ggplot2.html
+
+Et l'extension
+http://larmarange.github.io/analyse-R/etendre-ggplot2.html
+
+N'oublions pas pour finir la feuille de tricherie
+
+https://thinkr.fr/pdf/ggplot2-french-cheatsheet.pdf

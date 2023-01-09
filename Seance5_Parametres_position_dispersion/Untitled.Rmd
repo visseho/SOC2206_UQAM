@@ -1,0 +1,28 @@
+---
+title: "Transformer vos fichiers en pdf"
+author: "Visseho Adjiwanou, PhD."
+date: "15/10/2020"
+output: html_document
+---
+
+
+## Solution
+
+### Solution 1
+
+Dans votre console exécuter le code suivant :
+install.packages('tinytex')
+Après l'installation, fermer Rstudio et recommencer votre travail. 
+
+### Solution 2
+
+Vous mettez votre fichier .RMD sur ce site et il vous le transforme
+https://www.markdowntopdf.com/
+
+### Solution 3
+
+Vous knittez dans Word, et vous enrégistrez sous pdf.
+
+### Solution 4
+
+Imprimer le .rmd

@@ -1,0 +1,541 @@
+---
+title: "Labo6.1 : Tidyverse"
+author: "Visseho Adjiwanou, PhD."
+institute: "Département de Sociologie - UQAM"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output: html_document
+---
+
+## Téléchargement de la base de données
+
+```{r}
+
+crsc96 <- read.csv("cora-crsc1996-E-1996_F1.csv")
+
+crsc96_t <- read_csv("cora-crsc1996-E-1996_F1.csv")
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Charger Base R et Tidyverse
+
+```{r}
+#install.packages("tidyverse")
+library(tidyverse)
+```
+
+
+
+
+
+
+
+
+
+- téléchargement de la base
+
+```{r}
+
+crsc96_t <- read_csv("cora-crsc1996-E-1996_F1.csv")
+
+```
+
+
+- Exemple
+
+## Sélectionner des variables et des observations
+
+**Sélectionner des variables**    
+
+- Base R
+
+```{r}
+
+crsc96_small_b <- subset(crsc96, select = c(sexq, region, age, q2))
+
+```
+
+
+
+
+
+- Tidyverse
+
+
+```{r }
+
+crsc96_small_t <-
+  crsc96 %>% 
+  select(sexq, region, age, q2)
+
+crsc96_small_t <-
+  crsc96_t %>% 
+  select(sexq, region, age, q2)
+
+
+```
+
+
+
+
+
+
+## Sélectionner les observations
+
+- Base R
+
+```{r}
+
+crsc96_homme_b <- subset(crsc96, subset = sexq == 1)
+
+```
+
+- Tidyverse
+
+```{r}
+
+crsc96_homme_t <-
+  crsc96 %>% 
+  filter(sexq == 1)
+
+
+```
+
+
+## Toutes ces étapes peuvent se réduire à:
+
+- Base R
+
+```{r}
+
+crsc96_small_b <- subset(crsc96, select = c(sexq, region, age, q2), subset = sexq == 1)
+
+```
+
+
+- Tidyverse
+
+```{r}
+
+crsc96_small_homme_t <-
+  crsc96 %>% 
+  select(sexq, region, age, q2) %>% 
+  filter(sexq == 1)
+
+```
+
+
+# résumé de l'information
+
+- Base r
+
+```{r}
+# Moyenne 
+mean(crsc96_small_t$age)
+median(crsc96_small_t$age)
+var(crsc96_small_t$age)
+sd(crsc96_small_t$age)
+
+# Pour les hommes
+homme <- 
+  crsc96_small_t %>% 
+  filter(sexq == 1)
+
+mean(homme$age)
+
+# pour les femmes
+
+femme <-
+  crsc96_small_t %>% 
+  filter(sexq == 2)
+
+mean(femme$age)
+```
+
+- tidyverse
+
+```{r}
+
+resume <- 
+  crsc96_small_t %>% 
+  summarise(moyenne = mean(age),
+            mediane = median(age),
+            variance = var(age),
+            ecart_type = sd(age))
+
+
+resume_homme <-
+  crsc96_small_t %>% 
+  filter(sexq == 1) %>% 
+  summarise(moyenne = mean(age),
+            mediane = median(age),
+            variance = var(age),
+            ecart_type = sd(age))
+  
+
+resume_femme <-
+  crsc96_small_t %>% 
+  filter(sexq == 2) %>% 
+  summarise(moyenne = mean(age),
+            mediane = median(age),
+            variance = var(age),
+            ecart_type = sd(age))
+
+resume_sexe <-
+  crsc96_small_t %>% 
+  group_by(sexq) %>% 
+  summarise(moyenne = mean(age),
+            mediane = median(age),
+            variance = var(age),
+            ecart_type = sd(age))
+
+
+resume_sexe_region <-
+  crsc96_small_t %>% 
+  group_by(region, sexq) %>% 
+  summarise(moyenne = mean(age),
+            mediane = median(age),
+            variance = var(age),
+            ecart_type = sd(age))
+
+
+```
+
+## Graphiques
+
+- histogramme sur age
+  - Base R
+  
+```{r}
+
+hist(crsc96_small_t$age)
+
+```
+  
+- q2
+
+```{r}
+
+library(summarytools)
+freq(crsc96_small_t$q2)
+
+```
+
+ - diagramme de barre
+
+```{r}
+barplot(crsc96_small_t$sexq)
+class(crsc96_small_t$sexq)
+
+barplot(crsc96_small_t$region)
+```
+ 
+ - Avec tidyverse
+ 
+ 
+```{r}
+
+ggplot(crsc96_small_t) +
+  geom_histogram(aes(x = age))
+
+```
+ 
+ _ quelques options supplémentaires
+ 
+```{r}
+
+ggplot(crsc96_small_t) +
+  geom_histogram(aes(x = age), colour = "white", fill = "blue", alpha = 0.2) + 
+  theme_dark()
+
+```
+ 
+ - et par sexe alors
+ 
+ 
+```{r}
+
+ggplot(crsc96_small_t) +
+  geom_histogram(aes(x = age), colour = "white", fill = "blue", alpha = 0.2) +
+  facet_grid(~sexq)
+
+```
+ 
+```{r}
+ggplot(crsc96_small_t) +
+  geom_histogram(aes(x = age), colour = "white", fill = "blue", alpha = 0.2) +
+  facet_wrap(~sexq)
+
+```
+
+```{r}
+ggplot(crsc96_small_t) +
+  geom_histogram(aes(x = age, fill = as_factor(sexq)), colour = "white", alpha = 0.2) +
+  facet_wrap(~sexq)
+
+```
+
+- Boîte àmoustache
+
+```{r}
+ boxplot(crsc96_small_t$age)
+```
+
+- avec tidyverse
+
+```{r}
+
+ggplot(crsc96_small_t) +
+  geom_boxplot(aes(y = age))
+
+
+```
+
+```{r}
+
+ggplot(crsc96_small_t) +
+  geom_boxplot(aes(x = as_factor(sexq), y = age, colour = as_factor(sexq)))
+
+```
+
+```{r}
+
+ggplot(crsc96_small_t) +
+  geom_boxplot(aes(x = as_factor(sexq), y = age), colour = "red", fill = "blue", alpha = 0.2)
+
+```
+
+
+```{r}
+
+ggplot(crsc96_small_t) +
+  geom_boxplot(aes(x = as_factor(region), y = age, colour = as_factor(region)))
+
+```
+
+
+
+
+## Recodage et création de variables facorielles
+
+- Base R
+
+```{r}
+
+crsc96_small_b$age25[crsc96_small_b$age <= 25] <- "25 ans et moins"
+crsc96_small_b$age25[crsc96_small_b$age > 25] <- "PLus de 25 ans"
+
+```
+
+
+- Tidyverse
+
+  - La création de nouvelles variables se fait avec la commande `mutate`
+
+```{r}
+
+crsc96_small_homme_t <-
+  crsc96_small_homme_t %>%
+  mutate(age25 = age >=25)
+
+
+# if_else
+crsc96_small_homme_t <- 
+  crsc96_small_homme_t %>% 
+  mutate(age25_bis = if_else(age <= 25, "25 ans et moins", "Plus de 25 ans"))
+
+
+# case_when
+
+crsc96_small_homme_t <-
+  crsc96_small_homme_t %>% 
+  mutate(age_4groupe = case_when(
+    age <= 25 ~ "25 ans ou moins",
+    age > 25 & age < 35 ~ "26 - 34 ans",
+    age >= 35 & age < 55 ~ "35 - 54",
+    age > 55 ~ "plus de 55 ans"
+  ))
+  
+
+crsc96 <-
+  crsc96 %>% 
+  mutate(age_carre = age^2)
+
+```
+
+https://www.mcgill.ca/amlf/files/amlf/keyboardlayout.pdf
+
+FIN
+
+  -  Recodage
+
+```{r}
+
+crsc96_small_homme_t <-
+  crsc96_small_homme_t %>% 
+  mutate(q2_new = factor(q2, 
+                         labels = c("totally agree", "agree somewhat", "DK/NA", "disagree somewhat", "totally disagree")))
+
+class(crsc96_small_homme_t$q2_new)
+
+freq(crsc96_small_homme_t$q2_new)
+
+
+```
+
+## If_else pour créer des variables binaires ou dichotomiques
+
+Supposons que nous voulons scinder la variable age en deux catégorie, alors on peut utiliser la commande `if_else`
+
+```{r}
+crsc96_small_homme_t <-
+  crsc96_small_homme_t %>% 
+  mutate(age2 = if_else(age >= 35, "adulte", "jeune"))
+
+class(crsc96_small_homme_t$age2)
+freq(crsc96_small_homme_t$age2)
+
+```
+
+## Commande case_when pour des cas plus généraux
+
+```{r}
+
+crsc96_small_homme_t <-
+  crsc96_small_homme_t %>% 
+  mutate(age4 = case_when(
+    age < 20 ~ "adolescent",
+    age >= 20 & age < 34 ~ "jeune",
+    age >= 35 & age <59 ~ "adulte",
+    age >=60 ~ "ainé"
+  ))
+
+class(crsc96_small_homme_t$age4)
+freq(crsc96_small_homme_t$age4)
+
+```
+
+## Pour le rendre comme une variable catégorielle
+
+```{r}
+
+crsc96_small_homme_t <-
+  crsc96_small_homme_t %>% 
+  mutate(age4 = factor(age4))
+
+```
+
+## ou le créer directement comme une variable catégorielle
+
+
+```{r}
+
+crsc96_small_homme_t <-
+  crsc96_small_homme_t %>% 
+  mutate(age5 = factor(case_when(
+    age < 20 ~ 1,
+    age >= 20 & age < 34 ~ 2,
+    age >= 35 & age <59 ~ 3,
+    age >=60 ~ 4), 
+    labels = c("adolescent", "jeune", "adulte", "ainé")
+  ))
+
+class(crsc96_small_homme_t$age5)
+freq(crsc96_small_homme_t$age5)
+
+```
+
+En le créant sous forme de variable factorielle, systématiquement le tableau est ordonné selon les catégories de la variable. Remarquez la différence avec le tableau précédent.
+
+## Finalement, on peut créer la variable age en le scindant en 5 catégories
+
+
+```{r}
+
+crsc96_small_homme_t <-
+  crsc96_small_homme_t %>% 
+  mutate(age6 = ntile(age, 5))
+
+class(crsc96_small_homme_t$age6)
+freq(crsc96_small_homme_t$age6)
+
+
+```
+
+## Je peux donc utiliser ntile en combinaison avec factor pour créer une variable factorielle
+
+```{r}
+
+crsc96_small_homme_t <-
+  crsc96_small_homme_t %>% 
+  mutate(age6 = factor(ntile(age, 5), labels = c("g1", "g2", "g3", "g4", "g5")))
+
+class(crsc96_small_homme_t$age6)
+freq(crsc96_small_homme_t$age6)
+
+```
+
+
+## Application
+
+- Créer la variable age au carré nommé `age_square`
+- Recode la variable q2 en trois catégories (`agree`, `dk`, et `disagree`) (variable factorielle)
+- Créer une nouvelle variable qui permet de savoir combien de personnes sont dans le groupe d'âge [25, 35]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Solution - application
+
+```{r}
+
+crsc96_small <-
+  crsc96_small %>% 
+  mutate(age_square = age^2,
+         q2_3 = factor(case_when(
+           q2 == 1 | q2 == 2 ~ 1,
+           q2 == 3 ~ 2,
+           q2 == 4 | q2 == 5 ~ 3), labels = c("agree", "dk", "disagree")),
+         age_groupe = between(age, 25, 34))
+
+class(crsc96_small$age_groupe)
+freq(crsc96_small$age_groupe)
+freq(crsc96_small$q2_3) 
+
+```
+
+## Aller plus loin
+
+- Cheatsheet Dplyr
+
