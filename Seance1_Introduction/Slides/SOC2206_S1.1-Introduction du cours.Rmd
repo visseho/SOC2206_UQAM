@@ -18,8 +18,11 @@ header-includes:
 ## Plan de la séance
 
 1. Introduction du cours: importance des méthodes quantitatives (30 minutes)
-2. Présentation du cours (45 minutes)
-3. Début du cours: Les statistiques et les variables
+2. Présentation du cours (30 minutes)
+3. Vue d'ensemble: organisation de la classe (30 minutes)
+4. Pause : 10 minutes
+5. Début du cours: Les statistiques et les variables (45 minutes)
+6. Labo (30 minutes)
 
 ## Plan de présentation (30 minutes)
 
@@ -78,7 +81,9 @@ Intérêts de recherche
 
 ## Intérêts centrés sur les objectifs de développement durable
 
-![](/Users/visseho/OneDrive - UQAM/Cours/Images_cours/odd_poster.jpg)
+
+![](../../Images/odd_poster.jpg)
+
 
 ## Comment est-ce que les progrès sont évalués?
 
@@ -144,8 +149,11 @@ Exercice 1: Télécharger vos données de Facebook pour le prochain cours.**
     - Puissance de calcul des ordinateurs X 2 plus ou moins tous les 2 ans (Moore's Law)
     - Capacité de stockage X 2 plus ou moins tous les 40 mois
     - Progrès très rapides dans l'apprentissage automatique /Intelligence Artificielle.
-![](/Users/visseho/OneDrive - UQAM/Cours/Images_cours/Matthews.png)
 
+
+![](../../Images/Matthews.png){width=75%}
+
+    
 ## Conséquences
 
 - Les chercheurs peuvent maintenant:
@@ -162,9 +170,12 @@ Exercice 1: Télécharger vos données de Facebook pour le prochain cours.**
 
 Exemples  
 ========================================================
+
+
 ## Quand vous pensez méthodes quantitatives, vous voyez...
 
-![](/Users/visseho/OneDrive - UQAM/Cours/Images_cours/joke1.png)
+![](../../Images/joke1.png)
+
 
 ## Mobilité intergénérationnelle de revenu
 

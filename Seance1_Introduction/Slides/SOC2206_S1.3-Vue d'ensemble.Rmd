@@ -1,5 +1,5 @@
 ---
-title: "Séance 1: Tour d'horizon"
+title: "Séance 1.3: Tour d'horizon"
 author: "Visseho Adjiwanou"
 institute: "Sociologie, UQAM"
 date: "`r format(Sys.time(), '%d %B %Y')`"
@@ -7,7 +7,7 @@ output:
   beamer_presentation:
     colortheme: beaver
     fonttheme: structurebold
-    theme: AnnArbor
+    theme: Ilmenau
   slidy_presentation: default
   ioslides_presentation: default
 header-includes:
@@ -16,16 +16,20 @@ header-includes:
 
 ## Plan
 
-1. Introduction du cours (30 minutes)
-2. Présentation du cours (30 minutes)
-3. Les statistiques et les variables (Labo - 1h en groupe, 1h ensemble)
-  - Achète un.e ami.e
-  - Résultats de votre participation à l'enquête
-  
+1. Vue d'ensemble: organisation de la classe (30 minutes)
+
 
 ## Organisation
 
 - Slack
+    - Groupe 10 (lundi)
+https://join.slack.com/t/soc2206h2310/shared_invite/zt-1mujn6i76-vmtUoM_x1ogzHTjKXcfDpQ
+
+    - Groupe 30 (mercredi)
+
+https://join.slack.com/t/soc2206h2330/shared_invite/zt-1mvoj8y5g-geSFiMl2GvVkprlmZjRTOQ
+
+
 - DataCamp
 - Moodle
 - Livre de cours
