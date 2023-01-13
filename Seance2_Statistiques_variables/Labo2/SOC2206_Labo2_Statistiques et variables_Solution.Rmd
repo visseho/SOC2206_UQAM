@@ -272,6 +272,18 @@ Dans votre groupe, chacun présente aux autres les sujets qui l'intéressent. En
 
 Question de recherche: Est-ce que les femmes ont un niveau plus faible en statistiques que les hommes?
 
+A la cohorte de l'année passée, j'avais posé deux questions pour cerner leur niveau en statistiques:
+
+1: Sur une échelle de 1 à 10, quel est votre niveau en méthodes quantitatives (simple calcul et raisonnement mathématiques)
+
+2. Considérons un groupe de TD pour lequel la moyenne des notes est égale à 10 et la variance est égale à 9. Trois nouveaux étudiants ayant respectivement 7, 14 et 17 s'inscrivent dans ce groupe. Laquelle des énoncés suivantes est vraie?
+
+Les données se trouvent dans le fichier **Questions_SOC2206H21.csv**
+
+Nous allons à partir de ces données, mesurer l'association entre genre et compétences en statistiques.
+
+----------------
+
 1. Les deux variables en questions
   - Sexe
   - Niveau en statistiques (Qu'entendons-nous par cela?)
@@ -381,9 +393,10 @@ D'autres questions qu'on se pose est de savoir si la relation qu'on observe ici 
 ctable(sondage$sexe_2, sondage$resultat_math_objective_2, chisq = TRUE)
 
 ```
+
 On voit que si on généralisait ce résultat à l'ensemble de la population, il n'est pas prouvé que les femmes sont moins fortes que les hommes en statistiques.
 
-Tout ce que nous venons de dire, c'est qu'une partie des statistiques. Les statistiques commencent avec les questionnements que vous vous posez pour comprendre vos résultats. C'est la différence entre un.e sociologue qui utilise les statistiques et un analyste des données. Le/la Sociologie est outillé pour expliquer les résultats.
+Tout ce que nous venons de dire, c'est qu'une partie des statistiques. Les statistiques commencent avec les questionnements que vous vous posez pour comprendre vos résultats. C'est la différence entre un.e sociologue qui utilise les statistiques et un analyste des données. Le/la Sociologie est outillé.e pour expliquer les résultats.
 
 Voici quelques questions que vous devez vous posez alors:
 
