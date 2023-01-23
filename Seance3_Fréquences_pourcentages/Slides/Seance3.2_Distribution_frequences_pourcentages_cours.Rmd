@@ -198,9 +198,9 @@ Sans éducation   6/27*100 = 22.22  22.22
                  pourcentage       Pourcentage cumulatif
 ---------------- ----------------- --------------------------------------                     
 Sans éducation   6/27*100 = 22.22  22.22 
-Secondaire       7/27*100 = 25.93  25.93 + 22.22 = 48.15
-Collège          9/27*100 = 33.33  33.33 + 25.93 + 22.22 = 81.48
-Université       5/27*100 = 18.51  18.51 + 33.33 + 25.93 + 22.22 = 100   
+Secondaire       7/27*100 = 25.93  22.22 + 25.93  = 48.15
+Collège          9/27*100 = 33.33  48.15 + 33.33 = 81.48
+Université       5/27*100 = 18.51  81.48 + 18.51 = 100   
 
 
 ## Distribution de la variable niveau de scolarité
@@ -226,7 +226,10 @@ Université       5/27*100 = 18.51  18.51 + 33.33 + 25.93 + 22.22 = 100
 
 ## De la mauvaise utilisation des statistiques (tiré de Krieg)
 
-- **Pourcentage sur de petits échantillons**:  Méfiez-vous des statistiques "époustouflantes" ! Les journaux, les magazines et autres médias font souvent état de changements rapides dans la société. Par exemple, nous pouvons lire dans le journal local que le taux d'homicide de notre communauté a augmenté de 50 % par rapport à l'année précédente. Cela peut être une source d'inquiétude ou non. Si le nombre de meurtres à la même époque l'année dernière était de deux, une augmentation de 50 % signifie que notre communauté a connu trois meurtres cette année. Passer de deux à trois n'est pas une grande augmentation (du moins dans la plupart des villes), et faire état d'une augmentation de 50 %, bien que statistiquement vrai, revient à tromper les consommateurs de ces statistiques en leur faisant croire que le problème est plus important qu'il ne l'est réellement.
+- **Pourcentage sur de petits échantillons**:  Méfiez-vous des statistiques "époustouflantes" ! Les journaux, les magazines et autres médias font souvent état de changements rapides dans la société. 
+
+    - Par exemple, nous pouvons lire dans le journal local que le taux d'homicide de notre communauté a augmenté de 50 % par rapport à l'année précédente. Cela peut être une source d'inquiétude ou non. 
+    - Si le nombre de meurtres à la même époque l'année dernière était de deux, une augmentation de 50 % signifie que notre communauté a connu trois meurtres cette année. Passer de deux à trois n'est pas une grande augmentation (du moins dans la plupart des villes), et faire état d'une augmentation de 50 %, bien que statistiquement vrai, revient à tromper les consommateurs de ces statistiques en leur faisant croire que le problème est plus important qu'il ne l'est réellement.
 
 ## De la mauvaise utilisation des statistiques (tiré de Krieg)
 

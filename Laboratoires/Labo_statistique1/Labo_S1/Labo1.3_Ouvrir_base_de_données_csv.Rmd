@@ -1,0 +1,45 @@
+---
+title: "Labo 1: Statistiques descriptives avec RStudio"
+subtitle: "Ouvrir une base de données avec RStudio"
+author: "Visseho Adjiwanou, PhD."
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output:
+  word_document: default
+  pdf_document: default
+  html_document: default
+---
+
+## Plan
+
+1. Ouvrir une base de données
+
+
+## Données
+
+Enquête sociale générale
+
+
+
+```{r}
+
+library(tidyverse)
+library(summarytools)
+
+
+crsc_1996 <- read_csv("cora-crsc1996-E-1996_F1.csv")
+
+
+```
+
+
+## Question
+
+1. Combien avons-nous d'individus?
+2. Combien de variables?
+
+## A votre tour
+
+1. Ouvrez le fichier de données qui s'appelle: "Questions_SOC2206H21.csv"
+2. Que contient ce fichier?
+
+

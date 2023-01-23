@@ -107,9 +107,9 @@ Compléter le tableau avec les informations manquantes et répondez aux question
 
 Garçon
 
-Atrribut  Freq  Pourc.
-0         2     2/20
-1         1     1/20
+Atrribut  Freq  Prop.  Pourc.             pourcentage cumulé 
+0         2     2/20   2/20*100 = 10%     10%
+1         1     1/20   1/20/100 = 5%      (2 + 1)/20*100 = 15%
 2         1
 3         1
 4         3
@@ -127,7 +127,7 @@ N         20
 
 3. Vous allez créer une nouvelle variable qui regroupe le nombre de dents de laits en classe selon:
 - Nombre de dents de laits < 5
-- Nombre de dents de laits >=5 et < 12
+- Nombre de dents de laits >=5 et < 13
 - Nombre de dents de laits >= 13
 
 - Classe de dents de lait
