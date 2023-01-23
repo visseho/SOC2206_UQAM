@@ -1,0 +1,101 @@
+---
+title: "Labo 2.1 - Introduction à R"
+subtitle : "*Console, Script, Rmarkdown*"
+author: "Visseho Adjiwanou, PhD."
+institute: "Département de Sociologie - UQAM"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output:
+  slidy_presentation: default
+  beamer_presentation:
+    colortheme: beaver
+    fonttheme: structurebold
+    theme: Ilmenau
+  ioslides_presentation: default
+header-includes:
+  - \usepackage{color}
+---
+
+
+Opérations arithmétiques
+========================================================
+
+
+## Opérations arithmétiques avec le console
+
+- Lancer R Studio *File > New File > R Script*
+- Dans le console, saisissez:
+
+```{r}
+
+5 + 3
+
+```
+
+- R ignore les espaces et 5+3 retournera le même résultat. 
+- Cependant, nous avons ajouté un espace avant et après l'opérateur + pour faciliter la lecture. 
+- [1] indique que la sortie est le premier élément d’un vecteur de longueur 1 
+
+## Opérations arithmétiques avec le console
+
+- Votre tour d'essayer: rappelez-vous que nous ne pouvons apprendre la programmation qu'en essayant! 
+
+- Autres exemples
+
+```{r}
+
+(5 - 2) * 3
+
+```
+
+## Opérations arithmétiques avec le console
+
+```{r}
+
+sqrt(4)
+
+```
+
+- L'expression finale est un exemple de **fonction**, qui prend une entrée (ou plusieurs entrées) et produit une sortie. Ici, la fonction **sqrt ()** prend un nombre non négatif et renvoie sa racine carrée. 
+- R possède de nombreuses autres fonctions que nous rencontrerons tout au long de ce cours. 
+- Vous apprendrez dans ce cours à créer votre propre fonction. 
+
+
+
+## Opération avec le script
+
+- Voir fichier "mon_premier_r.R"
+
+
+## Opération avec Rmarkdown
+
+
+![](/Users/visseho/OneDrive - UQAM/Cours/Images_cours/Image_RMarkdown.png)
+
+## Description R Markdown
+
+Comprend trois parties:
+
+1. Le chunk
+C'est la partie délimitée par les "---"
+
+![](/Users/visseho/OneDrive - UQAM/Cours/Images_cours/rmarkdown_chunk.png)
+
+
+## Description R Markdown
+
+2. Le code 
+C'est la partie commençant par les ```{r} et finissant pat ```
+
+![](/Users/visseho/OneDrive - UQAM/Cours/Images_cours/rmarkdown_code.png)
+
+
+
+## Description R Markdown
+
+
+3. Partie texte
+
+C'est toute les autres parties où vous pouvez saisir du texte comme dans Word.
+
+![](/Users/visseho/OneDrive - UQAM/Cours/Images_cours/rmarkdown_texte.png)
+

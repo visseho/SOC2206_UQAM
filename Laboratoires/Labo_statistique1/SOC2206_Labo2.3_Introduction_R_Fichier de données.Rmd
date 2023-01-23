@@ -1,0 +1,406 @@
+---
+title: "Labo 2.3 - Introduction à R: Base de données"
+subtitle: "*Fichiers de données*"
+author: "Visseho Adjiwanou, PhD."
+institute: "Département de Sociologie - UQAM"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output:
+  slidy_presentation: default
+  beamer_presentation:
+    colortheme: beaver
+    fonttheme: structurebold
+    theme: Ilmenau
+  ioslides_presentation: default
+header-includes:
+  - \usepackage{color}
+---
+
+## Au programme aujourd'hui
+
+<!--$\color{blue}{\text{B. Deuxième partie}}$-->
+
+  1. Fichier de données
+  
+  
+Fichier/base de données
+========================================================
+
+## Fichier de données
+
+> - Les fichiers de données sont les seuls types d'objet de R que nous allons plus utilisés dans le cadre de ce cours.
+
+> - Vous pouvez créer un fichier de données aussi manuellement comme vous avez créer une matrice, mais vous devez utiliser une autre fonction pour les coller les vecteurs ensembles. Rappelez-vous, on a utilisé **cbind** pour coller les vecteurs pour créer la matrice.
+
+> - Une différence fondamentale entre matrice et fichier de données est que dans la matrice, tous les vecteurs constituants doivent être de même nature (tous numérique, tous caractères).
+
+> - Dans le cas d'un fichier de données, les vecteurs peuvent être de différents types. C'est pourquoi nous allons travailler avec les fichiers de données.
+
+
+## Fichier de données - Type
+
+> - Jusqu'à présent, les seules données utilisées ont été entrées manuellement dans R. 
+> - Mais, la plupart du temps, nous chargerons les données à partir d'un fichier externe. 
+> - Differents types de fichiers:
+
+  > - Les fichiers **CSV** ou les valeurs séparées par des virgules représentent des données tabulaires. 
+  > - Ce concept est similaire à un tableur contenant des valeurs de données telles que celles générées par Microsoft Excel ou Google Spreadsheet. 
+  > - Chaque observation est séparée par des sauts de ligne et chaque champ de l'observation est séparé par une virgule, une tabulation ou un autre caractère ou une chaîne. Ces fichiers ont l'extention **.csv**.
+
+## Fichier de données - Type
+
+> - Les fichiers **RData** représentent une collection d'objets R, y compris des ensembles de données. 
+> - Ceux-ci peuvent contenir plusieurs objets R de différents types. 
+> - Ils sont utiles pour enregistrer les résultats intermédiaires de notre code R ainsi que les fichiers de données. Ces fichiers ont l'extention .RData.
+
+## Fichier de données - Type
+  
+> - Finalement, vos données peuvent provenir d'autres logiciels statistiques comme SPSS (.sav) ou Stata (.dta). Pour travailler avec ces données, vous devez utiliser des **"packages"** spécialisés.
+
+> - Je reviendrai sur l'importance des "packages" à la fin du cours.
+
+
+## Fichier/base de données 
+
+> - Avant d'interagir avec des fichiers de données, nous devons nous assurer qu'ils résident dans le `répertoire de travail`, par lequel R chargera les données et les enregistrera par défaut. 
+> - Il existe différentes manières de modifier le répertoire de travail. 
+> - Dans RStudio, le répertoire de travail par défaut est affiché dans la fenêtre en bas à droite sous l'onglet `Files`. 
+> - Souvent, cependant, le répertoire par défaut n'est pas le répertoire que nous voulons utiliser. 
+> - Pour modifier le répertoire de travail, nous pouvons utiliser le menu déroulant RStudio **`Session > Set Working Directory > Choose Directory` ...** et choisissez le dossier à partir duquel vous souhaitez travailler.
+  
+
+## Fichier/base de données 
+
+> - Il est également possible de changer le répertoire de travail en utilisant la fonction `setwd ()` en spécifiant le chemin complet du dossier de notre choix en tant que chaîne de caractères. 
+> - Pour afficher le répertoire de travail actuel, utilisez la fonction `getwd ()` sans fournir d'entrée.
+
+```{r}
+getwd()
+
+#setwd(/Users/visseho/Documents/Documents - MacBook Pro/COURSES/SOC2206/)
+```
+
+
+## Fichier/base de données - Opération sur les fichiers de données
+
+Les fichiers de données utilisés dans R sont accessibles de deux manières:
+
+1. **A partir du package**
+
+  > - Tout d'abord, les fichiers de données peuvent être distribués avec les packages R. Ce sont souvent des fichiers de données plus petits, utilisés dans des exemples et des didacticiels dans des packages.
+  > - Ceux-ci sont chargés avec la fonction **data ()**. 
+  > - Par exemple, vous pouvez charger des données UN sur des statistiques démographiques à partir du package **qss**, qui distribue les fichiers de données utilisés dans le manuel QSS de Kosuke Imai. 
+  > - La fonction **data ()** appelée sans aucun argument listera tous les fichiers de données distribués avec les packages installés.)
+
+
+## Fichier/base de données - Opération sur les fichiers de données
+
+```{r, out.width='80%'}
+getwd()
+library(qss)
+
+# liste de tous les fichiers de données du package "qss"
+data(package = "qss")   
+
+# Chargement d'un fichier particulier
+data("UNpop", package = "qss")    
+
+```
+
+## Fichier/base de données - Opération sur les fichiers de données
+
+```{r}
+head(UNpop)
+```
+
+## Fichier/base de données - Opération sur les fichiers de données
+
+2. A **partir d'un emplacement donné**
+
+  > - Deuxièmement, les fichiers de données peuvent être chargés à partir de fichiers externes, y compris des objets R stockés (.RData, .rda) et d'autres formats (.csv, .dta, .sav). 
+  > - Pour lire un fichier csv dans R, utilisez la fonction read.csv.
+
+
+## Fichier/base de données - Opération sur les fichiers de données
+
+2. A **partir d'un emplacement donné**
+
+```{r}
+
+UNpop_URL <- "https://raw.githubusercontent.com/kosukeimai/qss/master/INTRO/UNpop.csv"
+UNpop1 <- read.csv(UNpop_URL)
+
+```
+
+## Fichier/base de données - Opération sur les fichiers de données
+
+```{r}
+head(UNpop1)
+```
+
+## Fichier/base de données - Opération sur les fichiers de données
+
+```{r }
+Kenya <- read.csv("/Users/visseho/Documents/Documents - MacBook Pro/COURSES/SOC2206/Devoir_Maison/Devoir1/Kenya.csv")
+
+head(Kenya)
+```
+
+
+## Fichier/base de données - Opérations sur les bases de données
+
+```{r}
+
+class(UNpop)
+names(UNpop)
+nrow(UNpop)
+ncol(UNpop)
+
+
+```
+
+## Fichier/base de données - Opérations sur les bases de données
+
+```{r}
+dim(UNpop)
+length(UNpop)
+
+```
+
+
+## Fichier/base de données - Opérations sur les bases de données
+
+```{r}
+summary(UNpop)
+```
+
+## Fichier/base de données - Opérations sur les bases de données
+
+
+- L'opérateur **$** est un moyen d'accéder à une variable individuelle à partir d'un objet fichier de données. 
+- Il renvoie un vecteur contenant la variable spécifiée.
+
+
+```{r}
+
+UNpop[c(1, 2, 3), ]
+
+```
+
+
+## Fichier/base de données - Opérations sur les bases de données
+
+```{r}
+# Selectionner une variable
+UNpop[, "world.pop"]
+UNpop$world.pop
+UNpop[["world.pop"]]
+
+```
+
+<!--
+- select(UNpop, world.pop) marche aussi mais. select vient d'un autre package
+-->
+
+## Fichier/base de données - Opérations sur les bases de données
+
+```{r }
+
+UNpop[1:3, "year"]
+
+```
+
+<!--
+- Que fait la commande?
+
+- select(slice(UNpop, 1:3), year) marche aussi mais. select vient d'un autre package
+-->
+
+## Fichier/base de données - Opérations sur les bases de données
+
+- Sélectionner les observations impaires
+
+```{r}
+UNpop[seq(from = 1, to = nrow(UNpop), by = 2), "world.pop"]
+
+```
+
+## Fichier/base de données - création de nouvelles variables
+
+- Quand vous créez une nouvelle variable, il est important de la créer dans la même base de données.
+- Exemple: Calculer le taux de croissance
+
+```{r}
+
+UNpop$taux <- UNpop$world.pop / UNpop$world.pop[1]
+head(UNpop)
+
+```
+
+- Quand vous voulez créer une nouvelle variable qui fait appel à plusieurs calculs, créer des variables intermédiaires.
+
+## Fichier/base de données - Statistique 
+
+- Quand vous désirez calculer une statistique sur une variable, il faut créer un objet différent.
+- Exemple : calculer la population mondiale totale
+
+```{r}
+
+pop_totale <- sum(UNpop$world.pop) 
+pop_totale
+
+
+```
+
+## Fichier/base de données - Statistique 
+
+- Exemple : calculer la population mondiale moyenne
+
+```{r}
+
+pop_moyenne <- pop_totale / 6
+pop_moyenne
+
+pop_moyenne1 <- mean(UNpop$world.pop)
+pop_moyenne1
+
+```
+
+
+Fonctions
+========================================================
+
+## Fonctions - Définitions
+
+> - Les fonctions sont des objets importants dans R et effectuent un large éventail de tâches.
+> - Une fonction prend souvent plusieurs objets d'entrée et renvoie un objet de sortie. 
+> - Nous avons déjà vu plusieurs fonctions: **sqrt ()**, **print ()**, **class ()** et **c ()**. 
+> - Dans R, une fonction s'exécute généralement comme **funcname (input)** 
+  > - funcname est le nom de la fonction et 
+  > - input est l'objet d'entrée. 
+  > - En programmation (et en math), nous appelons ces entrées des **arguments**.
+> - Par exemple, dans la syntaxe **sqrt (4)**, `sqrt` est le nom de la fonction et `4` est l'argument ou l'objet d'entrée.
+
+
+## Fonctions - Définitions
+
+![](/Users/visseho/OneDrive - UQAM/Cours/Images_cours/Fonction_diagramme.jpg)
+
+<!--
+```{r diagramme, echo=FALSE, fig.cap="A caption", out.width = '90%'}
+knitr::include_graphics("/Users/visseho/OneDrive - UQAM/Cours/Images_cours/Fonction_diagramme.jpg")
+```
+-->
+
+> - Les arguments peuvent être des objets (« données », formules, expressions…) 
+> - Certains arguments peuvent être définis par défaut dans la fonction ; ces valeurs par défaut peuvent être modifiées par l'utilisateur avec les options. 
+> - Une fonction de R peut ne nécessiter aucun argument de la part de l'utilisateur : soit tous les arguments sont définis par défaut (et peuvent être changés avec les options), ou soit aucun argument n'est défini.
+
+## Fonctions - Définitions
+
+```{r}
+population <- c(2525779, 3026003, 3691173, 4449049, 5320817, 6127700, 6916183)
+population
+
+# Nombre d'éléments dans le vecteur
+length(population)
+
+# Le chiffre le plus petit de la série
+min(population)
+
+```
+
+
+## Fonctions - autres exemples
+
+
+```{r}
+
+
+# Le chiffre le plus grand de la série
+max(population)
+
+# L'étendue
+range(population)
+
+# Somme
+sum(population)
+
+```
+
+## Fonctions - autres exemples
+
+```{r}
+
+# Moyenne
+mean(population)
+
+# Une autre manière de calculer la moyenne
+sum(population) / length(population)
+
+```
+
+## Fonctions - Autres fonctions intéressantes
+
+```{r}
+c(1:10)
+seq(1:10)
+seq(1, 10, 0.5)
+
+```
+
+## Fonctions - Autres fonctions intéressantes
+
+```{r}
+seq(length = 9, from = 1, to = 5)
+rep(1, 7)
+```
+
+## Fonctions - Autres fonctions intéressantes
+
+```{r}
+sequence(4:7)
+gl(2, 5)      # Le premier chiffre est le nombre de niveau, le deuxième, le nombre de réplication
+gl(2, 6, label=c("Male", "Female"))
+
+
+```
+- gl pour `generate levels`
+
+## Fonctions - Autres fonctions intéressantes
+
+```{r}
+gl(2, 1)
+gl(2, 1, length=20)
+```
+
+## Fonctions - Créer notre propre fonction
+
+1. Créer une fonction qui donne le carré d'un nombre
+
+```{r}
+ca <- function(a){
+  carre <- a*a
+  print(carre)
+}
+
+ca(3)
+ca(438)
+
+```
+
+## Fonctions - Créer notre propre fonction
+
+2. Créer une fonction qui donne le rapport de deux nombres multiplié par 24
+
+```{r}
+r24 <- function(a, b){
+  a/b*24
+}
+
+r24(4,2)
+r24(4,0)
+```
+
+
+ 
+

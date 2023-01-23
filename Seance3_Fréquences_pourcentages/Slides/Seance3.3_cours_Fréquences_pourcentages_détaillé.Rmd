@@ -1,0 +1,649 @@
+---
+title: "Seance 3: Distribution de fréquences et de pourcentages"
+subtitle: "Étude de cas 2: Enquête sociale générale"
+author:
+- Visseho Adjiwanou ^[corresponding author - adjiwanou.vissého@uqam.ca]
+- Sociology department, Université du Québec à Montréal (UQAM)
+- co-authors
+- 
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output:
+  pdf_document: default
+  html_document: 
+    toc: true
+    toc_depth: 3
+  word_document: default
+  citation_package: natbib
+#  template: svm-latex-ms2.tex 
+#bibliography: Remarriage_autonomy.bib
+---
+
+(ancien labo 3: à réaménager)
+
+# Enquête sociale générale, 1996
+
+- Il s'agit du CROP Socio-Cultural Survey de 1996
+- Dans cette partie, nous allons apprendre à :
+    - Calculer des statistiques univariées
+
+Mais, pour ce faire, il est parfois important de :
+    - Sélectionner les **variables** qui nous concernent
+    - Sélectionner les observations
+    - Réorganiser les données
+    - Créer de nouvelles variables avec des fonctions de variables existantes
+    - Recoder des variables existantes
+
+
+## Téclecharger la base de données
+
+Je vous apprends une nouvelle façon d'effacer votre environnement avec le code `rm(list = ls())`. rm signifie remove (enlever) et ls() fait références à l'ensemble des fichiers ouverts. Donc ce code ordonne à R de fermer tous les fichiers déjà ouverts. Essayer d'exécuter  chaque ligne de code une à la fois. Mettez votre curseur sur la ligne et faite "command + entré" si vous êtes sur Mac. Sur Windows, c'est "Ctrl + Entré".
+
+```{r}
+# Effacer votre environnement
+
+rm(list = ls())
+
+## Téléchargement de la base de données
+
+crsc96 <- read.csv("cora-crsc1996-E-1996_F1.csv")
+
+```
+
+## Regardons ce que contient cette base de données
+
+```{r}
+
+#View(crsc96)
+
+#head(crsc96)
+
+```
+
+Les informations contenues dans cette base de données ne vous disent pas grande chose. C'est normal, vous n'avez pas collecté ces données. Cette base de données est accompagnée d'un "dictionnaire" qui la décrit ainsi que l'ensemble des variables et leur fréquence. Il s'agit du fichier pdf nommé **cora-crsc1996-E-1996.pdf** qui accompagne ce labo. Avant de continuer ce labo, prenez soin de lire attentivement ce fichier.
+
+Comme vous le voyez, cette base de données contient 2859 observations (les gens à qui on a posé les questions) et 416 variables (les questions qu'on a posées aux participants.es). Parce que ce n'est pas vous qui avez collecté ces données, on parle de **données secondaires**. Ces genres de données posent deux problèmes fondamentaux aux chercheurs:
+1. Il y a plein de variables qui ne vous intéressent pas;
+2. Il y a des variables qui vous intéressent mais qui ne se trouvent pas dedans;
+3. Il concerne des participant.es que vous ne souhaitez pas avoir;
+4. Il comprend des participant.es que vous souhaitez avoir mais qui n'y sont pas. 
+
+Les problèmes 1 et 3 sont facilement gérables et ne causent pas de réels biais. Par contre, vous n'avez aucune solution pour les problèmes 2 et 4. Vous devez vivre avec ces limites et reconnaître leurs conséquences sur vos résultats futurs.
+
+Dans ce labo, on va apprendre à
+- Sélectionner les variables qui nous concernent;
+- Sélectionner les observations qui nous concernent;
+- Calculer des fréquences et pourcentages sur ces variables et pour différents groupes de participant.es
+- Construire des graphiques en bâtons et circulaires pour présenter ces résultats (peut-être plus tard).
+
+Dans une seconde étape, on va affiner ces résultats en améliorant les catégories de nos variables. Il s'agira de:
+- renommer les variables; 
+- renommer ces catégories pour qu'elles soient plus explicites;
+- regrouper des catégories;
+- créer de nouvelles variables
+
+
+## 1. Sélectionnons les données qui nous intéressent
+
+Vous allez sélectionner les variables suivantes dans la base de données **crsc96**. Pour cela, vous allez créer un nouvelle base de données qui s'appelle **crsc96_court**. C'est cette base de données que vous allez utiliser pour la suite
+
+sexq:
+age:
+q1: 
+  - I hate being bossed around: I must feel that I have total control over all the different areas of my life  
+  - **Je déteste être patronné: je dois sentir que j'ai un contrôle total sur tous les différents domaines de ma vie**
+  
+q2:
+  - An unmarried girl of 18 should not have sexual relations
+  - *Une fille non mariée de 18 ans ne devrait pas avoir de relations sexuelles*
+
+q3: 
+  - The best way to get something from someone is by putting your foot down
+  - *La meilleure façon d'obtenir quelque chose de quelqu'un est de mettre le pied à terre (dialoguer)*
+
+q4: 
+  - In a household where both partners are working, is not right for the wife to earn more than the husband
+  - *Dans un ménage où les deux partenaires travaillent, il n'est pas normal que la femme gagne plus que le mari*
+
+q44: 
+  - Overpopulation in third world countries doesn't really affect our country
+  - *La surpopulation dans les pays du tiers monde n'affecte pas vraiment notre pays*
+  
+q95: 
+  - An extramarital affair from time to time is not that serious
+  - *Une liaison extraconjugale de temps en temps n'est pas si grave*
+
+q96:
+  - I would like to have a religious service at my funeral
+  - *J'aimerais avoir un service religieux à mes funérailles*
+
+
+### Réponse 
+
+Comme on l'a déjà appris, vous devez mettre votre code dans le **chunk** spécifié à cette effet. Vos commentaires doivent être ajoutés dans la partie en dessous de la zone non-grisée.
+
+```{r}
+
+crsc96_court <- subset(crsc96, select = c(sexq, age, q1:q4, q44, q95, q96))
+
+```
+
+Comme on le voit, notre nouvelle base de données ne contient plus que 9 variables. Il s'agit des 9 variables que nous avons sélectionné. 
+
+Un petit détour sur les fonctions avant de poursuivre.
+Remarquez comment fonctionne la fonction **subset** de Base R. C'est la logique de toutes les fonctions.
+Vous lui donnez des **inputs** (arguments) et il vous sort un **output**. les inputs sont de deux sortes, les obligatoires et les facultatifs. Si la fonction ne prend pas en compte un input et que vous le mettez dedans, il ne va pas fonctionner. C'est normal. Regardons un peu les autres inputs qu'on peut mettre dans cette fonction. Pour ce faire, on va exécuter la commande suivante dans le console. Voici ce que cela nous donne:
+
+Arguments
+
+--------- --------------------------------------------------------------
+x	        object to be subsetted. (objet à sous-définir)
+subset	  logical expression indicating **elements or rows** to keep 
+          missing values are taken as false.
+select	  expression, indicating **columns** to select from a data frame.
+drop	    passed on to [ indexing operator. 
+
+...	      further arguments to be passed to or from other methods.
+          (autres options non décrite ici)
+
+On voit clairement que si je veux sélectionner les individus qui ont 20 ans, je dois alors utiliser l'input **subset**. Essayons voir
+
+```{r}
+
+crsc96_court_20ans <- subset(crsc96, select = c(sexq, age, q1:q4, q44, q95, q96), subset = (age == 20))
+
+```
+
+J'aurai pu faire simplement en utilisant la base de données crsc96_court que je viens de créer.
+
+```{r}
+
+crsc96_court_20ans_bis <- subset(crsc96_court, subset = (age == 20))
+
+```
+
+Et ainsi, la nouvelle base contient que les données de 51 personnes, des personnes qui ont exactement 20 ans dans ma base de données.
+
+## 2. Niveau de mesure de chaque variable
+
+Maintenant que vous avez sélectionné vos variables, on va se documenter sur ce qu'elles contiennent. Pour ce faire, nous devons réduire l'information individuelle en un résumé qui nous informe sur l'échantillon dans sa globalité. Ce résumé dépend bien évidemment de la nature/type/niveau de mesure de chaque variable.
+
+Présentez dans un tableau simple (si vous le pouvez) ou en texte, le type de chaque variable sélectionnée au 1.
+
+### Réponse
+
+Vous ne pouvez répondre à cette question sans consulter le dictionnaire de la base de données.
+
+Variables  Type 
+---------- ------------------------------------------------------------
+sexq       Quantitative (numeric) continue (continuous) / nominale 
+age        Quantitative continue
+q1         Qualitative ordinale
+q2         Qualitative ordinale
+q3         Qualitative ordinale
+q4         Qualitative ordinale
+q44        Qualitative ordinale
+q95        Qualitative ordinale
+q96        Qualitative ordinale
+
+**Remarques**: Même le dictionnaire ne vous permet pas toujours de connaître le type de variables. Dans le cas ici, il nous dit que sexq est quantitative continue et il nous donne sa moyenne, alors que nous savons que la variable sexe est qualitative nominale. Nous devons faire preuve de bons sens et de notre connaissance. Pour les variables q1 à q96, le dictionnaire nous donne en plus l'information sur le label des valeurs numériques. Ceci nous indique en fait que ce sont des variables qualitatives. Dans ces cas, il ne nous présente pas la moyenne non plus de la variable. 
+
+Dans la plupart des cas, toutes les variables seront représentées par des chiffres dans la base de données car le format numérique est plus facile à sauvegarder. Et cela prend moins de place. Mais, il vous revient en tant qu'analyse de créer e nouvelles variables avec les bons labels. 
+
+
+## 3. Niveau de mesure de chaque variable selon R
+
+R ne nomme pas chaque type de variable de la même manière que nous le faisons. Nous devons comprendre la manière dont R le fait pour nous s'assurer du type de requête à lui envoyer. La fonction **class** ou mieux **typeof** permet de déterminer le type de la variable dans R. Utiliser cette fonction pour déterminer le type des variables sélectionnées au 1. Rappelez-vous, pour trouver une variable, il faut indiquer la base de données dans laquelle elle se trouve précédé de $ et le nom de la variable.
+
+```{r}
+
+class(crsc96_court$sexq)
+class(crsc96_court$age)
+class(crsc96_court$q1)
+
+typeof(crsc96_court$sexq)
+
+mode(crsc96_court$sexq)
+
+```
+
+Les types les plus fréquents sont:
+
+- "logical"	a vector containing logical values (logique, vrai/faux)
+- "integer"	a vector containing integer values (discrète)
+- "double"	a vector containing real values (continue)
+- "character"	a vector containing character values (caractère)
+- "factor" (facteur, qualitative)
+
+Commentez ces résultats en présentant un tableau synthèse (ou texte) entre le type de la variable trouvée au 2. et sa correspondance trouvée au 3.
+
+Maintenant que vous avez fait tout cela, on va calculer les fréquences (effectifs) et pourcentages de chaque variable.
+
+**Rappel**: Les fréquences et pourcentages se calculent sur des variables qualitatives et exceptionnellement sur des variables quantitatives discrètes (avec peu de catégories). Pour les variables quantitatives, on va résumé l'information par ce qu'on appelle les paramètres de tendances centrales et de dispersion. On verra cela dans les prochains chapitres.
+
+
+## 4. Calcul de fréquences et de pourcentages
+
+Calculer les fréquences et les pourcentages de chaque variable de votre base de donnée courte. Commentez brièvement ces résultats.
+
+### Réponses
+
+- Fréquences
+Nous créons des objets pour chaque fréquence. La fonction table permet de calculer les fréquences (effectifs).
+
+```{r}
+
+f_sexq <- table(crsc96_court$sexq)
+f_sexq
+
+```
+
+Pour le sexe, on voit que 1361 personnes sont de sexe 1 et 1498 personnes sont de sexe 2. Le codebook ne nous dit pas ce que représente 1 et ce que représente 2. Ceci est un gros problème. Notre expérience passée nous dit que 1 est robablement pour les Hommes et 2 pour les femmes. Donc, nous avons 1361 hommes et 1498 femmes qui ont répondu à l'enquête.
+
+```{r}
+
+f_age <- table(crsc96_court$age)
+f_age
+
+```
+
+Comme je le dit, le tableau de fréquence est bon pour les variables qualitatives ou les variables quantitatives discrètes avec peu de catégories. Ici, on va que les lignes 1, 3 5 représentent les âges des individus et les lignes en dessous représentent le nombre de personnes de chaque âge. Vous remarquez que pour l'âge 20, on a bien 51 personnes.
+
+```{r}
+
+f_q1 <- table(crsc96_court$q1)
+f_q1
+
+```
+
+'après le dictionnaire/codebook, les valeurs 1 à 5 correspondent à:
+
+1 : totally agree (Totalement d'accord)
+2 : agree somewhat (Un peu d'accord)
+3 : DK/NA (Ne sait pas / pas de réponse)
+4 : disagree somewhat (Un peu en désaccord)
+5 : totally disagree (Totalement en désaccord)
+
+C'est la même pour toutes les autres variables
+
+Donc, on peut dire que pour ceux et celles qui ont répondu à la question 1, 1065 sont totalement en accord contre 49 qui sont totalement en désaccord. 
+
+Vous pouvez continuez ainsi.
+
+**Remarques: Données manquantes**: ici, les données manquantes sont mises ensemble avec les données ne sait pas. Dans beaucoup de cas, ces deux catégories sont séparées à moins que le NSP veut dire aussi non réponse. Si je te demande ton âge et que tu me réponds je ne sais pas, cela signifie que tu ne veux pas répondre, c'est une information manquante. Dans les faits, une information manquante est une informations que nous ne pouvons pas utiliser dans nos analyses. On va souvent les rendre nulle (on va les enlever). Mais cela ne veut pas dire pour autant qu'elle n'a pas une influence sur nos résultats. Elle en a, et dès fois énormément. Donnez-moi des exemples de cas où l'information manquante influence le résultat issu des données valides.
+
+- **Pourcentages**
+Maintenant, nous allons présenter les pourcentages. On comprend qu'une fois qu'on a les fréquences, on peut faire de simples calculs pour calculer les pourcentages. Il suffit d'ajouter la collonne somme et le tout est joué. Pour ajouter la colonne somme, il faut utiliser la fonction **addmargins**
+
+```{r}
+
+# Ajout de la marge
+f_sexq_m <- addmargins(f_sexq)
+f_sexq_m
+
+f_sexq_m[1]
+
+# Pourcentage homme
+p_sexq1 <- f_sexq_m[1]/f_sexq_m[3]*100
+p_sexq1
+
+# Pourcentage femme
+p_sexq2 <- f_sexq_m[2]/f_sexq_m[3]*100
+p_sexq2
+
+# Ensemble
+
+p_sexq <- f_sexq_m/f_sexq_m[3]*100
+p_sexq
+
+```
+
+Vous vous en doutez bien qu'il y a une fonction qui doit faire le travail pour nous. Et bien la fonction **prop.table** nous calcule facilement les pourcentages. Il s'agit en fait des proportions.
+
+```{r}
+
+prop.table(f_sexq)
+
+```
+
+Pour avoir les pourcentages, il faut juste multiplier cela par 100.
+
+```{r}
+
+prop.table(f_sexq)*100
+
+```
+
+Pour la variable q1, voici ce que cela donne
+
+```{r}
+
+prop.table(f_q1)*100
+
+```
+
+On voit ainsi que 37% des répondant.es sont totalement d'accord avec l'affirmation.
+
+## 5. Fréquences et pourcentages selon le sexe
+
+La variable **q2** permet de mesurer le degré d'ouverture et d'inégalité de genre dans une société. On va essayer de comprendre cela en présentant les pourcentages de cette variable pour les hommes et les femmes séparément. Avant de faire ce calcul, que pensez-vous obtenir comme pourcentages chez les hommes et les femmes? Que pensez-vous de la mesure de cette variable? Quels sont les problèmes éventuels qu'une telle variable comporte.
+
+Maintenant, présentez ces fréquences et commentez vos résultats. Sont-ils corroborés pas votre hypothèse de départ?
+
+
+### Réponse
+
+Pour répondre à cette question, il faut d'abord créer la base de données des hommes et ensuite la base de données des femmes et calculer simplement les fréquences et les pourcentages.
+
+- Distribution de q2 pour les hommes
+
+```{r}
+
+# Base de données des hommes
+
+crsc96_court_homme <- subset(crsc96_court, subset = (sexq == 1))
+
+# Fréquences de q2 pour homme
+
+f_q2_homme <- table(crsc96_court_homme$q2)
+f_q2_homme
+
+# Pourcentages de q2 pour homme 
+prop.table(f_q2_homme)*100
+
+```
+
+- Distribution de q2 pour les femmes
+
+```{r}
+
+# Base de données des femmes
+
+crsc96_court_femme <- subset(crsc96_court, subset = (sexq == 2))
+
+# Fréquences de q2 pour les femmes
+
+f_q2_femme <- table(crsc96_court_femme$q2)
+f_q2_femme
+
+# Pourcentages de q2 pour les femmes 
+prop.table(f_q2_femme)*100
+
+```
+
+On se rend ainsi compte que 20% des femmes sont ainsi totalement d'accord avec l'affirmation contre 15% des hommes.
+
+
+Vous êtes maintenant capable de présenter les fréquences et les pourcentages de n'importe quelle variable et de les commenter. N'est-ce pas génial ça? Continuer sur la bonne voie.
+
+Cependant, vous vous rendez compte que si vous apportez ces résultats à votre supérieur hiérarchique, il va être dubitatif de votre qualité de "sociologues quantitativistes". C'est que comme vous le voyez vous-même, il n'y a pas de sexe qui soit 1 et de sexe qui soit 2. De même, les valeurs 1, 2, 3, 4, 5 des variables q2 ne lui disent rien. Et il peut se demander s'il n'y a pas un meilleur regroupement à faire de la variable q2 pour mieux informer la question 5. Et vos fréquences et pourcentages à la fin, ce n'est pas assez jolies comme ceux qu'on observe dans d'autres articles. Il vous renvoie donc à aller affiner vos résultats. Je ne veux pas que cela vous arrive. Alors, on va essayer d'améliorer ce qu'on vient de faire. Votre supérieur a évoqué principalement trois problèmes:
+
+1. des catégories des variables non explicites
+2. des catégories qu'on devrait penser regrouper (rappelez-vous les conseils pour regrouper les variables)
+3. la clarté et beauté de vos tableaux.
+
+On va essayer de répondre à chacune de ces questions maintenant. Pour ce faire, on va se limiter à nos deux variables **sexq**, **q2** et aussi à **age**, car il est évident que la réponse à la question 2 peut aussi bien dépendre de l'âge des participant.es à l'enquête.
+
+## 6. Renommer les catégories des variables q2 et sexq
+
+### Réponse
+
+- Création de la variable sexe
+Il est tentant de juste renommer les catégories d'une variable. Mais, c'est une bonne pratique de créer votre propre variable.
+
+```{r}
+
+attach(crsc96_court)
+crsc96_court$sexe[sexq == 1] <- "Homme"
+crsc96_court$sexe[sexq == 2] <- "Femme"
+
+# Pourcentage
+
+prop.table(table(crsc96_court$sexe))*100
+
+```
+
+On peut aussi utiliser la fonction ifelse pour créer les variables dichotomiques. essayer le pour créer la variable **sexe_bis**.
+
+- Creeation de la variable q2_bis
+
+```{r}
+
+crsc96_court$q2_bis[q2 == 1] <- "Totalement d'accord"
+crsc96_court$q2_bis[q2 == 2] <- "Un peu d'accord"
+crsc96_court$q2_bis[q2 == 3] <- "NSP"
+crsc96_court$q2_bis[q2 == 4] <- "Un peu en désaccord"
+crsc96_court$q2_bis[q2 == 5] <- "Totalement en désaccord"
+
+
+# Pourcentage
+
+prop.table(table(crsc96_court$q2_bis))*100
+
+```
+
+
+## 7. Regrouper les catégories de la variable q2 en trois groupes 
+
+Il vous est demandé en se basant sur les conseils donnés dans le livre de Fox de proposer un tel regroupement
+
+
+```{r}
+
+crsc96_court$q2_3[q2 == 1] <- "En accord"
+crsc96_court$q2_3[q2 == 2] <- "En accord"
+crsc96_court$q2_3[q2 == 3] <- "NSP"
+crsc96_court$q2_3[q2 == 4] <- "En désaccord"
+crsc96_court$q2_3[q2 == 5] <- "En désaccord"
+
+# Fréquence
+
+f_q2_3 <- table(crsc96_court$q2_3)
+f_q2_3
+
+# Pourcentage
+
+prop.table(f_q2_3)*100
+
+```
+
+On voit donc clairement qu'on peut se passer de la catégorie NSP en le rendant nulle.
+
+```{r}
+attach(crsc96_court)
+crsc96_court$q2_3[q2_3 == "NSP"] <- NA
+
+```
+
+Calculons à nouveau les fréquences pour cette variable.
+
+```{r}
+
+# Fréquence sans les valeurs manquantes
+
+table(crsc96_court$q2_3)
+
+# Fréquence
+
+f_q2_3 <- table(crsc96_court$q2_3, useNA = "always")
+f_q2_3
+
+# Pourcentage
+
+prop.table(f_q2_3)*100
+
+```
+
+L'option **useNA = "always"** permet d'afficher les informations sur les données manquantes.
+
+## 8. Créer une nouvelle variable
+
+Créer une nouvelle variable basée sur la variable age que vous appelez gpage qui tient compte des conditions suivantes:
+
+- Si age <25 alors la nouvelle variable prend la valeur "Adolescents" 
+- si age >=25 et age <65, la nouvelle variable rend la valeur "Adultes"
+- Si age >=65, la nouvelle variable prend la valeur "Ainés"
+
+
+```{r}
+
+crsc96_court$gpage[age < 25] <- "Adolescent.es"
+crsc96_court$gpage[age >= 25 & age < 65] <- "Adultes"
+crsc96_court$gpage[age > 65] <- "Ainé.es"
+
+# Fréquences
+
+f_gpage <- table(crsc96_court$gpage)
+f_gpage
+
+# Pourcentages
+
+p_gpage <- prop.table(f_gpage)*100
+p_gpage
+
+```
+
+## 9. Age et genre
+
+Répondez à nouveau à la question 5 ci-dessus mais cette fois-ci en remplaçant sexe par le groupe d'âges.
+
+- Base adolescents, fréquences et pourcentages de q2
+Nous allons faire cela en travaillant avec la nouvelle variable q2_3
+
+```{r}
+
+crsc96_court_adolescents <- subset(crsc96_court, subset = (gpage == "Adolescent.es"))
+dim(crsc96_court_adolescents)
+
+# Fréquence
+f_q2_adolescents <- table(crsc96_court_adolescents$q2_3)
+f_q2_adolescents
+
+# Pourcentage
+
+p_q2_adolescents <- round(prop.table(f_q2_adolescents)*100, 2)
+p_q2_adolescents
+
+```
+
+Cette base de données contient les informations sur 539 adolescent.es. La fonction dim permet de déterminer cela. On voit que parmi eux, 27$ sont en accord avec l'assertion 2 et 72% sont totalement en désaccord.
+Qu'en est-il pour les adultes?
+
+- Adultes (Vous savez quoi faire)
+
+```{r}
+
+```
+
+
+Et pour les ainés
+- Ainés (vous savez quoi faire). Finalement je l'ai fait pour vous.
+
+```{r}
+
+crsc96_court_aine <- subset(crsc96_court, subset = (gpage == "Ainé.es"))
+dim(crsc96_court_adolescents)
+
+# Fréquence
+f_q2_aine <- table(crsc96_court_aine$q2_3)
+f_q2_aine
+
+# Pourcentage
+
+p_q2_aine <- round(prop.table(f_q2_aine)*100, 2)
+p_q2_aine
+
+```
+
+Quelle est votre conclusion?
+- effet de génération
+
+Seulement avec des fréquences et pourcentages, on peut voir de résultats très intéressants. Je vous conseille vivement d'essayer des choses.
+
+## 10. Qualité de vos tableaux
+
+Maintenant, pour rendre vos tableaux plus jolies, il y a plusieurs packages qui nous permettent de faire cela mieux que ce que R de base nous donne. Un de ses packages que nous utiliserons tout au long de ce cours est **summarytools**. Vous pouvez apprendre de l'utilisation de ce packages ici : https://cran.r-project.org/web/packages/summarytools/vignettes/Introduction.html
+
+Pour le moment, on va l'utiliser pour faire juste de simple fréquences et pourcentages. On l'utilisera plus tard pour montrer des relations entre deux variables qualitatives.
+
+Je n'ai pas présenté les graphiques pour le moment dans cette partie. Les graphiques que Base R nous donnent ne sont pas aussi jolies. On va plutôt utiliser pour ce faire un package qui s'appelle **ggplot** qui fait partie d'une famille  de packages qu'on appelle **tidyverse**. Cette famille de packages contient d'autres packages qui nous permettent de créer des variables plus facilement ainsi que de les récoder mieux. J'introduirai ces autres packages un peu plus tard dans le cours dans la séance sur les visualisations.
+
+Revenons-en au packages summarytools. Au fait, c'est quoi un package?
+
+Pour utiliser un package, vous devez suivre les étapes suivantes. cela est vrai pour tous les packages:
+1. **les installer**. Cela se fait une seule fois. Vous n'avez pas besoin de les installer chaque fois. Pour utiliser Facebook sur votre téléphone, vous ne l'installer pas chaque fois.
+2. **les charger**. Comme dans le cas où vous voulez utiliser votre Facebook sur votre téléphone, vous devez cliquer dessus.
+3. **utiliser les fonctions du package**. Facebook a plusieurs fonctions aussi, écrire, mettre une vidéo, commenter, liker. C'est la même chose avec les packages.
+4. **utiliser les options de la fonction**. Le différence entre vos tableaux proviendra toujours des options que vous y mettez. Pour savoir les fonctions qu'il y a dans une fonction, il faut faire help(le_nom de la fonction). 
+
+Je vous montre ici avec l'exemple de summarytools pour calculer les fréquences de la variables sexe.
+
+
+```{r}
+# 1. Installer le package
+#install.packages("summarytools")
+
+# 2. Le charger
+
+library(summarytools)
+
+# 3. Utiliser ses fonction
+
+summarytools::freq(crsc96_court$q2)
+
+# 4. Les options de cette fonction
+
+
+help("freq")
+
+# 5. Utilisons l'option du format du tableau
+
+freq(crsc96_court$q2, style = "grid")
+
+```
+
+Comme j'ai déjà installé le packages summarytools, je ne veux pas exécuter à nouveau ce package. Donc je le précède de # (dans le code).
+
+## Les autres packages pour calculer des fréquences et pourcentages
+
+Il n'y a pas que Summarytools qui permet de calculer des fréquences de manières convenables. Une petite recherche dans google avec les mots **descriptive table package, r** vous en donnera de multiples autres. Voici quelques une de cette liste et leur utilisation. Comme chaque fois, vous devez les installer, les charger avant de les utiliser.
+
+- **descr** : https://www.rdocumentation.org/packages/descr/versions/1.1.4
+
+```{r}
+#install.packages("descr")
+library(descr)
+descr::freq(crsc96_court$q2)
+
+descr::freq(crsc96_court$q2, y.axis = "percent")
+
+descr::freq(crsc96_court$q2, y.axis = "percent", user.missing = 3)
+
+descr::freq(crsc96_court$q2, y.axis = "percent", user.missing = 3, plot = F)
+
+```
+
+
+**Remarques importantes**: Parce que la fonction freq existe à la fois dans **summarytools** et dans **descr**, vous devez lui indiquer lequel vous utilisez. Pour ce faire, vous précédez la fonction du nom du package suivi de **::**.
+
+- **Hmisc**: https://www.rdocumentation.org/packages/Hmisc/versions/4.4-2
+
+```{r}
+#install.packages("Hmisc")
+library(Hmisc)
+
+describe(crsc96_court$q2)
+
+```
+
+
+Maintenant que je vous ai montré tout cela, à votre tour de jouer.
+
+
+## Visualisation
+
+```{r}
+ install.packages("esquisse")
+
+```
+
+Bon labo

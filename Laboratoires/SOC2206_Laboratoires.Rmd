@@ -1,0 +1,99 @@
+---
+title: "Organisation des laboratoires du cours SOC2206"
+author:
+  - Visseho Adjiwanou 
+  - Département de Sociologie, Université du Québec à Montréal (UQAM)
+  - Yao Kouadio (Assistant)
+  - Aoudou Mounchingam (Assistant)
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output:
+  pdf_document: default
+  html_document: 
+    toc: true
+    toc_depth: 3
+  word_document: default
+  citation_package: natbib
+#  template: svm-latex-ms2.tex 
+#bibliography: Remarriage_autonomy.bib
+header-includes:                        
+  - \renewcommand{\and}{\\}           #Permet d'avoir les noms des auteurs par ligne
+---
+
+## 1. Objectifs
+
+Les objectifs poursuivis par ces laboratoires est de:
+
+- répondre rapidement aux préoccupations des étudiant.es
+- corriger les travaux pratiques et 
+- travailler avec de vraies données à partir du logiciel R sous RStudio et BlueSky Statistics
+
+Dans le but de répondre efficacement aux préoccupations des étudiant.es et d'utiliser le temps imparti adéquatement, ceux/celles-ci doivent envoyer leurs questions ou les éléments de discussion sur Slack dans le #laboratoire https://soc2206h2310.slack.com/archives/C04KXNBDUE9. 
+
+## 2. Périodes
+
+Les périodes de labo sont:
+
+- Lundi 12h45 - 13h45
+- Jeudi 12h45 - 13h45
+
+Les laboratoires ont lieu au **A-1705**.
+
+## 3. Assistants
+
+Les deux assistants du cours sont :
+
+- Yao Jean Kouadio (<kouadio.yao_jean@courrier.uqam.ca>)
+- Aoudou Mounchingam (<njingouo_mounchingam.aoudou@courrier.uqam.ca>)
+
+Que vous soyez du groupe 10 ou 30, les labos du lundi sont animés par YK, et les labos de jeudi par AM. Cependant, vos travaux seront corrigés par l'assistant assigné à votre groupe cours.
+
+## 4.Activités
+
+Sem.   Dates     Activités                                      Assistants
+------ --------- ---------------------------------------------- ------------------
+Labo1 
+       23 jan    Montrer les interfaces de RStudio et BlueSky       
+       26 jan    Ouvrir les données dans RStudio et BlueSky     YK
+                 Reconnaître les différents formats de données  AM
+                 Reconnaître les niveaux de mesures de variables          
+Labo2
+       30 jan    Calculer les fréquences et les pourcentages    YK
+       2 fév     à partir de vraies données                     AM
+                 Traitement des données manquantes
+Labo3
+       6 fév     Calculer les paramètres de tendance centrale   YK
+       9 fév     à partir de vraies données                     AM
+                 Montrer les différences entre groupes
+                 Montrer le traitement des valeurs abberantes
+                 Interpréter les résultats
+Labo4
+       13 fév    Calculer les paramètres de variation           YK
+       16 fév    à partir de vraies données                     AM
+                 Montrer les différences entre groupes
+                 Calculer la statistique Z
+                 Interpréter les données
+Labo5
+       20 fév    Distribution d'échantillonnage                 YK
+       23 fév    Loi normale                                    AM
+                 Théorème centrale limite
+27 fév           **Semaine de relâche (pas de labo)**
+Labo6
+       6 mar     Étude de cas 1                                 YK
+       9 mar     Mettre ensemble les éléments déjà vus          AM
+                 Graphiques
+Labo7
+       13 mar    Tableau bivarié à partir de vraies données     YK
+       16 mar    Test de chi-deux                               AM
+                 Interprétations et limites
+Labo8
+       20 mar    Tableau bivarié à partir de vraies données     YK
+       23 mar    Test de chi-deux                               AM
+                 Mesure d'association
+                 Interprétations et limites
+Labo9
+       27 mar    Comparaison de moyennes                        YK
+       30 mar    Interprétations et limites                     AM
+Labo10
+       3 avr     Analyse de la variance                         YK
+       6 avr     Interprétations et limites                     AM
+
