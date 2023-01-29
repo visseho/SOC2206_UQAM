@@ -52,7 +52,7 @@ Répondez aux questions suivantes:
 
 
 
-Au cours de la même enquête, on a collecté les données sur le groupe d'âges des enquêtés. les résultats sont présentés dans le tableau 2.
+Au cours de la même enquête, on a collecté les données sur le groupe d'âges des enquêtés. Les résultats sont présentés dans le tableau 2.
 
 **Tableau 2: Distribution du groupe d'âges**
 
@@ -86,7 +86,7 @@ Non réponse    35          4.1
 1  1   1  1  1  1  1  1  1  1
 
 
-815 + 1)/2=408
+(815 + 1)/2=408
 
 3. Quel est la valeur du mode?
 
@@ -173,7 +173,7 @@ Vrai car elle permet d'améliorer l'efficacité des appareils.
 Faux car 
   - les technologies produisent elles-mêmes des problèmes
   - elles sont coûteuses
-  - ne vaut rien sans un changement dans nos habitudes de consommations
+  - ne valent pas grande chose sans un changement dans nos habitudes de consommations
 
 ## 2. En quoi n'est-elle pas valide?
 

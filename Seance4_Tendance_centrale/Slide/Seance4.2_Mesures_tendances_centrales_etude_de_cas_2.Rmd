@@ -65,9 +65,9 @@ N      1281
 - Convention: on va supposer que derrière les réponses à cette question, il y a une échelle (ratio) allant de 0.5 à 5.5. 
 - Autrement dit, ceux qui ont répondu 1, aurait répondu en réalité entre 0.5 et 1.5. On les ramène donc à la moyenne de l'intervalle qui vaut (0.5 + 1.5)/2 = 1 
 - Ainsi, les 299 personnes qui ont répondu 3 ont en fait répondu entre 2.5 et 3.5
-- Nous allons donc interpoler pour trouver à endroit se situe la médiane
+- Nous allons donc interpoler pour trouver à quel endroit se situe la médiane
 
-617 ---------641-------------------------------------617+298 = 915
+617 ---------641-------------------------------------617+299 = 916
 
 2.5 ----------M--------------------------------------3.5
 
@@ -78,9 +78,9 @@ N      1281
 - Si 3 pains coûtent 55$, combien coûte 2 pains?
 
 
-(M - 3.5)/(2.5 - 3.5) = (641 - 915)/(617 - 915)
+(M - 3.5)/(2.5 - 3.5) = (641 - 916)/(617 - 916)
 
-M = [(641 - 915)/(617 - 915)]/(2.5 - 3.5) + 3.5
+M = [(641 - 916)/(617 - 916)]/(2.5 - 3.5) + 3.5
 
 M = 2.6
 

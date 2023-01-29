@@ -67,6 +67,20 @@ Ratio/Intervalle     Oui       Oui       Oui         Oui         Oui
 (données groupées)
 
 
+Exemple de calcul
+==========================
+
+
+
+
+
+
+Exemple d'application
+=================================
+
+
+
+
 ## Pour la semaine prochaine
 
 1. Lecture 
