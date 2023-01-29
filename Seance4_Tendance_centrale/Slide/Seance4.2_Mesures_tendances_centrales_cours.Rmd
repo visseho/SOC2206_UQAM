@@ -1,0 +1,86 @@
+---
+title: 'Séance 4.2: Mesures de tendance centrale'
+subtitle: "Discussion en classe"
+author: "Visseho Adjiwanou, PhD."
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output:
+  beamer_presentation:
+    colortheme: beaver
+    fonttheme: structurebold
+    theme: Ilmenau
+  slidy_presentation: default
+  ioslides_presentation: default
+---
+
+
+## Résumé : Mesure de tendance centrale (paramètres de position)
+
+Symbole            Définition                           Formules
+------------------ ------------------------------------ ------------------------
+Moyenne            Somme des valeurs divisée par        $\bar{X} = \frac{1}{n} \sum_{i=1}^n X_i$
+                   l'effectif de la série
+Médiane            Valeur qui divise la distribution
+                   en deux parties égales
+Mode               Valeur observée de fréquence maximum                    
+Percentile         Valeurs qui divisent la distribution
+                   en 100 parties égales
+
+
+## Résumé : Mesure de dispersion
+
+Symbole     Définition                       Formules
+----------- -------------------------------- -----------------------------------------
+Étendue     Différence entre la plus grande  G - P
+            et la plus petite valeur de la 
+            variable
+EIQ         3ème quartile - 1er quartile     Q3 - Q1
+Déviation   La distance d'une valeur à       $X - \bar{X}$
+            la moyenne
+Sommes      Somme des carrés des déviations  SC = $\sum_{i=1}^n(X_i-\bar{X})^2$
+des carrés
+Variance    Moyenne des carrés des déviances $s^2=\frac{1}{n-1}\sum_{i=1}^n(X_i-\bar{X})^2$
+Écart-type  Racine carrée de la variance     $s = \sqrt{\frac{1}{n-1} \sum_{i=1}^n(X_i-\bar{X})^2}$     
+
+
+
+## Résumé : Quel type de résumé pour quel type de variable?
+
+
+Type de variable     Fréquence       Pourcentage      Commentaire
+-------------------- --------------- ---------------- ----------------------
+Nominale             Oui             Oui              Toujours
+Ordinale             Oui             Oui              Toujours
+Ratio/Intervalle     Pas souhaité    Pas souhaité     Oui si peu de modalités
+Ratio/Intervalle     Oui             Oui              Toujours
+(données groupées)
+
+
+## Résumé : Quel type de résumé pour quel type de variable?
+
+
+Type de variable     Moyenne   Mode      Médiane     Variance    Écart-type   
+-------------------- --------- --------- ----------- ----------- ------------ 
+Nominale             Non       Oui       Non         Non         Non
+Ordinale             Possible  Oui       Oui         Possible    Possible
+Ratio/Intervalle     Oui       Oui       Oui         Oui         Oui
+Ratio/Intervalle     Oui       Oui       Oui         Oui         Oui
+(données groupées)
+
+
+## Pour la semaine prochaine
+
+1. Lecture 
+- Paramètres de variation (ou de dispersion) - Fox : chapitre 4, pp.91-103
+- Distribution d’échantillonnage - Fox : Chapitre 4, pp.103-120
+
+2. Application
+- https://juba.github.io/tidyverse/01-presentation.html
+- https://juba.github.io/tidyverse/02-prise_en_main.html
+- https://juba.github.io/tidyverse/03-premier_travail.html
+
+
+
+
+
+
+

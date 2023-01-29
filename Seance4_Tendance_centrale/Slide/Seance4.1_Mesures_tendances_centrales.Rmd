@@ -7,7 +7,7 @@ output:
   beamer_presentation:
     colortheme: beaver
     fonttheme: structurebold
-    theme: AnnArbor
+    theme: Ilmenau
   slidy_presentation: default
   ioslides_presentation: default
 ---
@@ -35,7 +35,7 @@ H, F, F, F, H, F, H, F, F, F, F, H, H, F, H, H, . . . , F
   
 La variable X prend les valeurs $x_1, x_2, . . . , x_p$, n valeurs avec p occurrences différentes:
 
-![](/Users/visseho/OneDrive - UQAM/Cours/Images_cours/Tableau1.jpg)
+![](../../Images/Tableau1.jpg)
 
 <!--
 ```{r}
