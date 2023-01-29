@@ -228,30 +228,54 @@ Université       5/27*100 = 18.51  81.48 + 18.51 = 100
 ## De la mauvaise utilisation des statistiques (tiré de Krieg)
 
 
-- **Pourcentage sur de petits échantillons**:  Méfiez-vous des statistiques "époustouflantes" ! Les journaux, les magazines et autres médias font souvent état de changements rapides dans la société. 
+>- **Pourcentage sur de petits échantillons**:  Méfiez-vous des statistiques "époustouflantes" ! Les journaux, les magazines et autres médias font souvent état de changements rapides dans la société. 
 
-    - Par exemple, nous pouvons lire dans le journal local que le taux d'homicide de notre communauté a augmenté de 50 % par rapport à l'année précédente. Cela peut être une source d'inquiétude ou non. 
-    - Si le nombre de meurtres à la même époque l'année dernière était de deux, une augmentation de 50 % signifie que notre communauté a connu trois meurtres cette année. Passer de deux à trois n'est pas une grande augmentation (du moins dans la plupart des villes), et faire état d'une augmentation de 50 %, bien que statistiquement vrai, revient à tromper les consommateurs de ces statistiques en leur faisant croire que le problème est plus important qu'il ne l'est réellement.
+  >- Par exemple, nous pouvons lire dans le journal local que le taux d'homicide de notre communauté a augmenté de 50 % par rapport à l'année précédente. 
+  
+  >- Cela peut être une source d'inquiétude ou non. 
 
-## De la mauvaise utilisation des statistiques (tiré de Krieg)
-
-- **Spécificité sociale et géographique des statistiques**. Souvent, les statistiques qui sont censées représenter une société entière ne représentent qu'une partie de la population. 
-
-    - Par exemple, nous pouvons lire que le nombre de meurtres commis depuis le début de l'année est le double de celui de l'année dernière à la même époque. 
-    - Cela ne signifie pas pour autant que tout le monde court deux fois plus de risques d'être assassiné. Il se peut que la majorité des meurtres aient lieu dans des villes de 250 000 habitants ou plus. 
-    - Il est donc possible que l'augmentation globale du nombre de meurtres dans ces zones urbaines soit à l'origine de la hausse du taux de meurtres à l'échelle nationale, alors que d'autres types de communautés pourraient voir leur taux de meurtres diminuer.
 
 ## De la mauvaise utilisation des statistiques (tiré de Krieg)
 
-- **Autres exemple**: Il pourrait en être de même pour tout type de phénomène social - enlèvements d'enfants, fugues, viols, etc. 
+>- **Pourcentage sur de petits échantillons**    
 
-- Voir statistiques sur els homicides au Canada: https://www150.statcan.gc.ca/t1/tbl1/fr/tv.action?pid=3510007101
+  >- Si le nombre de meurtres à la même époque l'année dernière était de deux, une augmentation de 50 % signifie que notre communauté a connu trois meurtres cette année. 
+  
+  >- Passer de deux à trois n'est pas une grande augmentation (du moins dans la plupart des villes), et faire état d'une augmentation de 50 %, bien que statistiquement vrai, revient à tromper les consommateurs de ces statistiques en leur faisant croire que le problème est plus important qu'il ne l'est réellement.
 
-- Soyez vigilant.es: Il est important de savoir quels types de questions poser lorsque nous entendons ces statistiques "époustouflantes". 
+## De la mauvaise utilisation des statistiques (tiré de Krieg)
 
-    - Quelles sont les fréquences sur lesquelles ces statistiques sont basées ? 
-    - À quelles populations ces statistiques peuvent-elles être généralisées ? 
-    - Et, ce qui est peut-être le plus important, qui a intérêt à communiquer ce type de statistiques ?
+>- **Spécificité sociale et géographique des statistiques**. Souvent, les statistiques qui sont censées représenter une société entière ne représentent qu'une partie de la population. 
+
+  >- Par exemple, nous pouvons lire que le nombre de meurtres commis depuis le début de l'année est le double de celui de l'année dernière à la même époque. 
+    
+  >- Cela ne signifie pas pour autant que tout le monde court deux fois plus de risques d'être assassiné. 
+  
+  >- Il se peut que la majorité des meurtres aient lieu dans des villes de 250 000 habitants ou plus. 
+
+## De la mauvaise utilisation des statistiques (tiré de Krieg)
+
+>- **Spécificité sociale et géographique des statistiques**.
+
+  >- Il est donc possible que l'augmentation globale du nombre de meurtres dans ces zones urbaines soit à l'origine de la hausse du taux de meurtres à l'échelle nationale, alors que d'autres types de communautés pourraient voir leur taux de meurtres diminuer.
+
+## De la mauvaise utilisation des statistiques (tiré de Krieg)
+
+>- **Autres exemple**: Il pourrait en être de même pour tout type de phénomène social - enlèvements d'enfants, fugues, viols, etc. 
+
+>- Voir statistiques sur els homicides au Canada: https://www150.statcan.gc.ca/t1/tbl1/fr/tv.action?pid=3510007101
+
+## De la mauvaise utilisation des statistiques (tiré de Krieg)
+
+**Attitudes à tenir devant les statistiques**
+
+>- Soyez vigilant.es: Il est important de savoir quels types de questions poser lorsque nous entendons ces statistiques "époustouflantes". 
+
+  >- Quelles sont les fréquences sur lesquelles ces statistiques sont basées ? 
+    
+  >- À quelles populations ces statistiques peuvent-elles être généralisées ? 
+    
+  >- Et, ce qui est peut-être le plus important, qui a intérêt à communiquer ce type de statistiques ?
 
 
 <!-- Krieg, page 67
@@ -285,6 +309,23 @@ Il pourrait en être de même pour tout type de phénomène social - enlèvement
 
 > 2. Comparer la participation des minorités ethnoculturelles avec celle de la population majoritaire
   
+
+## Dimension économique - définition des concepts
+
+	
+>- Personnes occupées sont celles qui exercent un emploi ou qui exploitent une entreprise
+
+>- Chômeurs sont les personnes qui sont sans emploi, qui sont prêtes à travailler et qui cherchent activement du travail. 
+
+>- Population active : Personnes occupées + Chômeurs 
+
+>- Personnes inactives sont celles qui, considérant les conditions qui existaient sur le marché du travail dans leur région, ne désiraient ou ne pouvaient offrir ou fournir leurs services au cours de la semaine de référence (ceci comprend les personnes qui étaient actuellement aux études à temps plein). 
+
+>- La période de référence utilisée dans l’EIACA pour la situation d’emploi était la date de l’interview. La question suivante a été posée aux répondants : « Quelle est votre situation actuelle d’emploi? »
+
+>- Taux d’emploi Nombre de personnes en emploi parmi la population totale de 15 ans et plus. 
+
+
 
 ## Exemple 1: Mesurer la participation des Québécoises et Québécois des minorités ethnoculturelles
 

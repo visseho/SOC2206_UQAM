@@ -146,7 +146,13 @@ N                     20
 
 4. Quelle représentation graphique est appropriée pour présenter les données des filles et des garçons?
 
+4+2
 
+```{r}
+4+2
+4000000000*6353
+
+```
 
 ## Entrée les données dans R
 
@@ -156,11 +162,19 @@ library(tidyverse)
 library(summarytools)
 
 garcon <- c(1, 1, 10, 4, 14, 10, 2, 8, 4, 14, 6, 11, 13, 15, 16, 4, 0, 12, 16, 3)
+
+print(garcon)
+
 fille <- c(0, 9, 7, 0, 12, 1, 7, 4, 1, 2, 7, 9, 3, 4, 5, 4, 6, 16, 4, 11)
+
+fille
+
 sexe <- c(rep("garcon", 20), rep("fille", 20))
 
 donnee <- data.frame(sexe = sexe, nombre_dents = c(garcon, fille))
 
+
+freq(donnee$sexe)
 
 freq(garcon)
 
