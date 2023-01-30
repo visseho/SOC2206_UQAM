@@ -1,0 +1,56 @@
+---
+title: "Labo statistique 2: Distribution de fréquences et de pourcentages"
+subtitle: "Distribution de fréquences"
+author:
+- Visseho Adjiwanou ^[corresponding author - adjiwanou.vissého@uqam.ca]
+- Sociology department, Université du Québec à Montréal (UQAM)
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output:
+  word_document: default
+  html_document: 
+    toc: true
+    toc_depth: 3
+  pdf_document: default
+  citation_package: natbib
+#  template: svm-latex-ms2.tex 
+#bibliography: Remarriage_autonomy.bib
+---
+
+## Introduction
+
+- Continuer la découverte de l'environnement de BlueSky
+- Travailler avec le menu "dataset" et "analysis"
+- Données 
+    - cis_short_5percent_95.csv
+
+
+## Dateset
+
+1. Sélectionner les données de Québec 
+2. Sélectionner les données de Ontario
+3. Fusionner à nouveau ces deux données pour créer la base quebec_ontario.csv
+4. Calculer le revenu moyen par province et mettre le dans la base revenu_moyen_ensemble 
+
+    Datasets ==> Aggregate
+
+
+
+## Tableau de fréquence
+
+1. calculer pour chaque province la fréquence des variables 
+  - sexe
+  - état matrimonial
+  - niveau d'éducation
+  - revenu (CFATINC)
+  
+2. Montrer un peu la syntaxe des résultats  
+
+## Graphiques
+
+1. Montrer les graphiques qu'on peut créer avec ces 4 variables
+
+- diagramme de barre
+- diagramme circulaire
+- carte (revenu moyen)
+  - https://www.mapchart.net/
+

@@ -12,6 +12,12 @@ output:
   ioslides_presentation: default
 ---
 
+## A quoi ça sert?
+
+
+- Une mesure de tendance centrale est une valeur **typique** ou **représentative** d'un ensemble de scores
+
+
 
 ## Résumé : Mesure de tendance centrale (paramètres de position)
 
@@ -70,15 +76,227 @@ Ratio/Intervalle     Oui       Oui       Oui         Oui         Oui
 Exemple de calcul
 ==========================
 
+## Distribution de revenu
+
+Voici les revenus (en millier) d'un échantillon de 15 hommes et de 16 femmes
+
+ind   Revenus   ind   Revenus  ind   Revenus   ind   Revenus    
+----- --------- ----- -------- ----- --------- ----- --------
+1     2         9     3.1      1     3.1       9     0.5
+2     2.5       10    1.4      2     2.7       10    1.3
+3     1.7       11    7.1      3     1.2       11    2.9
+4     3         12    6.0      4     4.2       12    2.7
+5     5         13    3.3      5     5.5       13    5.1
+6     4.1       14    4.3      6     4.3       14    3.0
+7     8.1       15    6.1      7     2.0       15    6.3
+8     5.2                      8     1.5       16    4.2
+
+## Distribution du revenu des hommes
+
+
+![](../../Images/cours4.1.png)
+
+## Moyenne
 
 
 
+    - Revenu moyen des hommes = (2 + 2.5 + 1.7 + 3 + 5 + 4.1 + 8.1 + 5.2 + 3.1 + 1.4 + 7.1 + 6.0 + 3.3 + 4.3 + 6.1) / 15
+    
+    - revenu moyen des hommes = 4.19
+
+    - Revenu moyen des femmes = (3.1 + 2.7 + 1.2 + 4.2 + 5.5 + 4.3 + 2.0 + 1.5 + 0.5 + 1.3 + 2.9 + 2.7 + 5.1 + 3.0 + 6.3 + 4.2)/16
+    - Revenu moyen des femmes = 3.16
+
+## Médiane des hommes
+
+Médiane: valeur qui partage la distribution en deux parties égales
+
+- **La Médiane** = valeur telle que la moitié des observations lui sont inférieures et donc la moitié lui sont supérieures.
+
+- C'est donc assez facile à calculer, il suffit juste d'ordonner les cas.
+
+- Milieu de la distribution = (15 + 1)/2 = 8
+
+![](../../Images/cours4.1.png)
+25% des gens ont un revenu inférieur à cette valeur
+
+- je vois que 20% des gens ont un revenu de 2 ou moins
+- 26,67% des gens ont in revenu de 2.5 ou moins
+donc le 1e quartile se trouve entre 2 et 2.5
+
+- Médiane Homme = 4.1
+
+## Médiane des femmes
+
+Milieu de la distribution : (16 +1)/2 = 8.5 entre la 8 et la 9e valeur
+
+![](../../Images/cours4.2.jpg)
+Médiane se situe entre la 8e et la 9e valeur 
+
+Médiane = (2.9 + 3)/2 = 2.95
+
+## Mode
+
+- Homme = il n'y a pas de mode
+- Femme = deux modes, 2.7 et 4.2
+
+## Premier quartile
+
+Quelle est la localisation du premier quartile?
+
+1    2    3  4    5  6    7    8    9    10   11    12  13   17   15  
+1.4  1.7  2  2.5  3  3.1  3.3  4.1  4.3  5    5.2   6   6.1  7.1  8.1
 
 
-Exemple d'application
+## Premier quartile
+
+Quelle est la localisation du premier quartile?
+
+$L_k = k/100*(n + 1)$
+
+k = 25 si premier quartile
+n = 15
+
+donc l_25 = 25/100*(15+1) = 4
+Le premier quartile se trouve donc à la 4e position
+
+premier quartile (Q1) = 2.5
+
+## Troisième quartile
+
+l_75 = 75/100*(15+1) = 12
+
+donc Q3 = 6
+
+## Et pour les femmes?
+
+Q1 = ? 
+Q3 = ?
+
+## Et pour les femmes
+ 
+ 1   2    3    4   |  5  6    7    8   |  9   10   11   12   | 13   14   15   16 
+ .5  1.2  1.3  1.5 |  2  2.7  2.7  2.9 |  3.  3.1  4.2  4.2  | 4.3  5.1  5.5  6.3
+
+
+
+## Et pour les femmes?
+
+L_25 = 25/100*(16+1) = 4.25 (entre 4 et 5)
+L_75 = 75/100*(16+1) = 12.75 (entre 12 et 13)
+
+Q1 = (1.5 + 2)/2 = 1.75
+Q3 = (4.2 + 4.3)/2 = 4.25
+ 
+
+- Une difficulté arrive avec les variables ordinales
+
+## Représentation
+
+- Boxplot
+
+![](../../Images/boxplot_interpretation.png)
+
+## Représentation
+
+
+![](../../Images/cours4_graph1.jpg)
+
+## Médiane des variables ordinales
+
+Exemple: Attitude envers les immigrants et les emplois
+
+- Q1: Sur une échelle de 1 (totalement en désaccord) à 5 (totalement d'accord), que pensez-vous de l'affirmation suivante: "Les immigrants volent nos emplois"
+
+
+## Médiane des variables ordinales
+
+Valeur Fréquence  Fréq. cumulée  Pourcentage    Pourc. cumulé
+------ ---------- -------------- ------------ -----------------
+1      170         170
+2      446         616
+3      299         915
+4      301        1216
+5       65        1281
+N      1281     
+
+- Médiane va diviser la distribution en deux partie égale
+- (1281 + 1)/2 = 641
+- la médiane est la valeur du 641e score, c'est-à-dire quelque part parmi les 299 scores 3
+- La médiane est donc 3. Cependant il faut affiner cela.
+
+
+## Médiane des variables ordinales
+
+- Convention: on va supposer que derrière les réponses à cette question, il y a une échelle (ratio) allant de 0.5 à 5.5. 
+- Autrement dit, ceux qui ont répondu 1, aurait répondu en réalité entre 0.5 et 1.5. On les ramène donc à la moyenne de l'intervalle qui vaut (0.5 + 1.5)/2 = 1 
+- Ainsi, les 299 personnes qui ont répondu 3 ont en fait répondu entre 2.5 et 3.5
+- Nous allons donc interpoler pour trouver à quel endroit se situe la médiane
+
+617 ---------641-------------------------------------617+299 = 916
+
+2.5 ----------M--------------------------------------3.5
+
+## Médiane des variables ordinales
+
+- Interpolation
+- Application de la règle de trois
+- Si 3 pains coûtent 55$, combien coûte 2 pains?
+
+
+(M - 3.5)/(2.5 - 3.5) = (641 - 916)/(617 - 916)
+
+M = [(641 - 916)/(617 - 916)]/(2.5 - 3.5) + 3.5
+
+M = 2.6
+
+## Vous pouvez préféré utiliser la formule du livre
+
+$$Md = L + (\frac{N/2 - F}{f})(i)$$
+- L = la limite inférieure de l'intervalle contenant la médiane (2.5)
+- N = le nombre de cas (1281)
+- F = la fréquence cumulative des scores inférieurs à l'intervalle contenant la médiane (616)
+- f = le nombre de scores que comprend l'intervalle contenant la médiane (299)
+- i = la largeur de l'intervalle contenant la médiane (1)
+
+Md = 2.5 +(1281/2 - 616)/299*1 = 2.6
+
+
+
+Exemple d'application : 
 =================================
 
+## Mesure de l'inégalité
 
+
+- Moyenne
+- Médiane
+- Coefficient de Gini
+- Indice de Palma
+
+
+## Gini
+
+Le coefficient de Gini sert à mesurer le niveau d’inégalité de la répartition du revenu au sein de diverses populations ou au sein de la même population au fil du temps. Il peut être calculé pour d'autres indicateurs autre que le revenu. La courbe de Lorenz (figure) présente le rapport entre la proportion cumulée de la population, ordonnée selon le niveau de revenu, et la proportion cumulée du revenu total lui revenant. Le coefficient de Gini provient du calcul de l’aire entre la courbe de Lorenz et la droite de l’égalité parfaite. 
+
+- Plus cette aire est grande, plus l’inégalité est marquée. Les valeurs du coefficient de Gini varient entre 0 et 1. Une valeur de 0 indique que le revenu est également divisé entre tous les membres de la population, ceux-ci recevant exactement la même somme de revenu. Par contre, une valeur de 1 dénote une distribution parfaitement inégale au sein de laquelle une seule unité possède l’ensemble du revenu de l’économie. 
+
+- Une diminution de la valeur du coefficient de Gini peut être interprétée comme une diminution de l’inégalité, et vice versa.
+
+## Gini
+
+![](../../Images/Gini.png)
+
+
+## Indice de Palma
+
+https://jeanneemard.wordpress.com/2022/05/19/les-inegalites-au-quebec-de-1976-a-2020-selon-lindice-de-palma-et-le-coefficient-de-gini/
+
+![](../../Images/cours4_graph3.jpg)
+
+## Évolution de l'inégalité au Québec
+
+![](../../Images/cours4_graph4.jpg)
 
 
 ## Pour la semaine prochaine
@@ -93,8 +311,75 @@ Exemple d'application
 - https://juba.github.io/tidyverse/03-premier_travail.html
 
 
+<!--
+## Annexe 
+
+
+  
 
 
 
+```{r}
 
+library(tidyverse)
+library(summarytools)
+
+ind <- c(1:31)
+sexe <- c(rep("Homme", 15), rep("Femme", 16))
+Homme <- c(2, 2.5, 1.7, 3, 5, 4.1, 8.1, 5.2, 3.1, 1.4, 7.1, 6.0, 3.3, 4.3, 6.1)
+Femme <- c(3.1, 2.7, 1.2, 4.2, 5.5, 4.3, 2.0, 1.5, 0.5, 1.3, 2.9, 2.7, 5.1, 3.0, 6.3, 4.2)  
+
+donnee_revenu <- data.frame(ind, sexe, revenu = c(Homme, Femme))
+
+getmode <- function(v) {
+   uniqv <- unique(v)
+   uniqv[which.max(tabulate(match(v, uniqv)))]
+}
+
+
+# distribution de fréquence
+
+revenu_homme <-
+  donnee_revenu %>% 
+  filter(sexe == "Homme")
+
+freq(revenu_homme$revenu)
+
+
+revenu_femme <-
+  donnee_revenu %>% 
+  filter(sexe == "Femme")
+
+freq(revenu_femme$revenu)
+
+freq(donnee_revenu$revenu)
+
+
+revenu_moyen <-
+  donnee_revenu %>% 
+  group_by(sexe) %>% 
+  summarise(minimum = min(revenu),
+            maximum = max(revenu),
+            moyenne = mean(revenu),
+            mediane = median(revenu),
+            mode = getmode(revenu),
+            q1 = quantile(revenu, probs = 0.25),
+            q3 = quantile(revenu, probs = 0.75))
+revenu_moyen
+
+# Representation
+
+ggplot(revenu_femme) +
+  geom_boxplot(aes(x = revenu)) +
+  coord_flip()
+
+
+ggplot(donnee_revenu) +
+  geom_boxplot(aes(x = sexe, y = revenu, color = sexe)) +
+  theme_bw()
+
+```
+
+
+-->
 

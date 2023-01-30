@@ -1,0 +1,120 @@
+---
+title: "Labo statistique 2: Distribution de fréquences et de pourcentages"
+subtitle: "Préparation des données"
+author:
+- Visseho Adjiwanou ^[corresponding author - adjiwanou.vissého@uqam.ca]
+- Sociology department, Université du Québec à Montréal (UQAM)
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output:
+  pdf_document: default
+  html_document: 
+    toc: true
+    toc_depth: 3
+  word_document: default
+  citation_package: natbib
+#  template: svm-latex-ms2.tex 
+#bibliography: Remarriage_autonomy.bib
+---
+
+
+## Mesure des paramètres de dispersion
+
+```{r}
+
+rm(list = ls())
+
+
+#library(qss)
+library(tidyverse)
+library(summarytools)
+#library(tinytex)
+
+cis_2015 <- read_csv("CIS-72M0003-E-2015_F1.csv")
+
+
+summary(cis_2015$CFATINC) 
+
+freq(cis_2015$PROV)
+freq(cis_2015$AGEGP)
+```
+
+
+## Sélection les variables importantes et création de nouvelles variables
+
+```{r}
+
+cis_short <-
+  cis_2015 %>% 
+  select(PUMFID, PERSONID, AGEGP, SEX, MARST, PROV, IMMSTP, YRIMMGP, CMPHI, HLEV2G, CFID, CFSIZE, CFMJSI, CFATINC, CFEARNG, EFID, EFSIZE, EFATINC, HHSIZE, FWEIGHT) %>% 
+  mutate(Province = case_when(
+    PROV == 10 ~ "Terre-Neuve-et-Labrador",
+    PROV == 11 ~ "Ile du prince Edouard",
+    PROV == 12 ~ "Nouvelle-Écosse",
+    PROV == 13 ~ "Nouveau-Brunswick",
+    PROV == 24 ~ "Québec",
+    PROV == 35 ~ "Ontario",
+    PROV == 46 ~ "Manitoba",
+    PROV == 47 ~ "Saskatchewan",
+    PROV == 48 ~ "Alberta",
+    PROV == 59 ~ "Colombie Britanique"
+  ),
+  region = case_when(
+    PROV <= 13 ~ "Atlantique",
+    PROV == 24 ~ "Québec",
+    PROV == 35 ~ "Ontario",
+    PROV >=46 & PROV <= 48 ~ "Ouest",
+    PROV == 59 ~ "Colombie Britanique"
+  ),
+  sexe = if_else(SEX == 1, "Homme", "Femme"),
+  statut_mat = case_when(
+    MARST == 1 ~ "Marié",
+    MARST == 2 ~ "Conjoint de fait",
+    MARST == 3 ~ "Séparé",
+    MARST == 4 ~ "Divorcé",
+    MARST == 5 ~ "Veuf",
+    MARST == 6 ~ "Jamais marié",
+    MARST == 96 ~ "Non applicable",
+    MARST == 99 ~ "Non réponse"),
+  niveau_educ = case_when(
+    HLEV2G == 1 ~ "Moins que le diplôme d'études secondaires",
+    HLEV2G == 2 ~ "Diplôme d'études secondaires ou études postsecondaires partielles",
+    HLEV2G == 3 ~ "Certificat ou diplôme postsecondaire non universitaire",
+    HLEV2G == 4 ~ "Diplôme ou certificat universitaire",
+    HLEV2G == 6 ~ "Non applicable",
+    HLEV2G == 9 ~ "Non réponse"
+  ))
+
+
+write.csv(cis_short, file = "cis_short_2015.csv")
+
+#sort(cis_short$CFATINC)
+```
+
+CMPHI : Flag - Person completed high school
+HLEV2G : Highest level of education of person, 2nd grouping
+EFID : Economic family identifier
+EFSIZE : Number of economic family members
+EFATINC : EF - After-tax income
+HHSIZE : Number of household members
+FWEIGHT : Final weight
+IMMSTP: Flag - Person is a landed immigrant
+YRIMMGP: Number of years since person immigrated to Canada, grouping
+CMPHI: Flag - Person completed high school
+
+
+## Séparer les données
+
+```{r}
+
+
+require(caret)
+require(klaR)
+set.seed(12346)
+trainIndex <- caret::createDataPartition(cis_short_2015$Province, p=5 / 100 , list=FALSE)
+cis_short_5percent_2015 <- cis_short_2015[ trainIndex,]
+testdata <- cis_short_2015[-trainIndex,]
+BSkyLoadRefresh("cis_short_5percent_2015")
+BSkyLoadRefresh("testdata")
+
+```
+
