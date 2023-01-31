@@ -321,6 +321,8 @@ Il pourrait en être de même pour tout type de phénomène social - enlèvement
 
 >- Personnes inactives sont celles qui, considérant les conditions qui existaient sur le marché du travail dans leur région, ne désiraient ou ne pouvaient offrir ou fournir leurs services au cours de la semaine de référence (ceci comprend les personnes qui étaient actuellement aux études à temps plein). 
 
+## Dimension économique - définition des concepts
+
 >- La période de référence utilisée dans l’EIACA pour la situation d’emploi était la date de l’interview. La question suivante a été posée aux répondants : « Quelle est votre situation actuelle d’emploi? »
 
 >- Taux d’emploi Nombre de personnes en emploi parmi la population totale de 15 ans et plus. 
