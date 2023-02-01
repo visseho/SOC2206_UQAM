@@ -3,8 +3,8 @@ title: 'Labo 5: Paramètres de tendance centrale'
 author: "Visseho Adjiwanou, PhD."
 date: "`r format(Sys.time(), '%d %B %Y')`"
 output:
-  word_document: default
   pdf_document: default
+  word_document: default
   html_document: default
 institute: Département de Sociologie - UQAM
 ---
@@ -55,7 +55,7 @@ A partir de ce graphique, répondez aux questions suivantes:
 
 ## Question 3: Vrai ou faux, justifier (ou donner un exemple selon les cas)
 
-1. les scores-Z sont particulièrement utiles lorsque l'on compare des scores provenant de distributions dont les moyennes et les écart-types sont différents (Vrai ou Faux)
+1. Les scores-Z sont particulièrement utiles lorsque l'on compare des scores provenant de distributions dont les moyennes et les écart-types sont différents (Vrai ou Faux)
 
 2. La moyenne d'une variable standardisée vaut 1 (Vrai ou Faux)
 
@@ -71,7 +71,7 @@ A partir de ce graphique, répondez aux questions suivantes:
 
 8. Si la moyenne d'heure d'écoute de la télé est de 2,90 et l'écart-type est de 2,14, alors l'intervalle de confiance à 95% est de 2,77 à 3,03 (Vrai ou Faux)
 
-## Question 4 - représentation graphique
+## Question 4 - Représentation graphique
 
 Quelles sont les types de représentation graphique que l'on peut faire avec une variable quantitative (ratio ou intervalle) ?
 
