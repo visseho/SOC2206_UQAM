@@ -395,73 +395,9 @@ https://jeanneemard.wordpress.com/2022/05/19/les-inegalites-au-quebec-de-1976-a-
 
 ## Annexe 
 
-
+- Voir le fichier Seance4_Annexe pour voir comment les données sont entrées et analysées avec RStudio.
   
 
 
-
-```{r}
-
-library(tidyverse)
-library(summarytools)
-
-ind <- c(1:31)
-sexe <- c(rep("Homme", 15), rep("Femme", 16))
-Homme <- c(2, 2.5, 1.7, 3, 5, 4.1, 8.1, 5.2, 3.1, 1.4, 7.1, 6.0, 3.3, 4.3, 6.1)
-Femme <- c(3.1, 2.7, 1.2, 4.2, 5.5, 4.3, 2.0, 1.5, 0.5, 1.3, 2.9, 2.7, 5.1, 3.0, 6.3, 54.2)  
-
-donnee_revenu <- data.frame(ind, sexe, revenu = c(Homme, Femme))
-
-getmode <- function(v) {
-   uniqv <- unique(v)
-   uniqv[which.max(tabulate(match(v, uniqv)))]
-}
-
-
-# distribution de fréquence
-
-revenu_homme <-
-  donnee_revenu %>% 
-  filter(sexe == "Homme")
-
-freq(revenu_homme$revenu)
-
-
-revenu_femme <-
-  donnee_revenu %>% 
-  filter(sexe == "Femme")
-
-freq(revenu_femme$revenu)
-
-freq(donnee_revenu$revenu)
-
-
-revenu_moyen <-
-  donnee_revenu %>% 
-  group_by(sexe) %>% 
-  summarise(minimum = min(revenu),
-            maximum = max(revenu),
-            moyenne = mean(revenu),
-            mediane = median(revenu),
-            mode = getmode(revenu),
-            q1 = quantile(revenu, probs = 0.25),
-            q3 = quantile(revenu, probs = 0.75))
-revenu_moyen
-
-# Representation
-
-ggplot(revenu_femme) +
-  geom_boxplot(aes(x = revenu)) +
-  coord_flip()
-
-
-ggplot(donnee_revenu) +
-  geom_boxplot(aes(x = sexe, y = revenu, color = sexe)) +
-  theme_bw()
-
-```
-
-
--->
 
 
