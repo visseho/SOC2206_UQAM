@@ -292,15 +292,15 @@ M = 2.6
 
 $$Md = L + (\frac{N/2 - F}{f})(i)$$
 
-- L = la limite inférieure de l'intervalle contenant la médiane (2.5)
+>- L = la limite inférieure de l'intervalle contenant la médiane (2.5)
 
-- N = le nombre de cas (1281)
+>- N = le nombre de cas (1281)
 
-- F = la fréquence cumulative des scores inférieurs à l'intervalle contenant la médiane (616)
+>- F = la fréquence cumulative des scores inférieurs à l'intervalle contenant la médiane (616)
 
-- f = le nombre de scores que comprend l'intervalle contenant la médiane (299)
+>- f = le nombre de scores que comprend l'intervalle contenant la médiane (299)
 
-- i = la largeur de l'intervalle contenant la médiane (1)
+>- i = la largeur de l'intervalle contenant la médiane (1)
 
 >- Md = 2.5 +(1281/2 - 616)/299*1 = 2.6
 
@@ -321,9 +321,12 @@ Exemple d'application : mesurer l'inégalité
 ## Coefficient de Gini
 
 - Le coefficient de Gini sert à mesurer le niveau d’inégalité de la répartition du revenu au sein de diverses populations ou au sein de la même population au fil du temps. 
-- Il peut être calculé pour d'autres indicateurs autre que le revenu. 
-- La courbe de Lorenz (figure) présente le rapport entre la proportion cumulée de la population, ordonnée selon le niveau de revenu, et la proportion cumulée du revenu total lui revenant. 
-- Le coefficient de Gini provient du calcul de l’aire entre la courbe de Lorenz et la droite de l’égalité parfaite. 
+
+>- Il peut être calculé pour d'autres indicateurs autre que le revenu. 
+
+>- La courbe de Lorenz (figure) présente le rapport entre la proportion cumulée de la population, ordonnée selon le niveau de revenu, et la proportion cumulée du revenu total lui revenant. 
+
+>- Le coefficient de Gini provient du calcul de l’aire entre la courbe de Lorenz et la droite de l’égalité parfaite. 
 
 ## Coefficient de Gini
 
@@ -351,14 +354,19 @@ https://jeanneemard.wordpress.com/2022/05/19/les-inegalites-au-quebec-de-1976-a-
 ## Indice de Palma
 
 - IP est obtenu en divisant le revenu total des membres du 10e décile par le revenu total des membres des quatre premiers déciles (les plus pauvres)
-- Un IP égal à 1 signifie que les ménages du décile le plus riche gagnent en moyenne quatre fois plus que ceux des quatre déciles les plus pauvres, 
-- Un IP égal à 2 équivaut à huit fois plus et ainsi de suite.
+
+>- Un IP égal à 1 signifie que les ménages du décile le plus riche gagnent en moyenne quatre fois plus que ceux des quatre déciles les plus pauvres, 
+
+>- Un IP égal à 2 équivaut à huit fois plus et ainsi de suite.
 
 
 ## Quel revenu utilisé?
 
-- Le **revenu ajusté** est obtenu en divisant le revenu total de tous les membres d’un ménage par la racine carrée de la taille de ce ménage. 
-- Par exemple, le revenu ajusté des membres d’un ménage de quatre personnes qui a un revenu total de 100 000\$ sera de 50 000 \$ (100 000 \$ / $\sqrt4$, soit 2, = 50 000 \$) et ce revenu sera accordé aux quatre membres de ce ménage.
+>- Le **revenu ajusté** est obtenu en divisant le revenu total de tous les membres d’un ménage par la racine carrée de la taille de ce ménage. 
+
+>- Par exemple, le revenu ajusté des membres d’un ménage de quatre personnes qui a un revenu total de 100 000\$ sera de ?
+
+>- 50 000 \$ (100 000 \$ / $\sqrt4$, soit 2, = 50 000 \$) et ce revenu sera accordé aux quatre membres de ce ménage.
 
 ## Quel revenu utilisé?
 
