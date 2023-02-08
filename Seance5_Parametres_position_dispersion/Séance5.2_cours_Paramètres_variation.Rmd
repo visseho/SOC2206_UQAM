@@ -4,12 +4,12 @@ title: "Séance 5.1: Paramètres de variation"
 author: "Visseho Adjiwanou, PhD."
 date: "`r format(Sys.time(), '%d %B %Y')`"
 output:
-  slidy_presentation: default
+  ioslides_presentation: default
   beamer_presentation:
     colortheme: beaver
     fonttheme: structurebold
     theme: AnnArbor
-  ioslides_presentation: default
+  slidy_presentation: default
 ---
 
 ## Plan de présentation
@@ -260,7 +260,7 @@ courbe_normale
 
 ## La distribution normale: Propriété
 
-![](Courbe_normale.png)
+![](../Images/Courbe_normale.png)
 
 Quelque soit la forme de la loi normale:
 
@@ -381,8 +381,18 @@ Distribution d'échantillonnage
 >- (10, 11, 13) avec la moyenne de 11,3 ans
 >- (10, 11, 14) avec la moyenne de 11,7 ans
 >- (11, 13, 14) avec la moyenne de 12,7 ans
+>- (10, 13, 14) avec la moyenne de 12,3 ans
 
->- 11,3; 11,7 et 12,7 est appellé la distribution d'échantillonnage
+>- 11.3; 11.7; 12.7 et 12.3 est appellé la distribution d'échantillonnage
+
+## Distribution d'échantillonnage
+
+- Exemple simple
+
+>- 11.3; 11.7; 12.7 et 12.3 est appellé la distribution d'échantillonnage
+
+- Quel est la moyenne de cette distribution d'échantillonnage?
+- Que constatez-vous?
 
 
 ## Distribution d'échantillonnage
@@ -482,7 +492,7 @@ Théorème central limite - Règle de l'Approximation Normale (généralité)
 ## Forme de la distribution d'échantillonnage
 
 
-![](distribution_echantillonnage.jpg)
+![](../Images/distribution_echantillonnage.jpg)
 
 
 
@@ -496,7 +506,7 @@ Donc, quand n s'accroît, la distribution d'échantillonnage de $\bar{X}$ est de
 
 ## Théorème central limite (Règle de l'Approximation Normale)
 
-![](tcl.jpg)
+![](../Images/tcl.jpg)
 
 
 

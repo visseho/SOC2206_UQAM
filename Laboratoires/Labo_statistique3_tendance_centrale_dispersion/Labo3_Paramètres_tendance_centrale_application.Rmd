@@ -1,0 +1,52 @@
+---
+title: "Labo statistique 3: Paramètres de tendance centrale"
+author:
+- Visseho Adjiwanou ^[corresponding author - adjiwanou.vissého@uqam.ca]
+- Sociology department, Université du Québec à Montréal (UQAM)
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output:
+  pdf_document: default
+  html_document: 
+    toc: true
+    toc_depth: 3
+  word_document: default
+  citation_package: natbib
+#  template: svm-latex-ms2.tex 
+#bibliography: Remarriage_autonomy.bib
+---
+
+## Introduction
+
+- Continuer la découverte de l'environnement de BlueSky
+- Travailler avec le menu "dataset" et "analysis"
+- Données 
+    - cis_short_5percent_95.csv
+
+
+## Base de données
+
+Nous allons continuer avec la base de données que nous avons utilisées la fois passée cis_short_5percent_95.csv.
+
+1. Dressez le tableau de fréquence de la variable province.
+2. Sélectionner les données de Québec et de l'Ontario. Rappelez-vous que Québec était mal orthographié.
+
+
+## Paramètres de tendance centrale
+
+1. Calculer pour les variables suivantes si c'est possible les paramètres de tendance centrale (moyenne, mode, médiane, premier quartile, troisimène quartile, les déciles) 
+  - sexe
+  - état matrimonial
+  - niveau d'éducation
+  - revenu (CFATINC)
+
+2. Faites les mêmes choses pour chaque province (Québec et Ontario)
+
+3. Calculer l'indice de Palma pour le Québec et l'Ontario
+
+## Graphiques
+
+4. Représenter graphiquement le diagramme de quartile pour la variable revenu selon la province.
+
+5. Interpréter les résultats
+
+

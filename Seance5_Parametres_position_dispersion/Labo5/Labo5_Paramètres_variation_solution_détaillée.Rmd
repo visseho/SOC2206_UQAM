@@ -1,11 +1,12 @@
 ---
-title: "Labo 5: Paramètres de tendance centrale"
+title: 'Labo 5: Paramètres de tendance centrale'
 author: "Visseho Adjiwanou, PhD."
-institute: "Département de Sociologie - UQAM"
 date: "`r format(Sys.time(), '%d %B %Y')`"
 output:
-  pdf_document: default
+  word_document: default
   html_document: default
+  pdf_document: default
+institute: Département de Sociologie - UQAM
 ---
 
 
@@ -200,41 +201,10 @@ variance <- 5.099^2
 
 4. En se basant sur les propriétés de la courbe normale, nous pouvons dire que 68% des répondant.es se sont marié.es entre les âges 22.19 - 5.099 et 22.19 + 5.099, soit entre 17.10 et 27.29 ans.  
 
+
 5. En se basant sur les propriétés de la courbe normale, nous pouvons dire que 95% des répondant.es se sont marié.es entre les âges `22.19 - 2*5.099` et `22.19 + 2*5.099` soit entre 12.00 ans et 32.38 ans
 
 
-## Question 3: Vrai ou faux, justifier (ou donner un exemple selon les cas)
-
-1. les scores-Z sont particulièrement utiles lorsque l'on compare des scores provenant de distributions dont les moyennes et les écart-types sont différents (Vrai ou Faux)
-
-**Vrai**
-
-2. La moyenne d'une variable standardisée vaut 1 (Vrai ou Faux)
-
-**Faux, il vaut 1. C'est l'écart-type qui vaut 1.**
-
-3. On peut calculer les scores-Z pour les variables ordinales (Vrai ou Faux)
-
-**Faux**
-
-4. Si vous prenez deux distributions normales A et B avec A plus applatie (signifie quoi) que l'autre, alors la proportion des scores qui se trouve à 1,5 écart-type de la moyenne de A est plus grande que la proportion des scores qui se trouve à 1,5 écart-type de la moyenne de B (Vrai ou Faux)
-
-**Faux**
-
-5. La distribution d'échantillonnage n'est rien d'autre que la distribution d'un échantillon (Vrai ou Faux)
-
-- Voir Solution détaillée à la fin.
-
-
-6. Énoncez et expliquer le théorème de la **limite centrale**
-
-- Voir solution détaillé à la fin
-
-7. Il n'y a pas de différence entre l'**écart-type** et l'**erreur-type**
-
-- Voir Solution détaillée à la fin
-
-8. Si la moyenne d'heure d'écoute de la télé est de 2,90 et l'écart-type est de 2,14, alors l'intervalle de confiance à 95% est de 2,77 à 3,03 (Vrai ou Faux)
 
 ## Question 4 - représentation graphique
 
@@ -422,28 +392,7 @@ Pour répondre à cette question, j'ai besoin des données de 2009. Je vous lais
 
 
 
-<!-- Cette partie est un travail en développement. Vous ne devez pas le lire
 
-# Représentation graphique
-Si nous supposons que les échantillons en questions sont tirés de la population de toutes les voitures, d'après le théorème centrale limite, nous pouvons dire que ces moyennes sont distribués de manière normale avec pour moyenne la moyenne obtenue et et erreur-type, l'écart-type divisé par la racine carré de N
-
-
-```{r}
-
-erreur_type_1994 <- ecart_1994/sqrt(18)
-erreur_type_1994
-
-
-ggplot(data = data.frame(x = c(15, 35)), aes(x)) +
-  geom_function(fun = dnorm, args = list(mean = Tendance_1994[1, 2], sd = erreur_type_1994[1]), color = "red") +
-  geom_function(fun = dnorm, args = list(mean = Tendance_1994[2, 2], sd = erreur_type_1994[2]), color = "blue")
-
-
-Tendance_1994[2, 2]
-
-```
-
--->
 
 ## Solution de la question 4
 
@@ -457,7 +406,7 @@ Réponse: Faux.
 Une distribution d’échantillonnage correspond à une distribution de statistiques quelconques (moyennes, médianes, etc.) provenant de tous les échantillons possibles d’une taille donnée que l’on peut tirer d’une population déterminée. Une distribution d'un échantillon est la distribution des scores à l'intérieur d'un échantillon d'une taille donnée.
 
 
-Voici une manière de comprendre la distribution d'échantillon. On va utiliser les données du marathon de Boston de 2012. le tableau présente la description de cette base de données:
+Voici une manière de comprendre la distribution d'échantillon. On va utiliser les données du marathon de Boston de 2012. Le tableau présente la description de cette base de données:
 
 Variables    Description
 -----------  -----------------------
@@ -468,7 +417,7 @@ V4           Division
 V5           Pays
 V6           Temps mis
 
-Pour estimer le temps moyen que ce marathon a été couru, nous n'avons pas besoin d'avoir forcément l'ensemble des résultats de la course. Un échantillon représentatif devrait suffire à nous fournir ce résultat. Donc, nous allons prendre un échantillon de 40 coureurs et calculer le temps moyen mis. Pour le moment, nous vivons comme ci nous ne connaissons par le temps vrai (issu de la course).
+Pour estimer le temps moyen que ce marathon a été couru, nous n'avons pas besoin d'avoir forcément l'ensemble des résultats de la course. Un échantillon représentatif devrait suffire à nous fournir ce résultat. Donc, nous allons prendre un échantillon de 40 coureurs et calculer le temps moyen mis. Pour le moment, nous vivons comme si nous ne connaissons par le temps vrai (issu de la course).
 
 Nous chargeons la base de données dans R.
 
@@ -485,7 +434,7 @@ Pour tirer un échantillon, nous allons utiliser la fonction **sample_n** du pac
 
 ```{r}
 #install.packages("dplyr")
-library(dplyr)
+library(tidyverse)
 set.seed(430)
 marathon_S1 <- sample_n(marathon, 40, replace = FALSE)
 
@@ -542,11 +491,12 @@ J'ai utilisé ce générateur en ligne pour le calculer : https://www.dcode.fr/c
 
 Bref, revenons à notre exercice. Aujourd'hui avec la puissance des machine, on peut déterminer en une fraction de secondes le nombre total d'échantillon. Mais, au fait, si on peut tirer tous ces échantillons, n'est-il juste pas plus simple de collecter l'information sur l'ensemble de la population ? Bien sûr. Dans les faits, on ne tirera jamais plus d'un échantillon. 
 
-Si je prenais par contre 10 échantillons de taille 40, la distribution que j'obtiens de la moyenne est ce qu'on appelle **une distribution d'échantillonnage**. Voyons ce que cela donne :
+Si je prenais par contre 100 échantillons de taille 40, la distribution que j'obtiens de la moyenne est ce qu'on appelle **une distribution d'échantillonnage**. Voyons ce que cela donne :
 
 ```{r}
 
 set.seed(123432)
+
 marat_T40_R100 <- bind_rows(replicate(100, sample_n(marathon, 40, replace = FALSE), simplify = F), .id = "Obs")
 
 ```
@@ -558,17 +508,17 @@ En lisant cette syntaxe de la droite vers la gauche, cela veut dire que :
 
 C'est tout. Vous voyez que cela me donne un échantillon de 4000 observations. La variable Obs distingue ainsi chaque unique échantillon.
 
-Si nous calculons alors la moyenne de chaque échantillon on obtient la base de données avec les moyenne. On va utiliser la fonction stby de summarytools pour faire cela facilement. remarquez une fois de plus que je charge ce package avant de l'utiliser.
+Si nous calculons alors la moyenne de chaque échantillon on obtient la base de données avec les moyenne. On va utiliser la fonction stby de summarytools pour faire cela facilement. Remarquez une fois de plus que je charge ce package avant de l'utiliser.
 
 ```{r}
-library(summarytools)
+#library(summarytools)
 
-with(marat_T40_R100, stby(data = V6, INDICES = Obs,
-     FUN = descr, stats = c("mean")))
+#with(marat_T40_R100, stby(data = V6, INDICES = Obs,
+#     FUN = descr, stats = c("mean")))
 
 ```
 
-Sammarytools ne semble pas fonctionner, je vais utiliser une autre option:
+Summarytools ne semble pas fonctionner, je vais utiliser une autre option:
 
 ```{r}
 
@@ -590,16 +540,16 @@ hist(Moyenne_T40_R100$moyenne)
 
 ```
 
-On voit ainsi que cela à l'allure d'une coure normale.
+On voit ainsi que cela à l'allure d'une courbe normale.
 
-Que pensez-vous que la moyenne de ces moyenne va nous donner?
+Que pensez-vous que la moyenne de ces moyennes va nous donner?
 
 ```{r}
 moyenne_moyenne <- mean(Moyenne_T40_R100$moyenne)
 moyenne_moyenne
 ```
 
-cela nous donne exactement 263 minutes, ce qui est exactement la vraie moyenne à quelque centième de seconde près. Bingo, la moyenne des moyennes nous donne une estimation de la vrai moyenne.
+Cela nous donne exactement 263 minutes, ce qui est exactement la vraie moyenne à quelque centième de seconde près. Bingo, la moyenne des moyennes nous donne une estimation de la moyenne de la population.
 
 Pour faire cet exercice, voici un peu toutes les recherches que j'ai faites sur le net:
 
@@ -647,7 +597,7 @@ hist(Moyenne_T40_R100$moyenne)
 
 ```
 
-et la moyenne des moyenne vaut
+et la moyenne des moyennes vaut
 
 ```{r}
 
@@ -686,9 +636,9 @@ Alors, faites la même chose en choississant un échantillon de 150 coureur.es.
 
 7. Il n'y a pas de différence entre l'**écart-type** et l'**erreur-type**
 
-l'écart-type est ce que vous calculer à partir d'un seul échantillon, alors que l'erreur-type est ce que vous calculer à partir d'une distribution d'échantillonnage. Donc, en haut, j'ai plutôt calculé les erreurs-types.
+l'écart-type est ce que vous calculez à partir d'un seul échantillon, alors que l'erreur-type est ce que vous calculez à partir d'une distribution d'échantillonnage. Donc, en haut, j'ai plutôt calculé les erreurs-types.
 
-Pouvez-vous e dire alors, comment sont calculés les erreurs-type?
+Pouvez-vous me dire alors, comment sont calculés les erreurs-type?
 
 **N'est-ce pas formidable les statistiques?**
 
