@@ -58,7 +58,7 @@ library(tidyverse)
 - Comme dit plus haut, Tidyverse va nous servir à faire tout ce travail.
 - Comme toujours, imitez au maximum ce que je fais
 
-![](/Users/visseho/OneDrive - UQAM/Cours/Images_cours/r4ds.jpg)
+![](../../Images/r4ds.jpg)
 
 
 
@@ -188,7 +188,7 @@ RStudio offre aux utilisateurs :
 
 La figure 1.1 montre une capture d'écran de RStudio.
 
-![](/Users/visseho/OneDrive - UQAM/Cours/Images_cours/Screenshot_RStudio.jpg)
+![](../../Images/Screenshot_RStudio.jpg)
 
 
     
@@ -211,18 +211,18 @@ Présentation de BlueSky Statistics (BSS)
 
 ## Présentation
 
-![](/Users/visseho/OneDrive - UQAM/Cours/Images_cours/screenshot_bluesky.png)
+![](../../Images/screenshot_bluesky.png)
 
 ## Principaux menus et leur utilisation
 
-1. Menu d'ouverture de base de données 
+1. **Menu d'ouverture de base de données**
 2. "Datasets": Traitement sur les bases de données
 3. "Variables": traitement sur les variables
-  - Créer et recoder des variables 
-  - Traiter les données manquantes ...
+    - Créer et recoder des variables 
+    - Traiter les données manquantes ...
 4. "Analysis": 
-  - *Summary* pour les fréquences, les paramètres de tendance centrale et de dispersion
-  - Statistiques bivariées
+    - *Summary* pour les fréquences, les paramètres de tendance centrale et de dispersion
+    - Statistiques bivariées
 5. "Graphics": pour faire les visualisations
 6. "Model Fitting" pour les analyses de régression
 

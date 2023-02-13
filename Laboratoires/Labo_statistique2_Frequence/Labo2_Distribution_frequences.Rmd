@@ -49,9 +49,9 @@ cis_short <-
   mutate(Province = case_when(
     PROV == 10 ~ "Terre-Neuve-et-Labrador",
     PROV == 11 ~ "Ile du prince Edouard",
-    PROV == 12 ~ "Nouvelle-Écosse",
+    PROV == 12 ~ "Nouvelle-Ecosse",
     PROV == 13 ~ "Nouveau-Brunswick",
-    PROV == 24 ~ "Québec",
+    PROV == 24 ~ "Quebec",
     PROV == 35 ~ "Ontario",
     PROV == 46 ~ "Manitoba",
     PROV == 47 ~ "Saskatchewan",
@@ -60,7 +60,7 @@ cis_short <-
   ),
   region = case_when(
     PROV <= 13 ~ "Atlantique",
-    PROV == 24 ~ "Québec",
+    PROV == 24 ~ "Quebec",
     PROV == 35 ~ "Ontario",
     PROV >=46 & PROV <= 48 ~ "Ouest",
     PROV == 59 ~ "Colombie Britanique"
