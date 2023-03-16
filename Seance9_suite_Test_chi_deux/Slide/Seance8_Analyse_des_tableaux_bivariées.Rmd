@@ -1,0 +1,345 @@
+---
+title: "Seance 8: Mesure de l'association entre deux variables"
+author: "Visseho Adjiwanou, PhD."
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output:
+  beamer_presentation:
+    colortheme: beaver
+    fonttheme: structurebold
+    theme: Ilmenau
+  ioslides_presentation: default
+  slidy_presentation: default
+---
+
+
+## Au programme aujourd'hui  
+
+1. Association entre deux variables catégorielles : 
+
+  - Tableaux croisés
+
+  - Visualisation de la relation entre deux variables catégorielles
+  
+2. Direction de la relation
+  
+3. Intensité de la relation
+
+4. Labo
+
+5. A faire pour la semaine prochaine
+
+
+
+Statistiques bivariées
+========================================================
+
+## Introduction
+
+- Le cours précédent nous a permis de décrire les caractéristiques d'un échantillon en analysant ses paramètres de position et de dispersion. 
+- Mais, en tant que sociologues, nous allons loin que cela. Ce qui nous intéresse, ce sont les relations causales dans lesquelles nous faisons l’hypothèse qu'une variable indépendante affecte une variable dépendante
+
+## Introduction 
+
+- Par exemple: 
+
+ - Est-ce que le vaccin A protège contre la maladie X?
+ - Les classes de petite taille augmentent-elles les résultats des tests standardisés des élèves? 
+ - Les soins de santé universels amélioreraient-ils la santé et les finances des pauvres?
+ - L'éducation réduit-elle le nombre d'enfants?
+ - La rémunération des gens sur Wikipedia augmentera-elle leur productivité?
+ - Est-ce que l'augmentation du salaire minimum réduit l'activité économique?
+ - Est-ce le statut marital influe sur le bonheur?
+
+## Introduction 
+    
+ - La réponse à ces questions va au-delà des logiciels statistiques. Elle commence et finit avec vous.
+ - les logiciels/statistiques ne nous donnent qu'une indication.
+
+## Conditions de la causalité
+
+- L'une des conditions de la causalité est l'existence d'association entre la variable indépendante et la variable dépendante.
+
+- L'analyse de cette association dépend du type des variables indépendantes et dépendantes
+
+## Conditions de la causalité
+
+>  1. Deux variables factorielles ou catégorielles (nominale ou ordinale) : Recours aux tableaux bivariés
+
+>  2. Variable dépendante continue (ratio ou d'intervalle) et variable indépendante factorielle : Différences de moyennes ou Analyse de la variance (ANOVA)
+
+>  3. Deux variables continues : Technique de régression
+    
+> - Les graphiques permettent aussi de mettre en exergue ces relations. 
+
+
+## Répondre à 6 questions
+
+ 1. Y a-t-il une relation entre les deux variables ?
+
+ 2. Quelle est l'intensité de cette relation
+
+ 3. Quelles sont la direction et la forme de cette relation?
+
+> 4. Pouvons-nous généraliser la relation à la population de laquelle est tiré l'échantillon?
+
+> 5. La relation est-elle vraiment causale?
+
+> 6. Quelles sont les variables intermédiaires qui relient les variables indépendantes et dépendante?
+
+> - Aujourd'hui, nous allons nous intéresser aux trois premières questions.
+
+
+1. Mesure de l'association entre deux variables catégorielles
+================================================================
+
+Tableaux bivariés 
+=================================
+
+## Tableaux bivariés 
+
+> - Évaluer la relation entre les variables dépendantes et les variables indépendantes (ou entre deux variables)
+
+> - Donne une première indication de l'effet d'une variable indépendante sur la variable dépendante
+
+> - Les lignes et les colonnes n'ont pas la même signification
+
+> - Les variables dépendantes sont mises dans la colonne
+
+> - Les variables indépendantes sont mises en ligne
+
+> - L'interprétation fait référence à l'utilisation de fréquences marginales
+
+> - Remarque: Dans votre livre de cours, les colonnes et les lignes sont renversées. Ce n'est pas grave du moment où on sait lire les tableaux
+
+
+## Tableau croisé, effectif marginal, pourcentage marginal, pourcentage ligne, pourcentage colonne 
+
+
+![](/Users/visseho/OneDrive - UQAM/Cours/Images_cours/tableau_croise1.jpg)
+<!--
+```{r tc1, echo=FALSE,  out.width = '100%'}
+knitr::include_graphics("/Users/visseho/OneDrive - UQAM/Cours/Images_cours/tableau_croise1.jpg")
+```
+-->
+
+## Fréquences marginales ou pourcentages marginaux
+
+- Les fréquences marginales ne sont pas appropriées pour les comparaisons
+
+ - D'où l'importance des pourcentages marginaux
+
+## Exemple
+
+- Existe-il une relation entre le lieu de résidence et la connaissance sur le VIH/Sida?
+
+![Tableau croisé](/Users/visseho/OneDrive - UQAM/Cours/Images_cours/tableau_croise2.jpg)
+<!--
+
+```{r tc2, echo=FALSE,  out.width = '100%'}
+knitr::include_graphics("/Users/visseho/OneDrive - UQAM/Cours/Images_cours/tableau_croise2.jpg")
+```
+-->
+
+## Exemple
+- Mauvais tableau de pourcentage
+
+![](/Users/visseho/OneDrive - UQAM/Cours/Images_cours/tableau_croise3.jpg)
+<!--
+```{r tc3, echo=FALSE,  out.width = '100%', fig.align='center'}
+knitr::include_graphics("/Users/visseho/OneDrive - UQAM/Cours/Images_cours/tableau_croise3.jpg")
+```
+-->
+
+## Exemple
+
+- **Bon tableau, mais ...**
+
+![](/Users/visseho/OneDrive - UQAM/Cours/Images_cours/tableau_croise4.png)
+<!--
+```{r tc4, echo=FALSE,  out.width = '100%', fig.align='center'}
+knitr::include_graphics("/Users/visseho/OneDrive - UQAM/Cours/Images_cours/tableau_croise4.png")
+```
+-->
+
+- **... Mauvaise interprétation**: «Parmi les femmes vivant en zone rurale, seules 37,9% ont une connaissance approfondie du sida et 72,1% non; par conséquent, vivre dans des zones rurales vous rend moins susceptible d'avoir une connaissance complète du SIDA.
+
+
+
+## Exemple
+
+- **Bon tableau**
+
+![](/Users/visseho/OneDrive - UQAM/Cours/Images_cours/tableau_croise4.png)
+
+
+
+## ... Bonne interprétation
+
+- **Bonne interprétation**: La conclusion selon laquelle le lieu de résidence a un effet sur la connaissance du SIDA doit reposer sur une comparaison entre zones urbaines et rurales. Plus précisément, nous comparons les 54,6% avec les 37,9%. On note que les femmes en zones urbaines sont plus susceptibles que les femmes en zones rurales d’avoir une connaissance approfondie du sida. 
+
+- La comparaison des **sous-groupes** est donc essentielle pour la lecture d'un tableau explicatif à deux variables.
+
+
+## Règle générale
+
+- La règle générale - et extrêmement importante - lorsque l'on interprète un tableau est donc de **COMPARER LES POURCENTAGES ENTRE LES CATÉGORIES DE LA VARIABLE INDÉPENDANTE**
+
+- Vous devez mémoriser cela.
+
+
+Représentation graphique
+=======================================================
+
+## Diagramme de barres empilées
+
+![](barre-empilee.jpg)
+
+## Code pour le faire
+
+ggplot(base de donnée) +
+
+ geom_bar(aes(x = var1, position = var2))
+
+
+2. Direction de la relation
+========================================================
+
+## Direction de la relation
+
+Il existe au moins trois type de relation entre les variables :
+
+> Relation positive
+
+> Relation négative
+
+> Relation curvilinéaire
+
+
+## Relation positive
+
+![](/Users/visseho/OneDrive - UQAM/Cours/Images_cours/positive.jpg)
+
+<!--
+```{r positive, echo=FALSE,  out.height = '50%', fig.align='center'}
+knitr::include_graphics("/Users/visseho/OneDrive - UQAM/Cours/Images_cours/positive.jpg")
+```
+-->
+
+## Relation positive
+
+1. Relation positive : est une relation dans laquelle les scores les plus élevés d'une variable sont associées aux scores les plus élevés de l'autre variable
+
+  - Exemple?
+
+
+## Relation négative
+
+![](/Users/visseho/OneDrive - UQAM/Cours/Images_cours/negative.jpg)
+<!--
+```{r negative, echo=FALSE,  out.height = '60%', fig.align='center'}
+knitr::include_graphics("/Users/visseho/OneDrive - UQAM/Cours/Images_cours/negative.jpg")
+```
+-->
+
+## Relation négative
+
+2. Dans une **relation négative** les scores les plus élevés d'une variable sont liés aux scores les plus faibles de l'autre.
+  - Exemple?
+  
+## Relation curviliéaire
+
+![](/Users/visseho/OneDrive - UQAM/Cours/Images_cours/curvilineaire.png)
+<!--
+```{r curvilineaire, echo=FALSE,  out.width = '60%', fig.align='center'}
+knitr::include_graphics("/Users/visseho/OneDrive - UQAM/Cours/Images_cours/curvilineaire.png")
+```
+-->
+
+## Relation curviliéaire
+
+3. Une **relation curvilinéaire** peut prendre différentes formes, mais les plus simples sont les relations dans lesquelles les cas avec des valeurs fortes et faibles pour la variable indépendante ont des valeurs similaires pour la variable dépendante.
+
+  - A souvent la forme d'un **V** ou d'un **V renversé**
+  - Exemple?
+  
+## Problèmes avec les tableaux bivariés
+
+- Si vous avez des effectifs faibles dans les tableaux, essayer de regrouper les modalités
+- Effectif faible (moins de 30 par exemple)
+- Les deux variables ne sont pas forcement catégorielles. Que faire dans ce cas?
+    - Les regrouper en catégories 
+    - Problème : perte d'information 
+
+
+4. Intensité de la relation
+==================================================================
+
+## Intensité de la relation
+
+- Une relation peut-être nulle
+
+![](/Users/visseho/OneDrive - UQAM/Cours/Images_cours/association_nulle.png)
+<!--
+
+```{r, echo=FALSE,  out.width = '60%', fig.align='center'}
+knitr::include_graphics("/Users/visseho/OneDrive - UQAM/Cours/Images_cours/association_nulle.png")
+```
+-->
+
+## Intensité de la relation
+
+- Une relation peut-être modérée
+
+![](/Users/visseho/OneDrive - UQAM/Cours/Images_cours/association_moderee.png)
+<!--
+```{r, echo=FALSE,  out.width = '60%', fig.align='center'}
+knitr::include_graphics("/Users/visseho/OneDrive - UQAM/Cours/Images_cours/association_moderee.png")
+```
+-->
+
+## Intensité de la relation
+
+- ou forte
+
+![](/Users/visseho/OneDrive - UQAM/Cours/Images_cours/association_forte.png)
+<!--
+```{r, echo=FALSE,  out.width = '60%', fig.align='center'}
+knitr::include_graphics("/Users/visseho/OneDrive - UQAM/Cours/Images_cours/association_forte.png")
+```
+-->
+
+## Intensité de la relation
+
+- Nous sommes arrivés à ces différentes conclusions en regardant l'écart entre les pourcentages.
+- Mais, que faire si les variables dépendante et indépendantes ont plusieurs modalités?
+- On va apprendre des statistiques pour mesurer cette intensité dans le prochain cours
+
+## Mot de fin sur l'association et la causalité
+
+- Exemples de relations associatives et non causales
+  - le nombre de cigognes dans certaines régions d'Europe est associé au taux de natalité de ces régions
+  - Les crues du Gange en Inde sont associées au taux de criminalisation de la ville de New York
+  - le nombre d'accident de la route est associé aux fêtes
+
+
+LABO 8
+========================================================
+
+
+Pour la semaine prochaine
+==========================
+
+
+## Pour la semaine prochaine
+
+- Chez vous
+
+  - Test de chi-carré (Chapitre 6, pp.149-167)
+  - Mesure intensité (chapitre 7, pp.169-175)
+  - Présentation Powerpoint
+  - Labo 9
+
+- En classe
+
+    - Quiz 6
+    - Travail en groupe Labo 9

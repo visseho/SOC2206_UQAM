@@ -1,0 +1,61 @@
+---
+title: "Labo statistique 4: Paramètres de dispersion - extension"
+author:
+- Visseho Adjiwanou ^[corresponding author - adjiwanou.vissého@uqam.ca]
+- Sociology department, Université du Québec à Montréal (UQAM)
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output:
+  pdf_document: default
+  html_document: 
+    toc: true
+    toc_depth: 3
+  word_document: default
+  citation_package: natbib
+#  template: svm-latex-ms2.tex 
+#bibliography: Remarriage_autonomy.bib
+---
+
+## Introduction
+
+On va explorer le théorème de la limite centrale dans ce labo.
+
+Nous allons travailler avec les données `bm_results2012.txt` du marathon de Boston de 2012. 
+Le tableau ci-dessous présente les informations contenues dans cette base de données.
+
+Variables    Description
+-----------  -----------------------
+V1           Nom 
+V2           Sexe
+V3           Age
+V4           Division
+V5           Pays
+V6           Temps mis
+
+
+
+## Base de données
+
+
+1. Dressez le tableau de fréquence de la variable V2
+2. Sélectionner un échantillon aléatoire de 200 coureurs 
+
+
+## Paramètres de tendance centrale
+
+1. Calculer pour les variables suivantes si c'est possible les paramètres de tendance centrale (moyenne, mode, médiane, premier quartile, troisimène quartile, les déciles) 
+
+- V2
+- V6
+
+2. Faites les mêmes choses pour chaque pays (V5)
+
+
+## Graphiques
+
+4. Représenter graphiquement le diagramme de quartile pour la variable revenu selon la province.
+
+5. Interpréter les résultats
+
+## Paramètres de variation
+
+6. Calculer pour la variable suivante V6 les paramètres de variation

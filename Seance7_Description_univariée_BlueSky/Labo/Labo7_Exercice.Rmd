@@ -1,0 +1,55 @@
+---
+title: "Labo 7: Exercice"
+author: "Visseho Adjiwanou, PhD."
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output:
+  word_document: default
+  pdf_document: default
+  html_document: default
+---
+
+
+# Question 1
+
+A partir de la base de données **cis_short_5percent_2015.csv**, répondez aux questions suivantes:
+
+1. créer une nouvelle base de données nommée **base_25_44** en selectionnant les individus âgés de **25 à 44 ans**
+
+2. Créer une nouvelle base de données constituée des femmes du Québec. Nommez-la **Quebec_femme**
+
+3. A partir de la base de données **Quebec_femme**, répondez aux questions suivantes:
+
+    3.1. Combien y-a-t'il d'hommes et de femmes dans cette base de données? Pourquoi?
+
+    3.2. Calculer les paramètres de tendance centrale des variables CFATINC, AGEGP et sexe. Que constatez-vous? Interpréter votre résultat.
+
+    3.3. Calculer les paramètres de variation des variables CFATINC, AGEGP, et sexe. Que constatez-vous? Interpréter votre résultat.
+
+4. On retourne aux données initiales **cis_short_5percent_2015.csv**
+
+    4.1. Calculer le revenu moyen selon le sexe. Interprétez ce résultat à l'aulne de l'une de vos théories en sociologies.
+
+    4.2. Présenter le résultat du 4.1 dans un graphique.
+    
+
+# Question 2
+
+Vous travaillez à nouveau avec la base de données **cis_short_5percent_2015.csv**
+
+1. Créer une nouvelle variable **quintile_revenu** qui divise la distribution de revenu en 5 parties égales. Prenez soin d'enlever tous les revenus qui sont inférieurs ou égaux à 0 avant de construire cette nouvelle variable.
+
+2. Créer une nouvelle variable nommée **revenu_z** en prenant le z score de revenu.
+
+3. Calculer la moyenne et l'écart-type de cette nouvelle variable **revenu_z**. Que constatez-vous? Êtes-vous surpris par ce résultat?
+
+4. Créer une nouvelle variable nommée groupe_age qui prend les valeurs suivantes:
+
+    - "moins de 18" ans si l'âge est plus petit que (<)  18 ans
+    - "18 - 24" ans si l'âge est compris entre 18 et 24 ans
+    - "25 - 44 ans" si l'âge est compris entre 25 et 44 ans
+    - "45 - 59 ans" si l'âge est compris entre 45 et 59 ans
+    - "plus de 60 ans" si l'âge est supérieur ou égale (>=) à 60 ans
+
+5. Comparer le revenu moyen des "25-44 ans" par rapport au revenu moyen des "45 - 69 ans". Interprétez le résultat à l'aulne d'une de vos théories sociologiques. 
+
+6. Quelles autres questions de recherche pensez-vous pouvoir répondre à partir de ces données? Quelles théories socilogiques allez-vous mobiliser pour répondre à ces questions?

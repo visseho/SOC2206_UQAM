@@ -246,6 +246,8 @@ V6           Temps mis
 rm(list = ls())
 marathon <- read.csv("bm_results2012.txt", header = FALSE, quote = "")
 
+write_csv(marathon, file = "bm_results2012.csv")
+
 ```
 
 

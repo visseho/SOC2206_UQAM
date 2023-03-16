@@ -6,7 +6,7 @@ output:
   beamer_presentation:
     colortheme: beaver
     fonttheme: structurebold
-    theme: AnnArbor
+    theme: Ilmenau
   ioslides_presentation: default
   slidy_presentation: default
 ---
