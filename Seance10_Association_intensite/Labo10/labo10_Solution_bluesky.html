@@ -1,0 +1,493 @@
+<html><head><title>BSky Format Output</title><style>body {margin: 0;font-family: "Roboto", "Helvetica", "Arial", sans-serif;font-size: 1rem;font-weight: 400;line-height: 1.5;color: #212529;text-align: left;background-color: #fafafa;}.container {  max-width: 940px;  margin-left: auto;  margin-right: auto;}img {  max-width:100%;}pre {max-width:100%;white-space: pre-line;overflow-wrap: normal!important;padding: 10px;border: 1px solid rgba(0, 0, 0, 0.1);background-color: #fff;}.input {background-color: #f4f5f7;}.table {width: 100%;margin-bottom: 1rem;color: #212529; }.table th,.table td {  padding: 0.75rem;  vertical-align: top;  border-top: 1px solid rgba(0, 0, 0, 0.06); }.table thead th {  vertical-align: bottom;  border-bottom: 2px solid rgba(0, 0, 0, 0.06); }.table tbody + tbody {  border-top: 2px solid rgba(0, 0, 0, 0.06); }.table-striped tbody tr:nth-of-type(odd) {background-color: rgba(0, 0, 0, 0.05); }.table {  background-color: #f4f5f7!important;  font-size: 0.8rem;  line-height: 1;}.table thead th {  font-size: 0.8rem;}.table.table-striped th {  background-color: #545b62!important;  border-color: #545b62!important;  color: #f4f5f7!important;}.table.table-striped th div {  border-bottom: none!important;}</style></head><body><div class="container"><h3>Open Dataset: Emploi_femme</h3><pre class='input'>```{r}
+BSkyloadDataset('/Users/visseho/OneDrive - UQAM/Cours/SOC2206_UQAM/Seance10_Association_intensite/Labo10/Emploi_femme.csv', 'CSV', worksheetName=NULL, replace_ds=TRUE, load.missing=FALSE, csvHeader=TRUE, character.to.factor=TRUE, isBasketData=FALSE, trimSPSStrailing=FALSE, sepChar=',', deciChar='.', datasetName='Emploi_femme')
+BSkyLoadRefresh("Emploi_femme")
+```</pre>
+<h3>Frequency Table</h3><pre class='input'>```{r}
+
+#Run the the frequency command            
+BSkyFreqResults <- BSkyFrequency( vars = c('sexe') , data = Emploi_femme)
+#Display the results
+BSkyFormat(BSkyFreqResults)
+#Remove the temporary object
+if (exists('BSkyFreqResults')) rm (BSkyFreqResults)
+
+```</pre>
+<table class="table table-condensed table-responsive table-striped table-hover" style="font-size: 12px; font-family: PT Sans; width: auto !important; ">
+<caption style="font-size: initial !important;">Dataset Overview</caption>
+ <thead>
+  <tr>
+   <th style="text-align:right;position: sticky; top:0; background-color: ;"> Dataset </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: ;"> Variables </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: ;"> Nominals </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: ;"> Observations </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> Emploi_femme </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 36 </td>
+  </tr>
+</tbody>
+</table>
+<table class="table table-condensed table-responsive table-striped table-hover" style="font-size: 12px; font-family: PT Sans; width: auto !important; ">
+<caption style="font-size: initial !important;">Summary By Variable</caption>
+ <thead>
+  <tr>
+   <th style="text-align:right;position: sticky; top:0; background-color: ;">   </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> sexe </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> F:20 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> M:16 </td>
+  </tr>
+</tbody>
+</table>
+<table class="table table-condensed table-responsive table-striped table-hover" style="font-size: 12px; font-family: PT Sans; width: auto !important; ">
+<caption style="font-size: initial !important;">Frequency Table for sexe</caption>
+ <thead>
+  <tr>
+   <th style="text-align:right;position: sticky; top:0; background-color: ;"> sexe </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: ;"> Frequency </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: ;"> Percent </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: ;"> CumPercent </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: ;"> Valid Percent </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: ;"> Valid CumPercent </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> F </td>
+   <td style="text-align:right;"> 20 </td>
+   <td style="text-align:right;"> 55.5556 </td>
+   <td style="text-align:right;"> 55.5556 </td>
+   <td style="text-align:right;"> 55.5556 </td>
+   <td style="text-align:right;"> 55.5556 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> M </td>
+   <td style="text-align:right;"> 16 </td>
+   <td style="text-align:right;"> 44.4444 </td>
+   <td style="text-align:right;"> 100.0000 </td>
+   <td style="text-align:right;"> 44.4444 </td>
+   <td style="text-align:right;"> 100.0000 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0.0000 </td>
+   <td style="text-align:right;"> 100.0000 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+  </tr>
+</tbody>
+</table>
+<h3>Frequency Table</h3><pre class='input'>```{r}
+
+#Run the the frequency command            
+BSkyFreqResults <- BSkyFrequency( vars = c('emploi') , data = Emploi_femme)
+#Display the results
+BSkyFormat(BSkyFreqResults)
+#Remove the temporary object
+if (exists('BSkyFreqResults')) rm (BSkyFreqResults)
+
+```</pre>
+<table class="table table-condensed table-responsive table-striped table-hover" style="font-size: 12px; font-family: PT Sans; width: auto !important; ">
+<caption style="font-size: initial !important;">Dataset Overview</caption>
+ <thead>
+  <tr>
+   <th style="text-align:right;position: sticky; top:0; background-color: ;"> Dataset </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: ;"> Variables </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: ;"> Nominals </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: ;"> Observations </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> Emploi_femme </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 36 </td>
+  </tr>
+</tbody>
+</table>
+<table class="table table-condensed table-responsive table-striped table-hover" style="font-size: 12px; font-family: PT Sans; width: auto !important; ">
+<caption style="font-size: initial !important;">Summary By Variable</caption>
+ <thead>
+  <tr>
+   <th style="text-align:right;position: sticky; top:0; background-color: ;">   </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> emploi </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> -          : 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> Non        :11 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> Partiel    : 9 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> Temps plein:15 </td>
+  </tr>
+</tbody>
+</table>
+<table class="table table-condensed table-responsive table-striped table-hover" style="font-size: 12px; font-family: PT Sans; width: auto !important; ">
+<caption style="font-size: initial !important;">Frequency Table for emploi</caption>
+ <thead>
+  <tr>
+   <th style="text-align:right;position: sticky; top:0; background-color: ;"> emploi </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: ;"> Frequency </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: ;"> Percent </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: ;"> CumPercent </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: ;"> Valid Percent </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: ;"> Valid CumPercent </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> - </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 2.7778 </td>
+   <td style="text-align:right;"> 2.7778 </td>
+   <td style="text-align:right;"> 2.7778 </td>
+   <td style="text-align:right;"> 2.7778 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> Non </td>
+   <td style="text-align:right;"> 11 </td>
+   <td style="text-align:right;"> 30.5556 </td>
+   <td style="text-align:right;"> 33.3333 </td>
+   <td style="text-align:right;"> 30.5556 </td>
+   <td style="text-align:right;"> 33.3333 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> Partiel </td>
+   <td style="text-align:right;"> 9 </td>
+   <td style="text-align:right;"> 25.0000 </td>
+   <td style="text-align:right;"> 58.3333 </td>
+   <td style="text-align:right;"> 25.0000 </td>
+   <td style="text-align:right;"> 58.3333 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> Temps plein </td>
+   <td style="text-align:right;"> 15 </td>
+   <td style="text-align:right;"> 41.6667 </td>
+   <td style="text-align:right;"> 100.0000 </td>
+   <td style="text-align:right;"> 41.6667 </td>
+   <td style="text-align:right;"> 100.0000 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0.0000 </td>
+   <td style="text-align:right;"> 100.0000 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+  </tr>
+</tbody>
+</table>
+<h3>Recode Variables</h3><pre class='input'>```{r}
+
+require(car)
+#Perform the recode
+BSkyRecode(colNames=c('emploi'), newColNames=c('Emploi_NA'), OldNewVals='"-" = NA', NewCol=TRUE, dontMakeFactor =FALSE,dataSetNameOrIndex='Emploi_femme')
+#Refresh the dataset in the data grid
+BSkyLoadRefresh("Emploi_femme")
+
+```</pre>
+<h3>Frequency Table</h3><pre class='input'>```{r}
+
+#Run the the frequency command            
+BSkyFreqResults <- BSkyFrequency( vars = c('Emploi_NA') , data = Emploi_femme)
+#Display the results
+BSkyFormat(BSkyFreqResults)
+#Remove the temporary object
+if (exists('BSkyFreqResults')) rm (BSkyFreqResults)
+
+```</pre>
+<table class="table table-condensed table-responsive table-striped table-hover" style="font-size: 12px; font-family: PT Sans; width: auto !important; ">
+<caption style="font-size: initial !important;">Dataset Overview</caption>
+ <thead>
+  <tr>
+   <th style="text-align:right;position: sticky; top:0; background-color: ;"> Dataset </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: ;"> Variables </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: ;"> Nominals </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: ;"> Observations </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> Emploi_femme </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 36 </td>
+  </tr>
+</tbody>
+</table>
+<table class="table table-condensed table-responsive table-striped table-hover" style="font-size: 12px; font-family: PT Sans; width: auto !important; ">
+<caption style="font-size: initial !important;">Summary By Variable</caption>
+ <thead>
+  <tr>
+   <th style="text-align:right;position: sticky; top:0; background-color: ;">   </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> Emploi_NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> Non        :11 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> Partiel    : 9 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> Temps plein:15 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> NA's       : 1 </td>
+  </tr>
+</tbody>
+</table>
+<table class="table table-condensed table-responsive table-striped table-hover" style="font-size: 12px; font-family: PT Sans; width: auto !important; ">
+<caption style="font-size: initial !important;">Frequency Table for Emploi_NA</caption>
+ <thead>
+  <tr>
+   <th style="text-align:right;position: sticky; top:0; background-color: ;"> Emploi_NA </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: ;"> Frequency </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: ;"> Percent </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: ;"> CumPercent </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: ;"> Valid Percent </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: ;"> Valid CumPercent </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> Non </td>
+   <td style="text-align:right;"> 11 </td>
+   <td style="text-align:right;"> 30.5556 </td>
+   <td style="text-align:right;"> 30.5556 </td>
+   <td style="text-align:right;"> 31.4286 </td>
+   <td style="text-align:right;"> 31.4286 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> Partiel </td>
+   <td style="text-align:right;"> 9 </td>
+   <td style="text-align:right;"> 25.0000 </td>
+   <td style="text-align:right;"> 55.5556 </td>
+   <td style="text-align:right;"> 25.7143 </td>
+   <td style="text-align:right;"> 57.1429 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> Temps plein </td>
+   <td style="text-align:right;"> 15 </td>
+   <td style="text-align:right;"> 41.6667 </td>
+   <td style="text-align:right;"> 97.2222 </td>
+   <td style="text-align:right;"> 42.8571 </td>
+   <td style="text-align:right;"> 100.0000 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 2.7778 </td>
+   <td style="text-align:right;"> 100.0000 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+  </tr>
+</tbody>
+</table>
+<h3>Crosstab</h3><pre class='input'>```{r}
+#Create the crosstab
+BSky_Multiway_Cross_Tab = BSkyCrossTable(
+    x=c('sexe'), y=c('Emploi_NA'), 
+    datasetname='Emploi_femme', 
+    chisq=FALSE, mcnemar=FALSE, fisher=FALSE,
+    prop.r=TRUE, prop.c=FALSE,
+    resid=FALSE, sresid=FALSE, asresid=FALSE,
+    expected=FALSE)
+#Display the crosstab in the output grid
+BSkyFormat(BSky_Multiway_Cross_Tab)
+```</pre>
+<table class="table table-condensed table-responsive table-striped table-hover" style="font-size: 12px; font-family: PT Sans; width: auto !important; ">
+<caption style="font-size: initial !important;">Multiway Cross Table</caption>
+ <thead>
+<tr>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: right; position: sticky; top:0; background-color: ;" colspan="1"><div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">sexe</div></th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: right; position: sticky; top:0; background-color: ;" colspan="1"><div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">count</div></th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; position: sticky; top:0; background-color: ;" colspan="4"><div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">Emploi_NA</div></th>
+</tr>
+  </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> Non </td>
+   <td style="text-align:right;"> Partiel </td>
+   <td style="text-align:right;"> Temps plein </td>
+   <td style="text-align:right;"> Total </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> F </td>
+   <td style="text-align:right;"> Count </td>
+   <td style="text-align:right;"> 8 </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 8 </td>
+   <td style="text-align:right;"> 20 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> % within sexe </td>
+   <td style="text-align:right;"> 40 </td>
+   <td style="text-align:right;"> 20 </td>
+   <td style="text-align:right;"> 40 </td>
+   <td style="text-align:right;"> 100 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> M </td>
+   <td style="text-align:right;"> Count </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 7 </td>
+   <td style="text-align:right;"> 15 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> % within sexe </td>
+   <td style="text-align:right;"> 20 </td>
+   <td style="text-align:right;"> 33.3333 </td>
+   <td style="text-align:right;"> 46.6667 </td>
+   <td style="text-align:right;"> 100 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> Total </td>
+   <td style="text-align:right;"> Count </td>
+   <td style="text-align:right;"> 11 </td>
+   <td style="text-align:right;"> 9 </td>
+   <td style="text-align:right;"> 15 </td>
+   <td style="text-align:right;"> 35 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> % within sexe </td>
+   <td style="text-align:right;"> 31.4286 </td>
+   <td style="text-align:right;"> 25.7143 </td>
+   <td style="text-align:right;"> 42.8571 </td>
+   <td style="text-align:right;"> 100 </td>
+  </tr>
+</tbody>
+</table>
+<h3>Crosstab</h3><pre class='input'>```{r}
+#Create the crosstab
+BSky_Multiway_Cross_Tab = BSkyCrossTable(
+    x=c('sexe'), y=c('Emploi_NA'), 
+    datasetname='Emploi_femme', 
+    chisq=TRUE, mcnemar=FALSE, fisher=FALSE,
+    prop.r=FALSE, prop.c=FALSE,
+    resid=FALSE, sresid=FALSE, asresid=FALSE,
+    expected=FALSE)
+#Display the crosstab in the output grid
+BSkyFormat(BSky_Multiway_Cross_Tab)
+```</pre>
+<table class="table table-condensed table-responsive table-striped table-hover" style="font-size: 12px; font-family: PT Sans; width: auto !important; ">
+<caption style="font-size: initial !important;">Multiway Cross Table</caption>
+ <thead>
+<tr>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: right; position: sticky; top:0; background-color: ;" colspan="1"><div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">sexe</div></th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: right; position: sticky; top:0; background-color: ;" colspan="1"><div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">count</div></th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; position: sticky; top:0; background-color: ;" colspan="4"><div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">Emploi_NA</div></th>
+</tr>
+  </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> Non </td>
+   <td style="text-align:right;"> Partiel </td>
+   <td style="text-align:right;"> Temps plein </td>
+   <td style="text-align:right;"> Total </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> F </td>
+   <td style="text-align:right;"> Count </td>
+   <td style="text-align:right;"> 8 </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 8 </td>
+   <td style="text-align:right;"> 20 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> M </td>
+   <td style="text-align:right;"> Count </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 7 </td>
+   <td style="text-align:right;"> 15 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> Total </td>
+   <td style="text-align:right;"> Count </td>
+   <td style="text-align:right;"> 11 </td>
+   <td style="text-align:right;"> 9 </td>
+   <td style="text-align:right;"> 15 </td>
+   <td style="text-align:right;"> 35 </td>
+  </tr>
+</tbody>
+</table>
+<table class="table table-condensed table-responsive table-striped table-hover" style="font-size: 12px; font-family: PT Sans; width: auto !important; border-bottom: 0;">
+<caption style="font-size: initial !important;">Statistical Tests</caption>
+ <thead>
+<tr>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: right; position: sticky; top:0; background-color: ;" colspan="1"><div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">Tests</div></th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: right; position: sticky; top:0; background-color: ;" colspan="1"><div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">Value</div></th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: right; position: sticky; top:0; background-color: ;" colspan="1"><div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">df</div></th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: right; position: sticky; top:0; background-color: ;" colspan="1"><div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">Asyp. Sig</div></th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: right; position: sticky; top:0; background-color: ;" colspan="1"><div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">Odds ratio</div></th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; position: sticky; top:0; background-color: ;" colspan="2"><div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">95% Confidence interval</div></th>
+</tr>
+  </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> Pearson Chi Square </td>
+   <td style="text-align:right;"> 1.7724 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 0.4122 </td>
+   <td style="text-align:right;"> X </td>
+   <td style="text-align:right;"> X </td>
+   <td style="text-align:right;"> X </td>
+  </tr>
+</tbody>
+ <tfoot>
+<tr><td style="padding: 0; " colspan="7"><span style="font-style: italic;">Note: </span></td></tr>
+<tr><td style="padding: 0; " colspan="7">
+<sup></sup> X indicates incomplete result due to errors</td></tr>
+</tfoot> 
+</table>
+<h3>Recode Variables</h3><pre class='input'>```{r}
+
+require(car)
+#Perform the recode
+BSkyRecode(colNames=c('emploi'), newColNames=c('emploi2'), OldNewVals='"Non" = "Ne travaille pas"; "Partiel" = "Ne travaille pas"; "Temps plain" = "Travaille"; "-" = NA', NewCol=TRUE, dontMakeFactor =FALSE,dataSetNameOrIndex='Emploi_femme')
+#Refresh the dataset in the data grid
+BSkyLoadRefresh("Emploi_femme")
+
+```</pre>
+<h3>Convert To Factor(s)</h3><pre class='input'>```{r}
+
+#Converts one or more variables to factor variables
+BSky.Temp.Obj <- BSkyMakeMultiColumnFactor(c('groupe_age'), 'Emploi_femme')
+#Refreshes the dataset in the data grid
+BSkyLoadRefresh("Emploi_femme")
+
+```</pre>
+</div></body></html>

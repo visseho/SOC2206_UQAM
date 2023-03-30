@@ -1,15 +1,77 @@
 ---
-title: "Seance 9.3: Mesure de l'intensité de l'association entre deux variables catégorielles"
+title: "Seance 10: Mesure de l'intensité de l'association entre deux variables catégorielles"
 author: "Visseho Adjiwanou, PhD."
 date: "`r format(Sys.time(), '%d %B %Y')`"
 output:
   beamer_presentation:
     colortheme: beaver
     fonttheme: structurebold
-    theme: AnnArbor
+    theme: Ilmenau
   ioslides_presentation: default
   slidy_presentation: default
 ---
+
+
+## Rappel des objectifs de l'analyse descriptive
+
+1. Y a-t-il une relation entre deux variables ?
+
+2. Quelle est l'intensité de cette relation?
+
+3. Quelles sont la direction et la forme de cette relation?
+
+4. Pouvons-nous **généraliser** la relation à la population de laquelle est tiré l'échantillon?
+
+## Rappel : comment faire un test de chi-carré?
+
+Pour faire un test d'association entre deux variables (catégorielles):
+
+1. Posez votre hypothèse nulle (et alternative)
+  - $H_0$ : Il **n'existe pas** d'association entre les deux variables
+  - $H_1$ : Il **existe** une association non nulle entre les deux variables 
+  
+>2. Choisissez votre niveau de significativité (5%)
+
+>3. Trouvez votre degré de liberté (r-1)(c-1)
+
+>4. Trouvez la valeur minimale du **chi-deux** pour rejeter l'hypothèse nulle
+
+>5. Calculez votre chi-deux à partir de votre échantillon
+
+## Rappel : comment faire un test de chi-carré?
+
+
+6. Prendre une décision:
+
+>- **chi-deux calculé** >= **chi-deux lu** ==> Rejeter l'hypothèse nulle. ==>Relation est **statistiquement significative au seuil retenu**
+
+
+>- **chi-deux calculé** < **chi-deux lu** ==> Vous ne pouvez pas rejeter l'hypothèse nulle
+
+
+## Rappel: Conditions de validité du test
+
+> 1. Condition 1 :  La fréquence totale du tableau de contingence (N) doit être supérieur ou égal à 30
+
+> 2. Condition 2 :  Les fréquences marginales du tableau de contingence (Ni. ou N.j) doivent toujours être supérieur ou égal à 5.
+
+> 3. Condition 3 :  La fréquence anticipée des  cases du tableau de contingence doit être supérieur à 5 dans 80% des cases du tableau de contingence.
+
+
+## Remarques
+
+
+>1. Remarque: Le test du Chi-2 est relativement robuste, ce qui signifie que ses conclusions demeurent en général valide, même lorsque les hypothèses de base ne sont pas tout à fait respectée.
+ 
+>2. Une relation statistiquement significative n'est pas toujours une **signification substantielle**. Avec une grande taille d'échantillon, les très petites différences peuvent être significatives
+
+>3. Le test de chi-deux est basé sur un échantillon issu d'une procédure d'échantillonnage probabilistique.
+
+## Labo
+
+
+Mesures de l'intensité d'association
+======================================
 
 ## Introduction
 
@@ -18,26 +80,28 @@ output:
 - Cependant, sa valeur est affectée par:
   - le nombre de ligne et de colonne 
   - la taille de l'échantillon
-- Autrement dit, un tableau qui a plus de lignes et de colonne aura tendance à avoir un chi-carré élevé.
-- Il permettrait ainsi de comparer plusieurs études dans des pays différents par exemple.
-- Il existe plusieurs mesures d'intensité: elles dépendent du niveau de mesure des deux variables.
+
+>- Autrement dit, un tableau qui a plus de lignes et de colonne aura tendance à avoir un chi-carré élevé.
+>- Il permettrait ainsi de comparer plusieurs études dans des pays différents par exemple.
+>- Il existe plusieurs mesures d'intensité: elles dépendent du niveau de mesure des deux variables.
 
 ## Introduction
 
 Ces mesures varient :
 
-- entre 0 et 1 pour les variables nominales
-- entre -1 et 1 (en passant par 0) pour les variables ordinales ou d'intervalle/ratio
+>- entre 0 et 1 pour les variables nominales
+>- entre -1 et 1 (en passant par 0) pour les variables ordinales ou d'intervalle/ratio
 
-- 0 Indique une absence de relation
-- -1 et 1 indiquent une relation parfaite
-- Plus la valeur d'une association est élevée, plus la relation est forte
-- Le signe indique le sens de la relation
+>- 0 Indique une absence de relation
+>- -1 et 1 indiquent une relation parfaite
+>- Plus la valeur d'une association est élevée, plus la relation est forte
+>- Le signe indique le sens de la relation
 
 ## Introduction
 
 Deux types de mesure de l'association
-1. Basé sur le chi-carré
+
+>1. Basé sur le chi-carré
 
 >2. Basé sur la **réduction proportionnelle de l'erreur (RPE)**
 
@@ -45,7 +109,7 @@ Deux types de mesure de l'association
 
 ## Introduction
 
-![lambda](/Users/visseho/OneDrive - UQAM/Cours/Images_cours/mesure_association.jpg){width=80%}
+![lambda](../../images/mesure_association.jpg){width=80%}
 
 
 
@@ -68,12 +132,14 @@ $$C = \sqrt{{\frac{\chi^2}{\chi^2 + N}}}$$
 
 **Problèmes**
 
-- Dépend du nombre de colonnes (c) et de rangées du tableau (r): augmente avec une augmentation de c et r
-- C est toujours inférieur à 1
-  - Pour une tableau (2,2), ie 2 colonnes et 2 rangées, la plus grande valeur de C est 0.71
-  - Pour une tableau (3,3), ie 3 colonnes et 3 rangées, la plus grande valeur de C est 0.82
-- Ce plafond inférieur à 1 rend l'interprétation un peu malaisée
-- Ce n'est donc pas la mesure idéale
+>- Dépend du nombre de colonnes (c) et de rangées du tableau (r): augmente avec une augmentation de c et r
+>- C est toujours inférieur à 1
+
+>- Pour une tableau (2,2), ie 2 colonnes et 2 rangées, la plus grande valeur de C est 0.71
+>- Pour une tableau (3,3), ie 3 colonnes et 3 rangées, la plus grande valeur de C est 0.82
+
+>- Ce plafond inférieur à 1 rend l'interprétation un peu malaisée
+>- Ce n'est donc pas la mesure idéale
 
 
 ## Le V de Cramer
@@ -108,7 +174,7 @@ $$\phi = \sqrt{{\frac{\chi^2}{N}}}$$
 >- Si le $\chi^2$ pour un tableau est statistiquement significatif, les mesures d'association reposant sur lui le seront aussi.
 >- Si le $\chi^2$ pour un tableau n'est pas statistiquement significatif, les mesures d'association reposant sur lui ne le seront pas aussi.
   
-## Le coefficient de prédiction de Guttman
+## Le coefficient de prédiction de Guttman (lambda)
 
 - Encore appelé le lambda ($\lambda$)
 - Mesure d'association pour les variables nominales
@@ -123,7 +189,7 @@ $$\phi = \sqrt{{\frac{\chi^2}{N}}}$$
 
 - N'a pas besoin de la fréquence marginale colonne (des modalités de la variable indépendante)
 
-![lambda](/Users/visseho/OneDrive - UQAM/Cours/Images_cours/lambda.png)
+![lambda](../../Images/lambda.png)
 
 ## Exemple
 
@@ -135,7 +201,7 @@ $$\phi = \sqrt{{\frac{\chi^2}{N}}}$$
   
 ## Exemple
 
-3. Si nous ne connaissions que la variable dépendante, que prédirions-nous des individus de l'échantillon en terme de leur opinion sur la sexualité des jeunes filles?
+>3. Si nous ne connaissions que la variable dépendante, que prédirions-nous des individus de l'échantillon en terme de leur opinion sur la sexualité des jeunes filles?
 
  >- Chaque répondant est plus susceptible de répondre **En désaccord** qu'autre chose.
  >- En prédisant donc que les 2859 répondants répondraient **en désaccord**, nous aurons 894 fois raisons et 1965 fois tort (2859 - 894)
@@ -143,7 +209,7 @@ $$\phi = \sqrt{{\frac{\chi^2}{N}}}$$
   
 ## Exemple
 
-4. Utiliser les informations de la variable indépendante: maintenant supposons que pour chaque répondant, nous connaissons le score de la variable indépendante, le sexe.
+>4. Utiliser les informations de la variable indépendante: maintenant supposons que pour chaque répondant, nous connaissons le score de la variable indépendante, le sexe.
 
  >- Si nous savons qu'un répondant est de sexe masculin, nous minimisons nos erreurs en plaçant cet homme et tous les autres dans la catégorie (Totalement en désaccord). Nous ne commettrons que 942 erreurs (tous les hommes qui ont répondu autre chose)  
  >- Si nous savons qu'un répondant est femme, nous minimisons nos erreurs en plaçant cette femme et toutes les autres femmes dans la catégorie (En désaccord). De ce fait, nous commettons seulement 1022 erreurs

@@ -1,0 +1,701 @@
+---
+title: "Séance 5.2: Paramètres de variation"
+subtitle: "Extensions"
+author: "Visseho Adjiwanou, PhD."
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output:
+  beamer_presentation:
+    colortheme: beaver
+    fonttheme: structurebold
+    theme: AnnArbor
+  slidy_presentation: default
+  ioslides_presentation: default
+---
+
+## Plan de présentation
+
+Application
+============================================================
+
+## Introduction
+
+
+
+## Chargement de la base de données
+
+```{r, out.width= '70%', out.height='70%', message=FALSE, warning=FALSE, error=FALSE}
+rm(list = ls())
+library(tidyverse)
+library(summarytools)
+#marathon <- read.csv("bm_results2012.txt", header = FALSE, quote = "")
+
+cis <- read.csv("cis_short_5percent_2015.csv")
+
+```
+
+
+# 100 échantillons de taille 200
+
+```{r}
+
+cis_T200_R100 <- bind_rows(replicate(100, cis %>% sample_n(200, replace = FALSE), simplify = F), .id = "Echantillon")
+
+ctable(cis$region, cis$sexe, chisq = TRUE)
+
+
+```
+
+
+
+
+
+
+
+
+
+
+## Distribution de la variable V6
+
+- variable continue, on peut calculer les paramètres de tendance centrales et de dispersion
+
+- Position
+
+```{r}
+# Moyenne
+mean(marathon$V6)
+
+# Mediane
+median(marathon$V6)
+
+# Mode
+
+```
+
+On voit que le marathon de Boston est couru en moyenne à 263 minutes. La moitié des coureurs sont arrivés avant 255.8 minutes alors que l'autre moitié est arrivé après. 
+
+- Dispersion
+
+```{r}
+# variance
+var(marathon$V6)
+
+# Écart-type
+sd(marathon$V6)
+```
+
+La variance égale 2502 minutes au carré alors que l'écrat-type vaut 50 minutes. On sait que la variance n'est pas de la même unité de mesure que la variable. C'est pourquoi on prend justement l'écart-type. En soit, ces mesure ne nous apporte pas beaucoup d'information. C'est en les comparant à une autre distribution qu'on peut tirer des conclusions. 
+
+On peut mieux présenter ces résultats en utilisant tydyverse
+
+```{r}
+
+caract <- 
+  marathon %>% 
+  summarise(moyenne = mean(V6, na.rm = TRUE),
+            ecarttype = sd(V6, na.rm = TRUE),
+            mediane = median(V6, na.rm = TRUE),
+            Q1 = quantile(V6, prob = 0.25),
+            Q3 = quantile(V6, prob = 0.75),
+            variance = var(V6, na.rm = TRUE))%>% 
+  mutate(echantillon = factor("Echantillon S1"))
+
+caract
+```
+
+
+## Représentation graphique
+
+Il y a deux représentations qu'on fait d'une variable quantitative:
+- l'histogramme
+- la boite à moustache
+
+1. Histogramme
+
+
+```{r, out.width= '50%', message=FALSE, warning=FALSE, error=FALSE}
+
+library(tidyverse)
+
+fig1 <- 
+  ggplot(marathon) +
+  geom_histogram(aes(x = V6), color="black", fill="white") +
+  geom_freqpoly(aes(x = V6), colour = "blue") +
+  stat_function(fun = dnorm, args = list(mean = mean(marathon$V6), sd = sd(marathon$V6)), colour = "green") +
+  geom_vline(aes(xintercept = mean(V6)), color = "red", linetype = "dashed") +
+  labs(title = "Histogramme du Marathon de 2002",
+       x = "Temps pour compléter le marathon",
+       y = "Nombre de coureurs")
+
+
+```
+
+
+## Distribution de la variable V6
+
+```{r, out.width= '90%', message=FALSE, warning=FALSE, error=FALSE}
+
+fig1
+
+```
+
+## Boite à moustache
+
+```{r}
+class(marathon$V6)
+fig2 <- 
+  ggplot(marathon) +
+  geom_boxplot(aes(y = V6)) +
+  labs(title = "Diagramme de quartile",
+       x = "",
+       y = "Temps mis")
+
+```
+
+
+```{r}
+fig2
+```
+
+Dans la plupart des cas, nous ne disposons pas de l'information de la population. Par exemple, pour estimer le revenu moyen de la population, nous devons disposer d'un échantillon. 
+
+Échantillonnage aléatoire simple 
+========================================================
+
+## Échantillonnage aléatoire simple
+
+On appelle échantillonnage aléatoire simple celui où chaque individu de la population **a la même chance d'être choisi** chaque fois que l'on tire une observation.
+
+- Maintenant, prenons un échantillon de cette population et analysons ses caractéristiques
+
+<div align="center">
+```{r, out.width= '60%', out.height='70%', message=FALSE, warning=FALSE, error=FALSE}
+
+set.seed(430)
+marathon_S1 <- sample_n(marathon, 40, replace = FALSE)
+
+head(marathon_S1)
+
+``` 
+</div>
+
+
+## Échantillonnage aléatoire simple
+
+```{r, out.width= '60%', out.height='70%', message=FALSE, warning=FALSE, error=FALSE}
+
+ggplot(marathon_S1) +
+  geom_histogram(aes(x = V6)) +
+  labs(title = "Histogramme du Marathon de 2012",
+       x = "Temps pour compléter le marathon",
+       y = "Nombre de coureurs")
+
+```
+
+
+## Échantillonnage aléatoire simple
+
+```{r, out.width= '70%', out.height='70%', message=FALSE, warning=FALSE, error=FALSE}
+
+caract_S1 <- 
+  marathon_S1 %>% 
+  summarise(moyenne = mean(V6, na.rm = TRUE),
+            ecarttype = sd(V6, na.rm = TRUE),
+            mediane = median(V6, na.rm = TRUE),
+            Q1 = quantile(V6, prob = 0.25),
+            Q3 = quantile(V6, prob = 0.75),
+            variance = var(V6, na.rm = TRUE))%>% 
+  mutate(echantillon = factor("Echantillon S1"))
+
+caract_S1
+
+```
+
+
+## Échantillonnage aléatoire simple - Comparaison de la moyenne d'échantillon et la moyenne de population
+
+```{r, out.width= '70%', out.height='70%', message=FALSE, warning=FALSE, error=FALSE}
+
+# Comparaison
+caract_c <- bind_rows(caract, caract_S1)
+caract_c
+
+```
+
+
+## Est-ce que cet échantillon est représentatif?
+
+```{r, out.width= '50%', out.height='70%', message=FALSE, warning=FALSE, error=FALSE}
+
+library(summarytools)
+
+freq(marathon$V2)
+freq(marathon_S1$V2)
+
+```
+
+
+
+Échantillonnage aléatoire simple - distribution d'échantillonnage
+========================================================
+
+## 100 échantillons de taille 10
+
+```{r}
+
+library(tidyverse)
+
+```
+
+- Ressource: https://stackoverflow.com/questions/42676348/multiple-random-sampling-in-r
+
+```{r, out.width= '60%', out.height='70%', message=FALSE, warning=FALSE, error=FALSE}
+
+set.seed(123432)
+marat_T10_R100 <- bind_rows(replicate(100, marathon %>% sample_n(10, replace = FALSE), simplify = F), .id = "Obs")
+
+glimpse(marat_T10_R100)
+
+
+
+cis_T200_R100 <- bind_rows(replicate(100, cis %>% sample_n(200, replace = FALSE), simplify = F), .id = "Obs")
+
+```
+
+
+## 100 échantillons de taille 10 
+
+```{r}
+
+caract_marat_T10_R100 <-
+  marat_T10_R100 %>% 
+  group_by(Obs) %>% 
+  summarise(moyenne = mean(V6, na.rm = TRUE),
+            ecarttype = sd(V6, na.rm = TRUE)) %>% 
+  mutate(Taille = factor("10"))
+
+glimpse(caract_marat_T10_R100)
+
+```
+
+
+## 100 échantillons de taille 10 : Vérification du théorème central limite
+
+```{r, out.width= '50%', out.height='70%', message=FALSE, warning=FALSE, error=FALSE}
+
+esperance_moyenne <- mean(caract_marat_T10_R100$moyenne)
+erreurtype <- sd(caract_marat_T10_R100$moyenne)
+
+population_moyenne <- mean(marathon$V6)
+erreurtype_calcule <- sd(marathon$V6)/sqrt(10)
+
+tcl_T10 <- bind_cols(e_m = esperance_moyenne, mu = population_moyenne, et = erreurtype, etc = erreurtype_calcule) 
+
+tcl_T10
+
+```
+
+
+## 100 échantillons de taille 10 - Représentation graphique
+
+```{r, out.width= '40%', out.height='70%', message=FALSE, warning=FALSE, error=FALSE}
+
+obslevel <- c(seq(1:100))
+
+fig_T10_1 <-
+  ggplot(caract_marat_T10_R100) +
+  geom_point(aes(x = Obs, y = moyenne)) +
+  geom_hline(aes(yintercept = mean(moyenne)), colour = "red") +
+  geom_hline(data = marathon, aes(yintercept = mean(V6)), colour = "green") +
+  scale_x_discrete(limits = obslevel) +
+  theme(axis.text.x = element_text(angle = -60, hjust = 1, size = 6))
+
+```
+
+
+## 100 Échantillons de taille 10 - Représentation graphique
+
+```{r, out.width= '50%', out.height='70%', message=FALSE, warning=FALSE, error=FALSE}
+
+fig_T10_2 <- 
+  ggplot(caract_marat_T10_R100) +
+  geom_histogram(aes(x = moyenne)) +
+  geom_vline(aes(xintercept = mean(moyenne)), colour = "red") +
+  geom_vline(data = marathon, aes(xintercept = mean(V6)), color = "green")
+
+```
+
+
+## 100 Échantillons de taille 10 - Représentation graphique
+
+```{r, out.width= '90%', out.height='70%', message=FALSE, warning=FALSE, error=FALSE}
+
+library(ggpubr)
+
+ggarrange(fig_T10_1, fig_T10_2, ncol = 2)
+
+```
+
+
+## 100 échantillons de taille 30
+
+
+```{r, out.width= '50%', out.height='70%', message=FALSE, warning=FALSE, error=FALSE}
+
+set.seed(1234)
+marat_T30_R100 <- bind_rows(replicate(100, marathon %>% sample_n(30, replace = FALSE), simplify = F), .id = "Obs")
+
+caract_marat_T30_R100 <-
+  marat_T30_R100 %>% 
+  group_by(Obs) %>% 
+  summarise(moyenne = mean(V6, na.rm = TRUE),
+            ecarttype = sd(V6, na.rm = TRUE)) %>% 
+  mutate(Taille = factor("30"))
+
+head(caract_marat_T30_R100)
+
+```
+
+
+## 100 échantillons de taille 30 : Vérification du théorème central limite
+
+```{r, out.width= '60%', out.height='70%', message=FALSE, warning=FALSE, error=FALSE}
+
+esperance_moyenne <- mean(caract_marat_T30_R100$moyenne)
+erreurtype <- sd(caract_marat_T30_R100$moyenne)
+
+population_moyenne <- mean(marathon$V6)
+erreurtype_calcule <- sd(marathon$V6)/sqrt(30)
+
+tcl_T30 <- bind_cols(e_m = esperance_moyenne, mu = population_moyenne, et = erreurtype, etc = erreurtype_calcule) 
+
+tcl_T30
+
+```
+
+## 100 échantillons de taille 30
+
+```{r, out.width= '60%', out.height='70%', message=FALSE, warning=FALSE, error=FALSE}
+
+#obslevel <- c(seq(1:100))
+
+fig_T30_1 <- 
+  ggplot(caract_marat_T30_R100) +
+  geom_point(aes(x = Obs, y = moyenne)) +
+  geom_hline(aes(yintercept = mean(moyenne)), colour = "red") +
+  geom_hline(data = marathon, aes(yintercept = mean(V6)), colour = "green") +
+  scale_x_discrete(limits = obslevel) +
+  theme(axis.text.x = element_text(angle = -60, hjust = 1, size = 6))
+
+```
+
+
+
+## 100 Échantillons de taille 30 - Représentation graphique
+
+```{r, out.width= '60%', out.height='70%', message=FALSE, warning=FALSE, error=FALSE}
+
+fig_T30_2 <- 
+  ggplot(caract_marat_T30_R100) +
+  geom_histogram(aes(x = moyenne)) +
+  geom_vline(aes(xintercept = mean(moyenne)), colour = "red") +
+  geom_vline(data = marathon, aes(xintercept = mean(V6)), color = "green")
+
+```
+
+
+## 100 Échantillons de taille 30 - Représentation graphique
+
+```{r, out.width= '90%', out.height='70%', message=FALSE, warning=FALSE, error=FALSE}
+
+ggarrange(fig_T30_1, fig_T30_2, ncol = 2)
+
+```
+
+
+## 100 échantillons de tailles 50
+
+```{r, out.width= '60%', out.height='70%', message=FALSE, warning=FALSE, error=FALSE}
+
+set.seed(12302)
+marat_T50_R100 <- bind_rows(replicate(100, marathon %>% sample_n(50, replace = FALSE), simplify = F), .id = "Obs")
+
+caract_marat_T50_R100 <-
+  marat_T50_R100 %>% 
+  group_by(Obs) %>% 
+  summarise(moyenne = mean(V6, na.rm = TRUE),
+            ecarttype = sd(V6, na.rm = TRUE))%>% 
+  mutate(Taille = factor("50")) 
+
+glimpse(caract_marat_T50_R100)
+
+```
+
+## 100 échantillons de taille 50 : Vérification du théorème central limite
+
+```{r, out.width= '60%', out.height='70%', message=FALSE, warning=FALSE, error=FALSE}
+
+esperance_moyenne <- mean(caract_marat_T50_R100$moyenne)
+erreurtype <- sd(caract_marat_T50_R100$moyenne)
+
+population_moyenne <- mean(marathon$V6)
+erreurtype_calcule <- sd(marathon$V6)/sqrt(50)
+
+tcl_T50 <- bind_cols(e_m = esperance_moyenne, mu = population_moyenne, et = erreurtype, etc = erreurtype_calcule) 
+
+tcl_T50
+
+```
+
+
+## 100 échantillons de taille 50
+
+```{r, out.width= '50%', out.height='70%', message=FALSE, warning=FALSE, error=FALSE}
+
+ggplot(caract_marat_T50_R100) +
+  geom_histogram(aes(x = moyenne)) +
+  geom_point(aes(x = moyenne, y = Obs)) +
+  geom_vline(aes(xintercept = mean(moyenne)), color = "red", size = 0.1) +
+  geom_vline(data = marathon, aes(xintercept = mean(V6)), color = "green", size = 0.1)
+
+```
+
+
+
+## Comparaison de plusieurs distributions d'échantillonnage
+
+```{r, out.width= '50%', out.height='70%', message=FALSE, warning=FALSE, error=FALSE}
+
+fig_comp <- 
+  ggplot() +
+  geom_density(data = caract_marat_T10_R100, aes(x = moyenne), colour = "yellow", fill = "yellow") +
+  geom_density(data = caract_marat_T30_R100, aes(x = moyenne), colour = "green") +
+  geom_density(data = caract_marat_T50_R100, aes(x = moyenne), colour = "purple") +
+  geom_density(data = marathon, aes(x = V6), colour = "red") +
+  geom_vline(data = marathon, aes(xintercept = mean(V6)), color = "black")
+  
+```
+
+
+## Comparaison de plusieurs distributions d'échantillonnage
+
+```{r}
+
+fig_comp 
+
+```
+
+
+## Fonction
+Nous avons sélectionné plusieurs échantillons en répliquant la meême formule plusieurs fois. Essayons de voir si nous pouvons faire la meême chose en utilisant les fonctions.
+
+```{r}
+
+echantillon <- function(k, donnee, n){
+  bind_rows(replicate(k, donnee %>% sample_n(n, replace = FALSE), simplify = F), .id = "Obs")
+
+}
+
+echantillon_t30_i100 <- echantillon(100, marathon, 30)
+
+ech <- c("taille5", "taille6")
+samp_k <- vector("list", length  = 2)       
+names(samp_k) <- names(ech)
+for (i in 5:6) {
+ samp_k[[i]] <- echantillon(100, marathon, i)
+  }
+
+
+#samp <- matrix(NA, nrow = length(echantillon), ncol = 7)
+#names(samp) <- names(marathon)
+#for (i in 5:6) {
+# samp[i, ] <- echantillon(100, marathon, i)
+#  }
+
+```
+
+
+Intervalle de confiance
+========================================================
+
+## Intervalle de confiance
+
+```{r, out.width= '50%', out.height='70%', message=FALSE, warning=FALSE, error=FALSE}
+
+caract_marat_T30_R100 <-
+  caract_marat_T30_R100 %>% 
+  mutate(erreurtype = sd(marathon$V6)/sqrt(30),
+         c1 = erreurtype*1.96)
+
+head(caract_marat_T30_R100)
+
+```
+
+
+## Intervalle de confiance
+
+```{r, out.width= '50%', out.height='70%', message=FALSE, warning=FALSE, error=FALSE}
+
+ggplot(caract_marat_T30_R100, aes(x = Obs, y = moyenne, colour = Obs)) +
+  geom_errorbar(aes(ymin = moyenne - c1, ymax = moyenne + c1), width=.2)+ 
+  geom_point() +
+  geom_hline(data = marathon, aes(yintercept = mean(V6)), colour = "black") +
+  scale_x_discrete(limits = obslevel) +
+  theme(axis.text.x = element_text(angle = -60, hjust = 1, size = 6), legend.position = "none")
+
+```
+
+
+## Intervalle de confiance
+
+- Dans les faits, on ne connait rien sur la population, donc on va remplacer l'écart type de la population par l'écart type de l'échantillon
+
+```{r, out.width= '50%', out.height='70%', message=FALSE, warning=FALSE, error=FALSE}
+
+caract_marat_T30_R100
+caract_marat_T30_R100 <-
+  caract_marat_T30_R100 %>% 
+  mutate(erreurtype_estime = ecarttype/sqrt(30),
+         c1_estime = erreurtype_estime*1.96)
+
+head(caract_marat_T30_R100)
+
+```
+
+
+## Intervalle de confiance*
+
+```{r, out.width= '60%', out.height='70%', message=FALSE, warning=FALSE, error=FALSE}
+
+ggplot(caract_marat_T30_R100, aes(x = Obs, y = moyenne, colour = Obs)) +
+  geom_errorbar(aes(ymin = moyenne - c1_estime, ymax = moyenne + c1_estime), width=.2)+ 
+  geom_point() +
+  geom_hline(data = marathon, aes(yintercept = mean(V6)), colour = "black") +
+  scale_x_discrete(limits = obslevel) +
+  theme(axis.text.x = element_text(angle = -60, hjust = 1, size = 6), legend.position = "none")
+
+```
+
+
+## Quels sont les échantillons qui s'écartent de deux écart types de la moyenne
+
+```{r, out.width= '60%', out.height='70%', message=FALSE, warning=FALSE, error=FALSE}
+
+ggplot(caract_marat_T30_R100, aes(x = Obs, y = moyenne, colour = Obs)) +
+  geom_point() +
+  geom_hline(data = marathon, aes(yintercept = (mean(V6) - 1.96*sd(V6)/sqrt(30))), colour = "red") +
+  geom_hline(data = marathon, aes(yintercept = (mean(V6) + 1.96*sd(V6)/sqrt(30))), colour = "red") +
+  geom_hline(data = marathon, aes(yintercept = mean(V6)), colour = "black") +
+  scale_x_discrete(limits = obslevel) +
+  theme(axis.text.x = element_text(angle = -60, hjust = 1, size = 6), legend.position = "none")
+
+```
+
+
+## Problèmes avec l'échantillonnage aléatoire
+
+- La base de sondage n'est pas toujours disponible (échantillonnage systématique)
+- Très couteux et non éfficient
+- Ne permet pas d'estimer les paramètres de petits groupes.
+- Aussi dans les faits, cette technique n'est pratiquement jamais utilisée seule. 
+- Elle est toujours combinée à plusieurs autres approches
+- Par exemple, les données de `dhs_ipv_benin` utilisent une combinaison de plusieurs méthodes
+  * Échantillonnage par grappe
+  * Échantillonnage stratifié
+  * Échantillonnage aléatoire
+- Je vais vous présenter rapidement certains de ces techniques:
+  - Échantillonnage stratifié
+  - Échantillonnage par grappes
+
+
+Échantillonnage stratifié
+========================================================
+
+## Régardons les distributions des femmes et des hommes dans la population des courreurs
+- Pour changer la couleur de contenu des graphiques: https://rpubs.com/woobe/ggplot2_ref_part02
+
+```{r, out.width= '60%', out.height='70%', message=FALSE, warning=FALSE, error=FALSE}
+
+fig_s1 <-
+  ggplot(marathon) +
+  geom_histogram(aes(x = V6, fill = V2)) +
+  scale_fill_brewer(palette="Set2")+ 
+  labs(title = "Histogramme du Marathon de 2012",
+       x = "Temps pour compléter le marathon",
+       y = "Nombre de coureurs")
+
+```
+
+
+## Régardons les distributions des femmes et des hommes dans la population des courreurs
+
+```{r, out.width= '60%', out.height='70%', message=FALSE, warning=FALSE, error=FALSE}
+
+fig_S2 <-
+  ggplot(marathon) +
+  geom_histogram(aes(x = V6, fill = V2)) +
+  scale_fill_brewer(palette="Set2")+ 
+  facet_wrap(~V2) +
+  geom_vline(aes(xintercept = mean(V6)), col = "red") +
+  labs(title = "Histogramme du Marathon de 2012",
+       x = "Temps pour compléter le marathon",
+       y = "Nombre de coureurs")
+
+```
+
+## Régardons les distributions des femmes et des hommes dans la population des courreurs
+
+```{r, out.width= '90%', out.height='70%', message=FALSE, warning=FALSE, error=FALSE}
+
+ggarrange(fig_s1, fig_S2, ncol = 2)
+
+```
+
+
+## Combien avons-nous d'hommes et de femmes?
+
+- La distribution des femmes peut eêtre différente de la distribution des hommes, dans ce cas, on va utiliser comme variable de stratification le sexe.
+
+```{r, out.width= '50%', out.height='70%', message=FALSE, warning=FALSE, error=FALSE}
+
+freq(marathon$V2)
+#freq(marathon$V5)
+
+```
+
+
+## Échantillonnage stratifié
+
+Vous pourriez préférer l'échantillonnage stratifié à l'échantillonnage aléatoire simple pour plusieurs raisons.
+
+1. Permet d'augmenter le degré de confiance pour les généralisations à des sous-groupes ou des secteurs particuliers. 
+- Cela garantit que vous pourrez représenter non seulement la population totale, mais également des sous-groupes clés de la population, en particulier les groupes minoritaires. 
+- Si vous voulez pouvoir parler de sous-groupes, c’est peut-être le seul moyen de s’assurer efficacement de le faire.
+- Si le sous-groupe est extrêmement petit, vous pouvez utiliser différentes fractions d'échantillonnage (f) dans les différentes strates pour sur-échantillonner de manière aléatoire le petit groupe.
+
+## Échantillonnage stratifié
+
+2. L'échantillonnage aléatoire stratifié a plus de précision statistique que l'échantillonnage aléatoire simple si les strates ou les groupes sont homogènes. 
+- S'ils le sont, vous devez vous attendre à ce que la variabilité au sein des groupes soit inférieure à celle de la population dans son ensemble. L'échantillonnage stratifié profite de ce fait.
+
+
+## Échantillonnage stratifié : Procédure
+
+
+- La population est divisée en groupes homogènes et mutuellement exclusifs (strates), tels que des quartiers, puis les observations sont sélectionnées de manière aléatoire au sein de chaque strate.
+- **NB:** Contrairement à l'échantillonnage par grappe, où les strates sont presque toujours spatiales, les strates sont généralement choisies pour être les facteurs de confusion de l'analyse démographique (âge, sexe, etc.) mais peuvent aussi être spatiales.
+- L'objectif principal de l'échantillonnage stratifié est de réduire l'erreur d'échantillonnage.
+
+
+## Échantillonnage stratifié : Exemple
+
+
+
+Échantillonnage par grappe
+========================================================
+
+
+Erreur totale
+========================================================
+
+-->
+
