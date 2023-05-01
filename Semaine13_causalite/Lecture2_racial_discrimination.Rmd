@@ -1,0 +1,162 @@
+---
+title: "Lecture2_racial_discrimination"
+author: "Visseho Adjiwanou, PhD."
+date: "2/17/2018"
+output:
+  beamer_presentation: default
+  ioslides_presentation: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Racial discrimination
+
+Does racial discrimination exist in the labor market? Or should racial disparities in the unemployment rate be attributed to other factors such as racial gaps in educational attainment ?
+
+
+## Slide with Bullets
+
+- In response to newspaper ads, the researchers sent out r??sum??s of fictitious job candidates to potential employers
+- Varied only the name of job applicant
+- Other information are unchanged
+
+
+## Slide with R Output
+
+```{r racial discrimination}
+
+## Set the work directory
+getwd()
+
+
+## Install and load the package "qss" that contains all data files from the book QSS - Imai Kosuke
+# devtools::install_github("kosukeimai/qss-package")      # See the way the package is installed
+# install.packages("rio")
+library("qss")
+library("tidyverse")
+library("readr")          # load csv files
+library("haven")          # for stata, spss and sas file
+library("rio")
+
+data("resume", package = "qss")
+# resume <- read_csv("resume.csv")        # What you will do to import the data (remember your directory)
+resume
+
+```
+
+
+## Quick observation of tha data
+
+```{r racial discrimination}
+
+## Subsetting the data
+head(colnames(resume))      # show the variables names
+head(resume)                # show first several observations
+summary(resume)
+glimpse(resume)
+
+table(resume$race, resume$call)
+table(resume$sex, resume$race)
+
+# Another way       - By using the tidyr
+race_call_tab <- 
+  resume %>%
+  group_by(race, call) %>%
+  count()
+race_call_tab
+
+# All people who were female
+people_female <- resume[resume$sex < 2, ]
+summary(people_female)
+
+# Complete case
+no_missing_data <- resume[complete.cases(resume), ]
+
+# subsample
+
+sex_call <- resume[, c("sex", "call")]
+sex_call
+
+# number of column
+ncol(sex_call)
+ncol(resume)
+
+```
+
+
+## Proportion call back by race
+
+
+```{r, racial discrimination}
+
+# Contengency table - cross tabulation 
+
+table(resume$race, resume$call)
+table(resume$sex, resume$call)
+
+race.call.tab <- table(race = resume$race, call = resume$call)    # if you want to re-use the table later
+race.call.tab
+
+addmargins(race.call.tab)
+
+# overall call back rate: total callbacks divided by the sample size
+
+sum(race.call.tab[, 2]) / nrow(resume)        # To what refers to race.call.table[, 2]
+race.call.tab[1,2]
+
+# Call back race for each race
+
+(black.call <- race.call.tab[1, 2] / sum(race.call.tab[1,]))    # Black
+
+(white.call <- race.call.tab[2, 2] / sum(race.call.tab[2, ]))   # White
+
+white.call - black.call
+
+# Overall call back simply
+
+mean(resume$call)         # Because call is a dummy variable
+
+```
+
+
+## Subsetting the data to produce the same results
+
+```{r, racial discrimination}
+
+## What is the call back for each race when one want to use mean
+
+resume$race
+
+# Callback rate for black-sounding names
+mean(resume$call[resume$race == "black"])
+
+# Callback rate for white-sounding names
+mean(resume$call[resume$race == "white"])
+
+
+``` 
+
+## Subsetting the data 
+
+Cleaning/Reshapring/???Wrangling??? data is a core task of quantitative social scientist more broadly. A recent New York Times Article suggests 80% of data scientists' time is spent cleaning data, while only 20% of their time is spent analyzing it.
+
+
+
+## Hawthorne effect
+
+The howtorn effect refers to the phenomenon where study subjects behave differently because they know they are being observed by researchers.
+
+```{r, hawthorne}
+social <- data("social", package = "qss")
+social
+
+head(social)
+
+
+```
+
+
+
+

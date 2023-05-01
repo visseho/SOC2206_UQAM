@@ -1,0 +1,225 @@
+---
+title: "R Notebook : Minimum wage"
+author: Visseho Adjiwanou
+output: html_notebook
+---
+
+
+
+
+Name                              Description
+--------------------------------- -----------------------------------------------------
+`chain`                           Name of fastfood restaurant chain
+`location`                        Location of restaurants (centralNJ, northNJ, PA, shoreNJ, southNJ)
+`wageBefore`                      Wage before the minimum wage increase
+`wageAfter`                       Wage after the minimum wage increase
+`fullBefore`                      Number of fulltime employees before the minimum wage increase
+`fullAfter`                       Number of fulltime employees after the minimum wage increase
+`partBefore`                      Number of parttime employees before the minimum wage increase
+`partAfter`                       Number of parttime employees after the minimum wage increase
+
+
+
+## *load the library, set the work directory ..
+
+```{r, minwage}
+library("tidyverse")
+library("qss")
+data("minwage", package = "qss")
+write.csv(minwage, file = "minwage.csv")
+minwage
+summary(minwage)
+# View(minwage)
+dim(minwage)          # give you the sample size and the number of variables
+glimpse(minwage)
+
+```
+
+# Difference in employment rate between NJ and PA after the policy
+Because the data is disaggregated for NJ by regions, we have first to create a new variable for state.
+We have to check also if the law has have any impact by checking if the wage changed after the law
+
+```{r}
+# Number of location in the file
+minwage %>%
+  count(location)
+
+# Create the variable state - two way to do it
+minwage <-
+  mutate(minwage, state = if_else(location == "PA", "PA", "NJ"))
+
+minwage <-  
+  mutate(minwage, state1 = str_sub(location, -2L))
+minwage 
+
+
+# Let's confirm that the state follow the law
+
+nj_minwage <- 5.05        # You do this to avoid what is called the magic number
+
+summarize(minwage)
+
+policy <-
+minwage %>%
+  mutate(pol_bef = if_else((wageBefore < nj_minwage), 1, 0),
+         pol_aft = if_else((wageAfter < nj_minwage), 1, 0)) %>% 
+  group_by(state) %>%
+  summarise(prop_after = mean(pol_aft),
+            prop_before = mean(pol_bef))
+policy
+
+# but simply like this
+minwage %>%
+  group_by(state) %>%
+  summarise(prop_after = mean(wageAfter < nj_minwage),
+            prop_before = mean(wageBefore < nj_minwage))
+
+# tapply((minwage$wageAfter < minwage$nj_minwage), minwage$state, mean)
+
+
+
+```
+## Effect of the policy
+Now, we can check if the employment rate is lower in NJ after tyhe policy as suggested by the economics theory.
+To do that, we can compare the employment rate between NJ and PA after the policy.
+But, what should be the dependent variable? Total employment, proportion of full time? 
+Here we use the proportion of full time as the dependent variable. What is the problem with total employment?
+
+
+```{r}
+
+# Is the proportion full time higher in NJ after
+
+  # Computation of the main outcome
+minwage <-
+minwage %>%
+  mutate(totalAfter = fullAfter + partAfter,
+         fullPropAfter = fullAfter / totalAfter)
+
+# Average proportion of full time for each state
+
+full_prop_by_state <-
+  minwage %>%
+  group_by(state) %>%
+  summarise(fullPropAfter = mean(fullPropAfter))
+full_prop_by_state
+
+# Difference between NJ and PA - two ways to do it
+ spread(full_prop_by_state, state, fullPropAfter) %>%
+  mutate(diff = NJ - PA)
+
+
+diff1 <- filter(full_prop_by_state, state == "NJ")[["fullPropAfter"]] - filter(full_prop_by_state, state == "PA")[["fullPropAfter"]]
+diff1
+
+
+```
+
+The result show that the mean employment rate increase by 4% in NJ after the introduction of the law. Can we say that, this is the impact of the new law? 
+
+## Confounding bias
+
+The important assumption of observational studies is that the treatment and control group must be comparable with respect to everything related to the outcome other than the treatment. It is difficult to conclude that this assumption is true in this study. 
+
+For example, if there is a competing industry for low-skilled workers in NJ but such an industry does not exist in PA. if that is the case, then the restaurants in the two states are not comparable and PA restaurants cannot serve as a valid control group for NJ restaurants. NJ may still have a higher full time employment rate, even in the absence of the increase, in order to attrack low-skilled workers. More generally, any other differences that exist between the fast-food restaurants in the two states before the administration of the NJ law would bias our inference if they are also related outcomes. Reasons that explained why the minimum wage is increased in NJ but not in PA may also explain the difference of outcomes. The possible existence of confounding bias is the reason behind the existence of the popular mantra, *"Association does not necessarily imply causation"*
+
+various solutions exist that we will see throughout the courses. Here are some few to start.
+
+**1. Subclassification**
+The idea is to make the treatment and control groups as similar to each other as possible by comparing them within a subset of observations defined by shared values in pretreatment variables or a subclass. Here, we subclassify by type of restaurants. What else variable might be interesting to use?
+
+```{r}
+## Subclassification
+
+## Proportion of each fast-food chain in each state
+
+prop_chain <-
+minwage %>% 
+  group_by(state) %>% 
+  count(chain) %>% 
+  mutate(prop_chain = n/sum(n))
+prop_chain
+
+## Why not put this information in a graph? Let's see
+
+ggplot(prop_chain, aes(x = chain, y = prop_chain, color = state)) +
+  geom_point() +
+  coord_flip()                                                        # to flip x and y ascis
+  
+## Effect by chain
+
+full_prop_by_state_chain <-
+  minwage %>%
+  group_by(state, chain) %>%
+  summarise(fullPropAfter = mean(fullPropAfter))
+full_prop_by_state_chain
+
+spread(full_prop_by_state_chain, state, fullPropAfter) %>%
+  mutate(diff = NJ - PA)
+
+# Here also, we can compute the difference
+ggplot(full_prop_by_state_chain, aes(x = chain, y = fullPropAfter, color = state)) +
+  geom_point() +
+  coord_flip()
+
+
+```
+
+
+
+**2. Before-and-after**
+In observational studies, the data collected over time are a valuable source of information. Multiple measurements taken over time on the same units are called *longitudinal data or panel data*. Longitidunal data often yield a more credible comparison of the treatment and control groups than cross-section data because the former contain additional information about changes over time.
+
+The advantage of this design is that any confounding factor that is specific to each state is held constant because the comparison is done within NJ. The disadvantage is that time-varying confounding factors can bias the resulting inference. If for instance, there are an upwards time trend in the local economy that improves wage and employment and is not cause by the minimum-wage increase.
+
+```{r}
+## Before-and-after 
+
+minwage <-
+  minwage %>% 
+  mutate(fullPropBefore = fullBefore / (fullBefore + partBefore))
+
+minwage %>% 
+  filter(state == "NJ") %>% 
+  summarise(diff_bef_aft_NJ = mean(fullPropAfter) - mean(fullPropBefore))
+
+```
+
+
+
+**3. Difference-in-difference**
+The difference-in-difference design extends the before-and-after design to adress the confounding bias due to time trends. The key assumption behind the DiD design is that the outcome variable follows a parallel trend in the absence of treatment.
+
+```{r}
+
+minwage %>% 
+  group_by(state) %>% 
+  summarise(diff = mean(fullPropAfter) - mean(fullPropBefore)) %>% 
+  spread(state, diff) %>% 
+  mutate(diff_in_diff = NJ - PA)
+
+```
+
+## Finally, let's put that in a graph
+Let???s create a single dataset with the mean values of each state before and after to visually look at each of these designs.
+```{r}
+
+minwage
+
+full_prop_by_state <-
+  minwage %>%
+  group_by(state) %>%
+  summarise_at(vars(fullPropAfter, fullPropBefore), mean) %>% 
+  gather(`fullPropAfter`, `fullPropBefore`, key = "period", value = "fullProp" ) %>% 
+  #gather(period, fullProp, -state) 
+  mutate(period = recode(period, fullPropAfter = 1, fullPropBefore = 0))
+  
+full_prop_by_state
+
+ggplot(full_prop_by_state, aes(x = period, y = fullProp, color = state)) +
+  geom_point() +
+  geom_line() +
+  scale_x_continuous(breaks = c(0, 1), labels = c("Before", "After"))
+
+```
+

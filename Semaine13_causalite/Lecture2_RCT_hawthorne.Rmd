@@ -1,0 +1,138 @@
+---
+title: "Lecture2_Social pressure"
+author: "Visseho Adjiwanou, PhD."
+date: "2/19/2018"
+output:
+  beamer_presentation: default
+  ioslides_presentation: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Social pressure and the Hawthorne effect
+
+Does social pressure within neighborhood increases participation (especially during a primary election)?
+
+The Hawthorne effect refers to the phenomenon where study subjects behave differently because they know they are being observed by researchers.
+
+## load the library and the data
+
+```{r social}
+
+## Set the work directory
+getwd()
+#setwd()
+
+## Install and load the package "qss" that contains all data files from the book QSS - Imai Kosuke
+# devtools::install_github("kosukeimai/qss-package")      # See the way the package is installed
+# install.packages("rio")
+library("qss")
+library("tidyverse")
+library("readr")          # load csv files
+library("haven")          # for stata, spss and sas file
+library("rio")
+
+
+data("social", package = "qss")
+write.csv(social, file = "social.csv")
+
+social
+head(social)
+summary(social)
+
+```
+
+## Turnout and SATE
+
+```{r, turnout}
+# turnout of each group
+
+message.tab <- table(social$messages, social$primary2006)
+addmargins(message.tab)
+
+# rate participation
+sum(message.tab[, 2]) / nrow(social)
+sum(message.tab[, 2]) / sum(message.tab[,])     # Another way to do it
+mean(social$primary2006)
+
+# participation civil duty
+(civil.duty <- message.tab[1, 2] / sum(message.tab[1, ]))
+civil.duty
+
+# participation control group
+control <- message.tab[2, 2] / sum(message.tab[2, ])
+control
+
+# participation hawthorne group
+hawthorne <- message.tab[3, 2] / sum(message.tab[3, ])
+hawthorne
+
+# participation neighbors group
+neighbor <- message.tab[4, 2] / sum(message.tab[4, ])
+neighbor
+
+
+# SATE for each treatment group
+
+civil.duty - control
+neighbor - control
+hawthorne - control
+
+```
+
+
+## Use of the function    (tapply)
+
+What we have done is a very long process. we can do that with less steps by taking advantage of the function in R. here, we are going to use the function tapply.
+
+```{r social }
+
+# turnout of each group
+tapply(social$primary2006, social$messages, mean)
+
+# turnout of the control group
+
+mean(social$primary2006[social$messages == "Control"])
+
+# SATE
+
+tapply(social$primary2006, social$messages, mean) - mean(social$primary2006[social$messages == "Control"])
+
+```
+
+
+## How can we be sure that the treatment groups are similar to the control group?
+
+
+```{r, social}
+
+# Are all four groups are similar before the treatment?
+
+# Comparison of age 
+social$age <- 2006 - social$yearofbirth
+
+tapply(social$age, social$messages, mean)
+
+# Comparison of previous election
+tapply(social$primary2004, social$messages, mean)
+
+# Comparison of hhsize
+tapply(social$hhsize, social$messages, mean)
+
+
+# comparison of sex
+
+tapply(social$sex, social$messages, mean)
+
+social$sex[social$sex == "Female"] <- "0"
+social$sex[social$sex == "Male"] <- "1"
+
+tapply(social$sex, social$messages, mean)
+
+```
+
+
+
+

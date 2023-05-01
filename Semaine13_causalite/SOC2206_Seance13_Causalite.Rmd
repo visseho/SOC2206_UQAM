@@ -1,0 +1,624 @@
+---
+title: 'Causalité'
+subtitle: 'Analyse tabulaire multivariée'
+author: "Visseho Adjiwanou, PhD."
+institute: "Département de Sociologie - UQAM"
+date: "28 Janvier 2019"
+output:
+  beamer_presentation:
+    colortheme: beaver
+    fonttheme: structurebold
+    theme: Ilmenau
+  slidy_presentation: default
+  ioslides_presentation: default
+header-includes:
+  - \usepackage{color}
+---
+
+
+## Plan de présentation
+
+1. Questions causales en sciences sociales et terminologie
+
+2. Effets causaux et contrefactuel
+
+3. Essais contrôlés randomisés (*Randomized controlled trials*) et causalité
+
+4. Causalité à partir des données observationnelles 
+
+5. Exercices
+
+
+Introduction
+========================================================
+
+## Introduction
+- Dans ce chapitre, nous considérons la causalité, l’un des concepts les plus centraux des sciences sociales quantitatives. 
+- Une grande partie de la recherche en sciences sociales s'intéresse aux effets causaux de diverses politiques et autres facteurs sociétaux. 
+- Par exemple: 
+    - Est-ce que le vaccin A protège contre la maladie X?
+    - Les classes de petite taille augmentent-elles les résultats des tests standardisés des élèves? 
+    - Les soins de santé universels amélioreraient-ils la santé et les finances des pauvres?
+    - L'éducation réduit-elle le nombre d'enfants?
+    - La rémunération des gens sur Wikipedia augmentera-elle leur productivité?
+    - Est-ce que l'augmentation du salaire minimum réduit l'activité économique?
+  
+  
+Questions de recherche
+========================================================
+
+## Questions de recherche
+
+- Une question de recherche est au cœur d'un projet de recherche, d'une étude ou d'une revue de littérature. 
+- Il concentre l'étude, détermine la méthodologie et guide toutes les étapes de la recherche, de l'analyse et de la production de rapports.
+- Peut être **associatif** ou **causal**
+
+
+## Exemple 1
+
+1. Le salaire minimum augmente-t-il le taux de chômage?
+    - Le taux de chômage a augmenté après l'augmentation du salaire minimum.
+    - Le taux de chômage aurait-il augmenté si l'augmentation du salaire minimum n'avait pas eu lieu?
+
+
+## Exemple 2
+2. La race/l'ethnie a-t-elle une incidence sur les perspectives d'emploi?
+    - Mohamed a postulé pour un emploi mais ne l'a pas obtenu.
+    - Mohamed aurait-il trouvé un travail s'il était blanc (avait un nom européen)?
+
+
+## Exemple 3
+3. Est-ce que fumer cause une maladie coronarienne?
+    - Jean, fumeur, a eu une maladie coronarienne.
+    - Est-ce que Jean aurait eu la même maladie s'il n'était pas fumeur?
+
+## Exemple 4
+  
+4. Quelle est l'importance des questions souverainistes dans la victoire de François Legault?
+    - Au cours de ces élections, la question souverainiste a été laissé de côté et François Legault a gagné.
+    - François Legault aurait-il gagné les élections si ces questions étaient présentes?
+
+## Terminologie
+
+1. **Réponse ou variable dépendante**, *outcome*
+  - C'est ce que nous voulons expliquer.
+  - *Exemples*:
+      - Taux de chômage
+      - Perspective d'emploi
+      - Maladie coronarienne
+      - Victoire de François Legault
+
+## Terminologie
+    
+2. **Variable indépendante, facteur de risque**
+  - Tout facteur pouvant influencer la variable de réponse
+  - Peut être de différents niveaux
+  - Leur choix dépend de la théorie
+  - *Exemples*:
+    - Salaire minimum
+    - Ethnie / Race
+    - Fumer
+    - Questions souverainistes
+
+3. **Variables de contrôle**
+
+Type de relation
+========================================================
+
+## Association 
+- On dit que deux variables A et B sont **associées** quand l’une se trouve plus communément en présence de l’autre.
+- Se détecte souvent à partir d'un tableau dit de **contingence** ou **tableau croisé** ou d'un graphique
+- Exemple  - Existe-il une association entre le degré d'ouverture d'un pays et l'attitude face a la violence contre les femmes?
+
+Pierotti, Rachel. (2013). "[Increasing Rejection of Intimate Partner Violence: Evidence of Global Cultural Diffusion](http://dx.doi.org/10.1177/0003122413480363)." *American Sociological Review*, 78: 240-265. 
+
+Nous utilisons les données des enquêtes démographiques et de santé (EDS), qui représentent un ensemble de plus de 300 enquêtes représentatives à l'échelle nationale, régionale et résidentielle menées dans des pays en développement du monde entier depuis 1992.
+
+## Association 
+
+Name                Description
+---------------     ---------------------------------------------------------
+`beat_burnfood`     Pourcentage de femmes dans chaque pays qui 
+                    pensent qu'un mari a le droit de battre sa femme 
+                    si elle brûle la nourriture (quantitative)
+`beat_burnfood_cat` Variable beat_bunfood en 4 catégories (qualitative)
+`no_media`          Pourcentage de femmes dans chaque pays qui ont 
+                    rarement accès un journal, une radio ou une
+                    télévision (quantitative)
+`no_media_cat`      Variable no_media en 3 catégories (qualitative)
+`country`           pays
+
+
+## Association 
+
+```{r, echo=FALSE, echo=FALSE, warning=FALSE, message=FALSE}
+
+#install.packages("devtools") 
+#library("devtools")
+#install_github("kosukeimai/qss-package", build_vignettes = TRUE)
+
+getwd()
+library(tidyverse)
+library(summarytools)
+library(qss)
+
+dhs_ipv <- read_csv("dhs_ipv.csv")
+
+dhs_ipv <-
+  dhs_ipv %>% 
+ # select(beat_burnfood!= "NA") %>% 
+  mutate(beat_burnfood_cat = factor(ntile(beat_burnfood, 4), labels = c('Très faible', 'Faible', 'Élevé', 'Très élevé')),
+         beat_goesout_cat = factor(ntile(beat_goesout, 4), labels = c('Très faible', 'Faible', 'Élevé', 'Très élevé')),
+         no_media_cat = factor(ntile(no_media, 3), labels = c('Riche', 'Moyen', 'Pauvre'))) 
+
+head(dhs_ipv)
+```  
+
+## Association
+
+- Résumé de l'information contenue dans la base de donnée
+
+```{r, out.width = '75%', echo=FALSE}
+
+summary(dhs_ipv)
+
+```
+
+## Association 
+
+- Association entre deux variables qualitatives
+
+```{r, echo=FALSE,  warning=FALSE, message=FALSE}
+
+ggplot(dhs_ipv) +
+  geom_bar(aes(x = no_media_cat, fill = beat_burnfood_cat), position = "dodge") +
+  ggtitle("Association entre ouverture aux médias et acceptation de la violence conjugale") +
+  xlab("Type de pays selon l'ouverture aux médias") +
+  ylab("Effectif") +
+  theme_bw()
+
+```  
+
+## Association 
+
+  - Représentation graphique (boxplot) dans le cas d'une variable qualitative et d'une variable quantitative
+  
+```{r, out.width = '75%', message = FALSE, echo=FALSE, warning=FALSE}
+
+ggplot(dhs_ipv) +
+  geom_boxplot(aes(x = no_media_cat, y = beat_burnfood, color = no_media_cat)) +
+  ggtitle("Association entre ouverture aux médias et acceptation de la violence conjugale") +
+  xlab("Type de pays selon l'ouverture aux médias") +
+  ylab("% qui estime qu'une femme doit être battue (beat_burnfood)") 
+
+```  
+
+
+## Association 
+
+  - Représentation linéaire (scatterplot) et de calcul d'indicateurs (corrélation de Pearson): dans le cas de deux variables quantitatives.
+
+```{r, out.width = '75%', message = FALSE, warning=FALSE, echo=FALSE}
+
+ggplot(dhs_ipv, aes(x = no_media, y = beat_burnfood)) +
+  geom_point() 
+
+```
+
+
+
+## Association 
+
+```{r, out.width = '75%', message = FALSE, warning=FALSE, echo=FALSE}
+
+ggplot(dhs_ipv, aes(x = no_media, y = beat_burnfood)) +
+  geom_point(aes(color = region)) +
+  geom_smooth(aes(color = region), method = lm, se = FALSE,  formula = y ~ x)
+
+```
+
+
+## Relation associative
+
+- Une association (linéaire) peut être 
+  - **positive** si les deux variables vont dans le même sens (une augmentation de l'un est associée à une augmentation de l'autre);
+    - *Exemple* : éducation et revenu, durée de résidence et emploi
+  - **négative** si les deux variables vont dans des sens opposés (une augmentation de l'un est associée à une diminution de l'autre);
+    - *Exemple* : scolarisation et racisme, revenu et obésité, niveau de développement d'un pays et niveau de mortalité infantile
+  - **nulle** (Absence d'association).
+    - *Exemple*:  
+
+
+## Relation causale
+
+- L'association est une **condition nécessaire** à la causalité (Mais elle **n'est pas suffisante**).
+- Toutes les associations ne sont pas causales. L'association peut arriver par hasard.
+- **L'analyse statistique à elle seule ne peut constituer une preuve d'un lien de causalité**
+- Comparaison entre **$\color{red}{factuel}$** et **$\color{red}{contrefactuel}$**
+- Problème fondamental de l'inférence causale: 
+  - Il faut déduire des résultats contrefactuels
+  - Il n'y a pas de causalité sans manipulation: caractéristiques immuables
+
+
+## Relation causale
+
+
+- La clé pour comprendre la causalité est de penser au contrefactuel. L'inférence causale est une comparaison entre le factuel (ce qui s'est réellement passé) et le contrefactuel (ce qui se serait passé si une condition était différente).
+
+- Contrefactuels ne sont pas observés, sauf dans les films.
+- https://www.youtube.com/watch?v=BvUbv4iwbDs&rel=0&modestbranding=1&autohide=1&showinfo=0
+
+
+Essais contrôlés randomisés (Expérimentation)
+========================================================
+
+## Essais contrôlés randomisés
+- Idée clé: la **randomisation** du traitement rend les groupes de **traitement** et de **contrôle** en moyenne «identiques»
+- Les deux groupes sont similaires en termes de toutes les caractéristiques (**observées et non observées**)
+- Peut attribuer les différences moyennes de résultats à la différence de traitement
+- Effet du Traitement Moyen (Sample Average Treatment Effect, SATE)
+
+
+```{r SATE, echo=FALSE,  out.width = '70%'}
+knitr::include_graphics("SATE1.jpg")
+```
+
+- Essais contrôlés randomisés comme **norme d'excellence** (*Gold standard*)
+
+## Essais contrôlés randomisés
+
+- La SATE n'est pas directement observable. 
+- Pour le groupe de traitement qui a reçu le traitement, nous avons observé le résultat moyen sous le traitement, mais nous ne savons pas quel aurait été leur résultat moyen sans le traitement. 
+- Le même problème existe pour le groupe témoin car ce groupe ne reçoit pas le traitement et, par conséquent, nous n'observons pas le résultat moyen qui se produirait dans les conditions de traitement. 
+- Pour estimer le résultat contrefactuel moyen du traitement, nous pouvons utiliser le résultat moyen observé du groupe témoin. 
+- De même, nous pouvons utiliser le résultat moyen observé du groupe de traitement comme une estimation du résultat contrefactuel moyen pour le groupe de contrôle. 
+- La Sate peut être estimée en calculant la différence entre le résultat moyen entre les groupes de traitement et témoin
+- En clair, la grande question de la causalité n'est qu'une question de soustraction :)
+
+## Essais contrôlés randomisés
+
+Dans un essai contrôlé randomisé (ECR), chaque unité est assignée de manière aléatoire au groupe de traitement ou au groupe de contrôle. La randomisation de l'assignation de traitement garantit que la différence moyenne de résultats entre les groupes de traitement et de contrôle peut être attribuée uniquement au traitement, car les deux groupes sont en moyenne identiques pour toutes les caractéristiques de prétraitement (observées et non observées).
+
+
+## Essais contrôlés randomisés
+
+1.  **Forces**  
+  - **Validité interne** - mesure dans laquelle les hypothèses de causalité sont satisfaites dans l'étude
+
+2. **Limites**
+  - **Validité externe** - mesure dans laquelle les conclusions peuvent être généralisées au-delà d'une étude particulière
+  - Explication causale faible
+  - Considérations éthiques
+  - Possibilité de contamination
+
+
+Applications
+========================================================
+
+## Exemple 1 discrimination raciale sur le marché du travail
+
+1. **Question de recherche**
+  - La discrimination raciale existe-t-elle sur le marché du travail?
+  - Ou bien les disparités raciales dans le taux de chômage devraient-elles être attribuées à d'autres facteurs tels que les écarts raciaux dans le niveau d'instruction?
+
+2. **Expérimentation**
+  - En réponse aux annonces dans les journaux, les chercheurs ont envoyé les CV de candidats fictifs à des employeurs potentiels.
+  - Changé seulement le nom du demandeur d'emploi
+    - Noms afro-américains
+    - Noms à consonance caucasienne
+  - Les autres informations sont inchangées
+
+3. **Variable dépendante**
+  - Taux de rappel
+
+## Exemple 1 discrimination raciale sur le marché du travail
+
+- **Unité d'analyse**: Individus
+
+- **Variable de traitement** (variable d’intérêt causal) **T**: Nom à consonance afro-américain
+
+- **Groupe de traitement** (unités traitées): Afro-américains
+
+- **Groupe de contrôle** (unités non traitées): Caucasiens
+
+- **Réponse** (variable de réponse) **Y**: si un rappel a été effectué
+
+  - Que signifie **"T cause Y"**? 
+  - Contrefactuels, **"Quoi si"** : Les Afro-Américains auraient-ils été rappelés s'ils n'avaient pas de noms afro-américains?
+
+## Exemple 1 discrimination raciale sur le marché du travail
+
+- **Deux résultats possibles**: Y(1) et Y(0)
+
+- **Effet causal**: `Y(1) - Y(0)`
+
+- **Problème fondamental d'inférence causale**: un seul des deux résultats potentiels est observable
+
+
+## Exemple 1 discrimination raciale sur le marché du travail
+
+- Comment pouvons-nous comprendre les contrefactuels?
+  - L'association n'est pas un lien de causalité
+  - Trouvez une unité similaire! ==> **Matching**
+  - Est-ce-que Jamal n'a été rappelé à cause de sa race?
+  - Trouver une personne blanche qui ressemble à Jamal 
+
+- Le problème: on ne peut pas correspondre sur tout
+- Facteurs de **confusion non observés**: variables associées au traitement et au résultat ==> **biais de sélection**
+
+
+## Exemple 1 discrimination raciale sur le marché du travail
+
+- La clé pour comprendre la causalité est de penser au contrefactuel. L'inférence causale est une comparaison entre le factuel (ce qui s'est réellement passé) et le contrefactuel (ce qui se serait passé si une condition était différente).
+
+
+```{r pressure, echo=FALSE, fig.cap="A caption", out.width = '100%'}
+knitr::include_graphics("factuel_contrafactuel.jpg")
+```
+
+
+- La toute première observation des données de l’expérience de résumé montre qu’un employeur potentiel a reçu un CV avec un nom stéréotypé afro-américain et a décidé de rappeler.
+
+- Avec quoi remplaçons-nous les **?** dans le tableau?
+
+## Exemple 1 discrimination raciale sur le marché du travail
+
+```{r, echo=FALSE}
+
+data("resume", package = "qss")
+# resume <- read_csv("resume.csv")        # What you will do to import the data (remember your directory)
+head(resume) 
+
+```
+
+## Exemple 1 discrimination raciale sur le marché du travail
+
+```{r}
+
+freq(resume$sex)
+
+```
+
+## Exemple 1 discrimination raciale sur le marché du travail
+
+```{r}
+
+freq(resume$race)
+
+```
+
+## Exemple 1 discrimination raciale sur le marché du travail
+
+```{r}
+
+freq(resume$call)
+
+```
+
+## Y'a-t-il discrimination ou pas?
+
+```{r}
+
+#ctable(resume$race, resume$call)
+tab <- table(resume$race, resume$call)
+
+round(prop.table(tab, 1)*100, 2)
+
+```
+- SATE = 9,65 - 6,45 = 3,2%
+
+## Est-ce que les deux groupes étaient similaires au début?
+
+```{r}
+
+ctable(resume$race, resume$sex)
+
+```
+
+Exercices de groupes
+========================================================
+
+
+
+Causalité à partir des données observationnelles
+========================================================
+
+## Données observationnelles
+
+- Souvent, nous ne pouvons pas randomiser le traitement pour des raisons éthiques et logistiques:
+- par exemple, tabagisme et cancer du poumon
+
+- Études observationnelles: traitement naturellement attribué
+- Plans d'observation passifs ou plans corrélationnels
+- Pas d'assignation aléatoire, pas de groupe de contrôle…
+
+## Données observationnelles
+
+- Meilleure validité externe pour la généralisation au-delà de l'expérience
+- Validité interne plus faible:
+    - les variables pré-traitement peuvent différer entre les groupes (traitement et contrôle)
+    1. **biais de confusion (Confounding bias)** dû à ces différences : Une variable de prétraitement associée aux variables de traitement et de résultat s'appelle un facteur de confusion et constitue une source de biais de confusion dans l'estimation de l'effet du traitement.
+    
+    2. **biais de confusion non observée (Unobserved confounding)** constitue la ménace la plus importante car il est inobservé.
+
+## Données observationnelles
+
+3. **biais de sélection (selection bias)** de l'auto-sélection au traitement: Le biais de confusion dû à l'auto-sélection dans le groupe de traitement s'appelle un biais de sélection. Un biais de sélection apparaît souvent dans les études d'observation car les chercheurs n'ont aucun contrôle sur le destinataire du traitement.
+
+- Contrôle statistique devient alors nécessaire
+
+
+## Données observationnelles
+
+```{r endogeneite, echo=FALSE, fig.cap="", out.width = '100%'}
+knitr::include_graphics("endogeneite.jpg")
+```
+
+
+## Exemples
+
+Il y a beaucoup d'accidents pendant les périodes de fête de Noël, donc la fête de Noël cause des accidents.
+
+```{r confounding, echo=FALSE, fig.cap="", out.width = '80%'}
+knitr::include_graphics("confounding.jpg")
+```
+Problèmes?
+
+## Exemples
+
+- Adjiwanou, V. et LeGrand, T. (2013). Does antenatal care matter in the use of skilled birth attendance in rural Africa: A multi-country analysis, Social Science & Medicine 86: 26-34.
+    - Est-ce que le fait d'avoir des consultations prénatales entraîne un accouchement à l'hopital?
+
+- Adjiwanou, V. (En revision). Stepfamilies in sub-Saharan Africa and their consequences in terms of children’s well-being, Presented at the Population Association of America (PAA) 2017.
+    - Est-ce que le fait de vivre avec son beau-père réduit les chances de scolarisation?
+
+
+Solutions
+========================================================
+
+## Solution 1
+
+1. Comparaison transversale (Cross-section comparison)
+    - Comparez les unités traitées avec les unités de contrôle après le traitement
+    - Hypothèse: les unités traitées et les unités de contrôle sont comparables
+    - Possibilité de confusion
+
+```{r cross-sectional, echo=FALSE, fig.cap="", out.width = '80%'}
+knitr::include_graphics("cross_sectional.jpg")
+```
+
+## Solution 2
+
+2. Comparaison avant-après (Before_and_after comparison)
+    - Comparez les mêmes unités avant et après le traitement
+    - Hypothèse: pas de variable de confusion qui change dans le temps
+
+```{r Before-After, echo=FALSE, fig.cap="", out.width = '80%'}
+knitr::include_graphics("Before-After.jpg")
+```
+
+## Solution 3
+
+3. Double différence (DD) - Difference-in-differences
+    - Compare les individus entre périodes et entre traitement et contrôle 
+    - Hypothèse: tendance temporelle parallèle
+    - Tient compte à la fois des facteurs de confusion spécifiques aux unités et variables dans le temps. 
+
+```{r Double-difference, echo=FALSE, fig.cap="", out.width = '80%'}
+knitr::include_graphics("Double_difference.jpg")
+```
+
+Exercices de groupes
+========================================================
+
+## Comment l'augmentation du salaire minimum affecte-t-elle l'emploi?
+
+- Débat actuel: augmentation du salaire minimum fédéral
+- De nombreux économistes estiment que cet effet sera négatif:
+    - surtout pour les pauvres
+    - aussi pour toute l'économie
+- Difficile de randomiser l'augmentation du salaire minimum
+- Deux chercheurs en sciences sociales ont testé cette technique en utilisant des chaînes de restauration rapide au New-Jersey (NJ) et en Pennsylvanie (PA).
+    - En 1992, le salaire minimum dans le New Jersey a augmenté de 4,25 dollars à 5,05 dollars
+    - En Pennsylvanie, il est demeuré à 4,25 $
+- NJ et PA (est) sont similaires
+- Les chaînes de restauration rapide au NJ et en PA sont similaires: prix, salaires, produits, etc.
+- Quel est l'impact de l'augmentation du salaire minimum au NJ?
+
+## Données
+
+```{r minimum-wage, echo=FALSE, fig.cap="", out.width = '80%'}
+knitr::include_graphics("minimum-wage.jpg")
+```
+
+
+## Données
+
+```{r, minwage, echo=FALSE}
+
+data("minwage", package = "qss")
+
+head(minwage)
+
+```
+
+## Réponse
+
+- Variable dépendante: proportion de la main-d'oeuvre à temps plein.
+- Comparaison transversale
+
+```{r, echo=FALSE}
+
+# Is the proportion full time higher in NJ after
+minwage <-
+  mutate(minwage, state = if_else(location == "PA", "PA", "NJ"))
+
+  # Computation of the main outcome
+minwage <-
+minwage %>%
+  mutate(totalAfter = fullAfter + partAfter,
+         fullPropAfter = fullAfter / totalAfter)
+
+# Average proportion of full time for each state
+
+full_prop_by_state <-
+  minwage %>%
+  group_by(state) %>%
+  summarise(fullPropAfter = mean(fullPropAfter))
+full_prop_by_state
+
+# Difference between NJ and PA - two ways to do it
+# spread(full_prop_by_state, state, fullPropAfter) %>%
+#  mutate(diff = NJ - PA)
+
+
+diff1 <- filter(full_prop_by_state, state == "NJ")[["fullPropAfter"]] - filter(full_prop_by_state, state == "PA")[["fullPropAfter"]]
+#diff1
+
+
+```
+
+## réponse
+
+- Avant et après
+
+```{r, echo=FALSE}
+## Before-and-after 
+
+minwage <-
+  minwage %>% 
+  mutate(fullPropBefore = fullBefore / (fullBefore + partBefore))
+
+minwage %>% 
+  filter(state == "NJ") %>% 
+  summarise(PropBefore = mean(fullPropBefore),
+            PropAfter = mean(fullPropAfter), 
+            diff_bef_aft_NJ = mean(fullPropAfter) - mean(fullPropBefore))
+
+```
+
+
+## réponse
+
+- Double différences
+
+```{r, echo=FALSE}
+
+minwage %>% 
+  group_by(state) %>% 
+  summarise(diff = mean(fullPropAfter) - mean(fullPropBefore))%>% 
+  spread(state, diff) %>% 
+  mutate(diff_in_diff = NJ - PA)
+
+```
+
+
+Pour la suite
+========================================================
+
+## Pour la suite
+
+- R possède le meilleur package de graphique appellé ggplot
+- https://www.datacamp.com/courses/data-visualization-with-ggplot2-1
+
+- Vos travaux m'intéressent!
